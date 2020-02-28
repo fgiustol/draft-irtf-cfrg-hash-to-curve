@@ -14,7 +14,7 @@
        This document specifies a number of algorithms that may be used to encode or hash an
 arbitrary string to a point on an elliptic curve. 
     " name="description">
-<meta content="xml2rfc 2.37.3" name="generator">
+<meta content="xml2rfc 2.40.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-irtf-cfrg-hash-to-curve-latest" name="ietf.draft">
 <link href="draft-irtf-cfrg-hash-to-curve.xml" rel="alternate" type="application/rfc+xml">
@@ -239,6 +239,10 @@ figcaption, caption {
     display: inline-block;
     vertical-align: text-bottom;
     padding-bottom: 8px;
+  }
+  table {
+    display: inline-block;
+    overflow-x: auto;
   }
 }
 
@@ -513,7 +517,7 @@ hr.addr {
     padding: 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
-    opacity: 0.6;
+    opacity: 0.9; /* TODO fix when Henrik takes the patch. */
   }
   #toc.active {
       opacity: 1;
@@ -824,7 +828,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Faz-Hernandez, et al.</td>
-<td class="center">Expires 28 August 2020</td>
+<td class="center">Expires 31 August 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -837,12 +841,12 @@ table.left {
 <dd class="internet-draft">draft-irtf-cfrg-hash-to-curve-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-02-25" class="published">25 February 2020</time>
+<time datetime="2020-02-28" class="published">28 February 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-08-28">28 August 2020</time></dd>
+<dd class="expires"><time datetime="2020-08-31">31 August 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -893,7 +897,7 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 August 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 August 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -992,13 +996,21 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-security-considerations" class="xref">Security considerations</a><a href="#section-toc.1-1.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-performance-considerations" class="xref">Performance considerations</a><a href="#section-toc.1-1.5.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-hash_to_field-implementatio" class="xref">hash_to_field implementation</a><a href="#section-toc.1-1.5.2.2.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-implementation" class="xref">Implementation</a><a href="#section-toc.1-1.5.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-expand_message" class="xref">expand_message</a><a href="#section-toc.1-1.5.2.3.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.1">
+                    <p id="section-toc.1-1.5.2.3.2.1.1"><a href="#section-5.3.1" class="xref">5.3.1</a>.  <a href="#name-expand_message_md" class="xref">expand_message_md</a><a href="#section-toc.1-1.5.2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.5.2.4">
-                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-alternative-hash_to_base-fu" class="xref">Alternative hash_to_base functions</a><a href="#section-toc.1-1.5.2.4.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.2">
+                    <p id="section-toc.1-1.5.2.3.2.2.1"><a href="#section-5.3.2" class="xref">5.3.2</a>.  <a href="#name-expand_message_xof" class="xref">expand_message_xof</a><a href="#section-toc.1-1.5.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.3">
+                    <p id="section-toc.1-1.5.2.3.2.3.1"><a href="#section-5.3.3" class="xref">5.3.3</a>.  <a href="#name-defining-other-expand_messa" class="xref">Defining other expand_message variants</a><a href="#section-toc.1-1.5.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
 </li>
 </ul>
 </li>
@@ -1062,39 +1074,39 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-suites-for-hashing" class="xref">Suites for Hashing</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="xref">8.1</a>.  <a href="#name-defining-a-new-hash-to-curv" class="xref">Defining a new hash-to-curve suite</a><a href="#section-toc.1-1.8.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="xref">8.1</a>.  <a href="#name-suites-for-nist-p-256" class="xref">Suites for NIST P-256</a><a href="#section-toc.1-1.8.2.1.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="xref">8.2</a>.  <a href="#name-suite-id-naming-conventions" class="xref">Suite ID naming conventions</a><a href="#section-toc.1-1.8.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="xref">8.2</a>.  <a href="#name-suites-for-nist-p-384" class="xref">Suites for NIST P-384</a><a href="#section-toc.1-1.8.2.2.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="xref">8.3</a>.  <a href="#name-suites-for-nist-p-256" class="xref">Suites for NIST P-256</a><a href="#section-toc.1-1.8.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="xref">8.3</a>.  <a href="#name-suites-for-nist-p-521" class="xref">Suites for NIST P-521</a><a href="#section-toc.1-1.8.2.3.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.4">
-                <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="xref">8.4</a>.  <a href="#name-suites-for-nist-p-384" class="xref">Suites for NIST P-384</a><a href="#section-toc.1-1.8.2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="xref">8.4</a>.  <a href="#name-suites-for-curve25519-and-e" class="xref">Suites for curve25519 and edwards25519</a><a href="#section-toc.1-1.8.2.4.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.5">
-                <p id="section-toc.1-1.8.2.5.1"><a href="#section-8.5" class="xref">8.5</a>.  <a href="#name-suites-for-nist-p-521" class="xref">Suites for NIST P-521</a><a href="#section-toc.1-1.8.2.5.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.5.1"><a href="#section-8.5" class="xref">8.5</a>.  <a href="#name-suites-for-curve448-and-edw" class="xref">Suites for curve448 and edwards448</a><a href="#section-toc.1-1.8.2.5.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.6">
-                <p id="section-toc.1-1.8.2.6.1"><a href="#section-8.6" class="xref">8.6</a>.  <a href="#name-suites-for-curve25519-and-e" class="xref">Suites for curve25519 and edwards25519</a><a href="#section-toc.1-1.8.2.6.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.6.1"><a href="#section-8.6" class="xref">8.6</a>.  <a href="#name-suites-for-secp256k1" class="xref">Suites for secp256k1</a><a href="#section-toc.1-1.8.2.6.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.8.2.7">
-                <p id="section-toc.1-1.8.2.7.1"><a href="#section-8.7" class="xref">8.7</a>.  <a href="#name-suites-for-curve448-and-edw" class="xref">Suites for curve448 and edwards448</a><a href="#section-toc.1-1.8.2.7.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.8.2.8">
-                <p id="section-toc.1-1.8.2.8.1"><a href="#section-8.8" class="xref">8.8</a>.  <a href="#name-suites-for-secp256k1" class="xref">Suites for secp256k1</a><a href="#section-toc.1-1.8.2.8.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.8.2.9">
-                <p id="section-toc.1-1.8.2.9.1"><a href="#section-8.9" class="xref">8.9</a>.  <a href="#name-suites-for-bls12-381" class="xref">Suites for BLS12-381</a><a href="#section-toc.1-1.8.2.9.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.8.2.7.1"><a href="#section-8.7" class="xref">8.7</a>.  <a href="#name-suites-for-bls12-381" class="xref">Suites for BLS12-381</a><a href="#section-toc.1-1.8.2.7.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-toc.1-1.8.2.9.2.1">
-                    <p id="section-toc.1-1.8.2.9.2.1.1"><a href="#section-8.9.1" class="xref">8.9.1</a>.  <a href="#name-bls12-381-g1" class="xref">BLS12-381 G1</a><a href="#section-toc.1-1.8.2.9.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.8.2.7.2.1">
+                    <p id="section-toc.1-1.8.2.7.2.1.1"><a href="#section-8.7.1" class="xref">8.7.1</a>.  <a href="#name-bls12-381-g1" class="xref">BLS12-381 G1</a><a href="#section-toc.1-1.8.2.7.2.1.1" class="pilcrow">¶</a></p>
 </li>
-<li class="toc ulEmpty" id="section-toc.1-1.8.2.9.2.2">
-                    <p id="section-toc.1-1.8.2.9.2.2.1"><a href="#section-8.9.2" class="xref">8.9.2</a>.  <a href="#name-bls12-381-g2" class="xref">BLS12-381 G2</a><a href="#section-toc.1-1.8.2.9.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.8.2.7.2.2">
+                    <p id="section-toc.1-1.8.2.7.2.2.1"><a href="#section-8.7.2" class="xref">8.7.2</a>.  <a href="#name-bls12-381-g2" class="xref">BLS12-381 G2</a><a href="#section-toc.1-1.8.2.7.2.2.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.8.2.8">
+                <p id="section-toc.1-1.8.2.8.1"><a href="#section-8.8" class="xref">8.8</a>.  <a href="#name-defining-a-new-hash-to-curv" class="xref">Defining a new hash-to-curve suite</a><a href="#section-toc.1-1.8.2.8.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.8.2.9">
+                <p id="section-toc.1-1.8.2.9.1"><a href="#section-8.9" class="xref">8.9</a>.  <a href="#name-suite-id-naming-conventions" class="xref">Suite ID naming conventions</a><a href="#section-toc.1-1.8.2.9.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -1103,6 +1115,14 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-security-considerations-2" class="xref">Security Considerations</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-hash_to_field-security" class="xref">hash_to_field security</a><a href="#section-toc.1-1.10.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="xref">10.2</a>.  <a href="#name-expand_message_md-security" class="xref">expand_message_md security</a><a href="#section-toc.1-1.10.2.2.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.11">
             <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-acknowledgements" class="xref">Acknowledgements</a><a href="#section-toc.1-1.11.1" class="pilcrow">¶</a></p>
@@ -1228,7 +1248,7 @@ protocol.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This document aims to bridge this gap by providing a thorough set of
 recommended algorithms for a range of curve types.
 Each algorithm conforms to a common interface: it takes as input an arbitrary-length
-bit string and produces as output a point on an elliptic curve.
+byte string and produces as output a point on an elliptic curve.
 We provide implementation details for each algorithm, describe
 the security rationale behind each recommendation, and give guidance for
 elliptic curves that are not explicitly covered.<a href="#section-1-3" class="pilcrow">¶</a></p>
@@ -1248,10 +1268,10 @@ a hash-to-curve suite, which fixes all of the parameters listed in <a href="#sui
 plus a domain separation tag (<a href="#domain-separation" class="xref">Section 3.1</a>).
 Starting from working operations on the target elliptic curve and its base field,
 a hash-to-curve suite requires implementing the specified encoding function (<a href="#roadmap" class="xref">Section 3</a>),
-its constituent subroutines (<a href="#hashtobase" class="xref">Section 5</a>, <a href="#mappings" class="xref">Section 6</a>, <a href="#cofactor-clearing" class="xref">Section 7</a>), and
+its constituent subroutines (<a href="#hashtofield" class="xref">Section 5</a>, <a href="#mappings" class="xref">Section 6</a>, <a href="#cofactor-clearing" class="xref">Section 7</a>), and
 a few utility functions (<a href="#utility" class="xref">Section 4</a>).<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">Correspondingly, designers specifying a protocol that requires hashing to an elliptic curve
-should either choose an existing hash-to-curve suite or specify a new one (see <a href="#new-suite" class="xref">Section 8.1</a>).
+should either choose an existing hash-to-curve suite or specify a new one (see <a href="#new-suite" class="xref">Section 8.8</a>).
 In addition, designers should choose a domain separation tag following the guidelines in
 <a href="#domain-separation" class="xref">Section 3.1</a>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 </section>
@@ -1341,7 +1361,7 @@ algorithm presented, this document lists the relevant restrictions.<a href="#sec
             <tr>
               <td class="text-center" rowspan="1" colspan="1">G</td>
               <td class="text-left" rowspan="1" colspan="1">A subgroup of the elliptic curve.</td>
-              <td class="text-left" rowspan="1" colspan="1">Destination group to which bit strings are encoded.</td>
+              <td class="text-left" rowspan="1" colspan="1">Destination group to which byte strings are encoded.</td>
             </tr>
             <tr>
               <td class="text-center" rowspan="1" colspan="1">r</td>
@@ -1393,23 +1413,23 @@ document does not discuss inversion algorithms.<a href="#section-2.2.1-3" class=
           </h4>
 <p id="section-2.2.2-1">Encodings are closely related to mappings.
 Like a mapping, an encoding is a function that outputs a point on an elliptic curve.
-In contrast to a mapping, however, the input to an encoding is an arbitrary bit string.
+In contrast to a mapping, however, the input to an encoding is an arbitrary string.
 Encodings can be deterministic or probabilistic.
 Deterministic encodings are preferred for security, because probabilistic
-ones can leak information through side channels.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+ones are more likely to leak information through side channels.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2.2-2">This document constructs deterministic encodings by composing a hash function H
 with a deterministic mapping.
-In particular, H takes as input an arbitrary bit string and outputs an element of F.
+In particular, H takes as input an arbitrary string and outputs an element of F.
 The deterministic mapping takes that element as input and outputs a point on an
 elliptic curve E defined over F.
-Since the hash function H takes arbitrary bit strings as inputs, it cannot be
+Since the hash function H takes arbitrary strings as inputs, it cannot be
 injective: the set of inputs is larger than the set of outputs, so there must
 be distinct inputs that give the same output (i.e., there must be collisions).
 Thus, any encoding built from H is also not injective.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2.2-3">Like mappings, encodings may be invertible, meaning that there is an efficient
-algorithm that, for any point P output by the encoding, outputs a bit string s
+algorithm that, for any point P output by the encoding, outputs a string s
 such that applying the encoding to s outputs P.
-The hash function used by all encodings specified in this document (<a href="#hashtobase" class="xref">Section 5</a>)
+The hash function used by all encodings specified in this document (<a href="#hashtofield" class="xref">Section 5</a>)
 is not invertible; thus, the encodings are also not invertible.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1452,7 +1472,7 @@ The reverse operation, deserialization, converts a bit string to an elliptic cur
 For example, <span>[<a href="#SEC1" class="xref">SEC1</a>]</span> and <span>[<a href="#p1363a" class="xref">p1363a</a>]</span> give standard methods for serialization and deserialization.<a href="#section-2.2.4-1" class="pilcrow">¶</a></p>
 <p id="section-2.2.4-2">Deserialization is different from encoding in that only certain strings
 (namely, those output by the serialization procedure) can be deserialized.
-In contrast, this document is concerned with encodings from arbitrary bit strings
+In contrast, this document is concerned with encodings from arbitrary strings
 to elliptic curve points.
 This document does not cover serialization or deserialization.<a href="#section-2.2.4-2" class="pilcrow">¶</a></p>
 </section>
@@ -1497,13 +1517,13 @@ Thus, it is safe to treat RO1 and RO2 as independent oracles.<a href="#section-2
       <h2 id="name-roadmap">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-roadmap" class="section-name selfRef">Roadmap</a>
       </h2>
-<p id="section-3-1">This section presents a general framework for encoding bit strings to points
+<p id="section-3-1">This section presents a general framework for encoding byte strings to points
 on an elliptic curve. To construct these encodings, we rely on three basic
 functions:<a href="#section-3-1" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-3-2.1">The function hash_to_base, {0, 1}^* x {0, 1, 2} -&gt; F, hashes arbitrary-length bit strings
+<li id="section-3-2.1">The function hash_to_field, {0, 1}^* x {0, 1, 2} -&gt; F, hashes arbitrary-length byte strings
 to elements of a finite field; its implementation is defined in
-<a href="#hashtobase" class="xref">Section 5</a>.<a href="#section-3-2.1" class="pilcrow">¶</a>
+<a href="#hashtofield" class="xref">Section 5</a>.<a href="#section-3-2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-3-2.2">The function map_to_curve, F -&gt; E, calculates a point on the elliptic curve E
 from an element of the finite field F over which E is defined.
@@ -1518,7 +1538,7 @@ this operation.<a href="#section-3-2.3" class="pilcrow">¶</a>
 Although these functions have the same interface, the
 distributions of their outputs are different.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-3-4.1">Nonuniform encoding (encode_to_curve). This function encodes bit strings to points in G.
+<li id="section-3-4.1">Nonuniform encoding (encode_to_curve). This function encodes byte strings to points in G.
 The distribution of the output is not uniformly random in G.<a href="#section-3-4.1" class="pilcrow">¶</a>
 </li>
 </ul>
@@ -1526,18 +1546,18 @@ The distribution of the output is not uniformly random in G.<a href="#section-3-
 <pre>
 encode_to_curve(alpha)
 
-Input: alpha, an arbitrary-length bit string.
+Input: alpha, an arbitrary-length byte string.
 Output: P, a point in G.
 
 Steps:
-1. u = hash_to_base(alpha, 2)
-2. Q = map_to_curve(u)
+1. u = hash_to_field(alpha, 1)
+2. Q = map_to_curve(u[0])
 3. P = clear_cofactor(Q)
 4. return P
 </pre><a href="#section-3-5" class="pilcrow">¶</a>
 </div>
 <ul>
-<li id="section-3-6.1">Random oracle encoding (hash_to_curve). This function encodes bit strings to points in G.
+<li id="section-3-6.1">Random oracle encoding (hash_to_curve). This function encodes byte strings to points in G.
 This function is suitable for applications requiring a random oracle returning points in G,
 provided that map_to_curve is "well distributed" (<span>[<a href="#FFSTV13" class="xref">FFSTV13</a>]</span>, Def. 1).
 All of the map_to_curve functions defined in <a href="#mappings" class="xref">Section 6</a> meet this requirement.<a href="#section-3-6.1" class="pilcrow">¶</a>
@@ -1547,17 +1567,16 @@ All of the map_to_curve functions defined in <a href="#mappings" class="xref">Se
 <pre>
 hash_to_curve(alpha)
 
-Input: alpha, an arbitrary-length bit string.
+Input: alpha, an arbitrary-length byte string.
 Output: P, a point in G.
 
 Steps:
-1. u0 = hash_to_base(alpha, 0)
-2. u1 = hash_to_base(alpha, 1)
-3. Q0 = map_to_curve(u0)
-4. Q1 = map_to_curve(u1)
-5. R = Q0 + Q1              # Point addition
-6. P = clear_cofactor(R)
-7. return P
+1. u = hash_to_field(alpha, 2)
+2. Q0 = map_to_curve(u[0])
+3. Q1 = map_to_curve(u[1])
+4. R = Q0 + Q1              # Point addition
+5. P = clear_cofactor(R)
+6. return P
 </pre><a href="#section-3-7" class="pilcrow">¶</a>
 </div>
 <p id="section-3-8">Instances of these functions are given in <a href="#suites" class="xref">Section 8</a>, which defines a list of
@@ -1576,15 +1595,15 @@ either hash_to_curve or encode_to_curve MUST enforce domain separation
 between those hash functions.
 This requirement applies both in the case of multiple hashes to the same
 curve and in the case of multiple hashes to different curves.
-(This is because the hash_to_base primitive (<a href="#hashtobase" class="xref">Section 5</a>) requires
+(This is because the hash_to_field primitive (<a href="#hashtofield" class="xref">Section 5</a>) requires
 domain separation to guarantee independent outputs.)<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">Domain separation is enforced with a domain separation tag (DST),
-which is an octet string.
+which is a byte string.
 Care is required when selecting and using a domain separation tag.
 The following requirements apply:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal" id="section-3.1-4">
-          <li id="section-3.1-4.1">Tags MUST be supplied as the DST parameter to hash_to_base, as
-described in <a href="#hashtobase" class="xref">Section 5</a>.<a href="#section-3.1-4.1" class="pilcrow">¶</a>
+<ol start="1" type="1" class="normal type-1" id="section-3.1-4">
+          <li id="section-3.1-4.1">Tags MUST be supplied as the DST parameter to hash_to_field, as
+described in <a href="#hashtofield" class="xref">Section 5</a>.<a href="#section-3.1-4.1" class="pilcrow">¶</a>
 </li>
 <li id="section-3.1-4.2">Tags MUST begin with a fixed protocol identification string.
 This identification string should be unique to the protocol.<a href="#section-3.1-4.2" class="pilcrow">¶</a>
@@ -1675,10 +1694,10 @@ extended to all of F by fixing inv0(0) == 0.
 To implement inv0 in constant time, compute inv0(x) := x^(q - 2).
 Notice on input 0, the output is 0 as required.<a href="#section-4-5.3" class="pilcrow">¶</a>
 </li>
-<li id="section-4-5.4">I2OSP and OS2IP: These functions are used to convert an octet string to
+<li id="section-4-5.4">I2OSP and OS2IP: These functions are used to convert a byte string to
 and from a non-negative integer as described in <span>[<a href="#RFC8017" class="xref">RFC8017</a>]</span>.<a href="#section-4-5.4" class="pilcrow">¶</a>
 </li>
-<li id="section-4-5.5">a || b: denotes the concatenation of bit strings a and b.<a href="#section-4-5.5" class="pilcrow">¶</a>
+<li id="section-4-5.5">a || b: denotes the concatenation of strings a and b.<a href="#section-4-5.5" class="pilcrow">¶</a>
 </li>
 </ul>
 <div id="sgn0-variants">
@@ -1792,170 +1811,302 @@ Steps:
 </div>
 </section>
 </div>
-<div id="hashtobase">
+<div id="hashtofield">
 <section id="section-5">
       <h2 id="name-hashing-to-a-finite-field">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-hashing-to-a-finite-field" class="section-name selfRef">Hashing to a Finite Field</a>
       </h2>
-<p id="section-5-1">The hash_to_base function hashes a string msg of any length into an element of a
-field F. This function is parametrized by the field F (<a href="#bg-curves" class="xref">Section 2.1</a>) and by H,
-a cryptographic hash function that outputs b bits.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">Implementors MUST NOT use rejection sampling to generate a uniformly
+<p id="section-5-1">The hash_to_field function hashes a byte string msg of any length into
+one or more elements of a field F.
+This function works in two steps: it first hashes the input byte string
+to produce a pseudorandom byte string, and then interprets this pseudorandom
+byte string as one or more elements of F.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">For the first step, hash_to_field calls an auxiliary function
+expand_message.
+This document defines two variants of expand_message, one appropriate
+for hash functions like SHA-2 <span>[<a href="#FIPS180-4" class="xref">FIPS180-4</a>]</span> or SHA-3 <span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span>, and one
+appropriate for extensible-output functions like SHAKE-128 <span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span>.
+Security considerations for each expand_message variant are discussed
+below (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>, <a href="#hashtofield-expand-xof" class="xref">Section 5.3.2</a>).<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">Implementors MUST NOT use rejection sampling to generate a uniformly
 random element of F.
-The reason is that these procedures are difficult to implement in constant time,
-and later well-meaning "optimizations" may silently render an implementation
-non-constant-time.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<div id="hashtobase-sec">
+The reason is that rejection sampling procedures are difficult to implement
+in constant time, and later well-meaning "optimizations" may silently render
+an implementation non-constant-time.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<div id="hashtofield-sec">
 <section id="section-5.1">
         <h3 id="name-security-considerations">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
         </h3>
-<p id="section-5.1-1">For security, hash_to_base should be collision resistant and its output distribution
-should be uniform over F. To this end, hash_to_base requires
-a cryptographic hash function H which satisfies the following properties:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal" id="section-5.1-2">
-          <li id="section-5.1-2.1">The number of bits output by H should be b &gt;= 2 * k for sufficient collision
-resistance, where k is the target security level in bits. (This is needed for a
-birthday bound of approximately 2^(-k).)<a href="#section-5.1-2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-5.1-2.2">H is modeled as a random oracle, so care should be taken when instantiating it.
-Hash functions in the SHA-2 <span>[<a href="#FIPS180-4" class="xref">FIPS180-4</a>]</span> and SHA-3 <span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span> families are
-typical and RECOMMENDED choices.<a href="#section-5.1-2.2" class="pilcrow">¶</a>
-</li>
-</ol>
-<p id="section-5.1-3">For example, for 128-bit security, b &gt;= 256 bits; in this case, SHA256 would
-be an appropriate choice for H.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">Ensuring that the hash_to_base output is a uniform random element of F requires
-care, even when H is modeled as a random oracle. For example,
-if H is SHA256 and F is a field of characteristic p = 2^255 - 19, then the
-result of reducing H(msg) (a 256-bit integer) modulo p is slightly more likely
-to be in [0, 37] than if the value were selected uniformly at random.
-In this example the bias is negligible, but in general it can be significant.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
-<p id="section-5.1-5">To control bias, the input msg should be hashed to an integer comprising at
-least ceil(log2(p)) + k bits; reducing this integer modulo p gives bias at
-most 2^-k, which is a safe choice for a cryptosystem with k-bit security.
-To obtain such an integer, HKDF <span>[<a href="#RFC5869" class="xref">RFC5869</a>]</span> is used to expand the input
-msg to a L-byte string, where L = ceil((ceil(log2(p)) + k) / 8); this
-string is then interpreted as an integer via OS2IP <span>[<a href="#RFC8017" class="xref">RFC8017</a>]</span>. For example,
-for p a 255-bit prime and k = 128-bit security, L = ceil((255 + 128) / 8) = 48 bytes.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
-<p id="section-5.1-6">Finally, hash_to_base appends one zero byte to msg in the invocation of HKDF-Extract.
-This ensures that the use of HKDF in hash_to_base is indifferentiable
-from a random oracle (see <span>[<a href="#LBB19" class="xref">LBB19</a>]</span>, Lemma 8 and <span>[<a href="#DRST12" class="xref">DRST12</a>]</span>, Theorems 4.3 and 4.4).
-(In particular, this approach works because it ensures that the final byte of
-each HMAC invocation in HKDF-Extract and HKDF-Expand is distinct.)<a href="#section-5.1-6" class="pilcrow">¶</a></p>
-<p id="section-5.1-7"><a href="#domain-separation" class="xref">Section 3.1</a> discusses requirements for domain separation and
-recommendations for choosing domain separation tags. The hash_to_curve
-function takes such a tag as a parameter, DST; this is the REQUIRED
-method for applying domain separation.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
-<p id="section-5.1-8"><a href="#hashtobase-impl" class="xref">Section 5.3</a> details the hash_to_base procedure.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">The hash_to_field function is designed to be indifferentiable from a
+random oracle <span>[<a href="#MRH04" class="xref">MRH04</a>]</span> when expand_message (<a href="#hashtofield-expand" class="xref">Section 5.3</a>)
+is modeled as a random oracle (see <a href="#security-considerations-hash-to-field" class="xref">Section 10.1</a>).
+Ensuring indifferentiability requires care; to see why, consider a prime
+p that is close to 3/4 * 2^256.
+Reducing a random 256-bit integer modulo this p yields a value that is in
+the range [0, p / 3] with probability roughly 1/2, meaning that this value
+is statistically far from uniform in [0, p - 1].<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">To control bias, hash_to_field instead uses pseudorandom integers whose
+length is at least ceil(log2(p)) + k bits.
+Reducing such integers mod p gives bias at most 2^-k for any p; this bias
+is appropriate when targeting k-bit security.
+To obtain such integers, hash_to_field uses expand_message to obtain
+L pseudorandom bytes, where L = ceil((ceil(log2(p)) + k) / 8); this
+byte string is then interpreted as an integer via OS2IP <span>[<a href="#RFC8017" class="xref">RFC8017</a>]</span>.
+For example, for a 255-bit prime p, and k = 128-bit security,
+L = ceil((255 + 128) / 8) = 48 bytes.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="hashtobase-perf">
+<div id="hashtofield-impl">
 <section id="section-5.2">
-        <h3 id="name-performance-considerations">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-performance-considerations" class="section-name selfRef">Performance considerations</a>
+        <h3 id="name-hash_to_field-implementatio">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-hash_to_field-implementatio" class="section-name selfRef">hash_to_field implementation</a>
         </h3>
-<p id="section-5.2-1">The hash_to_base function uses HKDF-Extract to combine the
-input msg and domain separation tag DST into a short digest, which is then
-passed to HKDF-Expand <span>[<a href="#RFC5869" class="xref">RFC5869</a>]</span>.
-For short messages, this entails at most two extra invocations of H, which
-is a negligible overhead in the context of hashing to elliptic curves.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">A related issue is that the random oracle construction described in <a href="#roadmap" class="xref">Section 3</a>
-requires evaluating two independent hash functions H0 and H1 on msg.
-One way to instantiate independent hashes is to append a counter to
-the value being hashed, e.g., H(msg || 0) and H(msg || 1).
-If msg is long, however, this is either inefficient (because it entails hashing
-msg twice) or requires non-black-box use of H (e.g., partial evaluation).<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">To sidestep both of these issues, hash_to_base takes a second argument, ctr,
-which it passes to HKDF-Expand.
-This means that two invocations of hash_to_base on the same msg with different
-ctr values both start with identical invocations of HKDF-Extract.
-This is an improvement because it allows sharing one evaluation of HKDF-Extract
-among multiple invocations of hash_to_base, i.e., by factoring out the common
-computation.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="hashtobase-impl">
-<section id="section-5.3">
-        <h3 id="name-implementation">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-implementation" class="section-name selfRef">Implementation</a>
-        </h3>
-<p id="section-5.3-1">The following procedure implements hash_to_base.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-5.3-2">
+<p id="section-5.2-1">The following procedure implements hash_to_field.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">The expand_message parameter to this function MUST conform to the requirements
+given below (<a href="#hashtofield-expand" class="xref">Section 5.3</a>).<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3"><a href="#domain-separation" class="xref">Section 3.1</a> discusses requirements for domain separation and
+recommendations for choosing DST, the domain separation tag.
+This is the REQUIRED method for applying domain separation.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-5.2-4">
 <pre>
-hash_to_base(msg, ctr)
+hash_to_field(msg, count)
 
 Parameters:
 - DST, a domain separation tag (see discussion above).
-- H, a cryptographic hash function.
 - F, a finite field of characteristic p and order q = p^m.
 - p, the characteristic of F (see immediately above).
 - m, the extension degree of F, m &gt;= 1 (see immediately above).
 - L = ceil((ceil(log2(p)) + k) / 8), where k is the security
   parameter of the cryptosystem (e.g., k = 128).
-- HKDF-Extract and HKDF-Expand are as defined in RFC5869,
-  instantiated with the hash function H.
+- expand_message, a function that expands a byte string and
+  domain separation tag into a pseudorandom byte string
+  (see discussion above).
 
 Inputs:
-- msg is the message to hash.
-- ctr is 0, 1, or 2.
-  This is used to efficiently create independent
-  instances of hash_to_base (see discussion above).
+- msg is a byte string containing the message to hash.
+- count is the number of elements of F to output.
 
-Output:
-- u, an element in F.
+Outputs:
+- (u_0, ..., u_(count - 1)), a list of field elements.
+
+Notation:
+- For a byte string str, let str[a : b] be the (b - a)
+  bytes starting at str[a]. For example, "ABC"[0 : 2] == "AB".
 
 Steps:
-1. msg_prime = HKDF-Extract(DST, msg || I2OSP(0, 1))
-2. info_pfx = "H2C" || I2OSP(ctr, 1)   # "H2C" is a 3-byte ASCII string
-3. for i in (1, ..., m):
-4.   info = info_pfx || I2OSP(i, 1)
-5.   tv = HKDF-Expand(msg_prime, info, L)
-6.   e_i = OS2IP(tv) mod p
-7. u = (e_1, ..., e_m)
-8. return u
-</pre><a href="#section-5.3-2" class="pilcrow">¶</a>
+1. len_in_bytes = count * m * L
+2. pseudo_random_bytes = expand_message(msg, DST, len_in_bytes)
+3. for i in (0, ..., count - 1):
+4.   for j in (0, ..., m - 1):
+5.     elm_offset = L * (j + i * m)
+6.     tv = pseudo_random_bytes[elm_offset : (elm_offset + L)]
+7.     e_j = OS2IP(tv) mod p
+8.   u_i = (e_0, ..., e_(m - 1))
+9. return (u_0, ..., u_(count - 1))
+</pre><a href="#section-5.2-4" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
-<div id="hashtobase-alt">
-<section id="section-5.4">
-        <h3 id="name-alternative-hash_to_base-fu">
-<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-alternative-hash_to_base-fu" class="section-name selfRef">Alternative hash_to_base functions</a>
+<div id="hashtofield-expand">
+<section id="section-5.3">
+        <h3 id="name-expand_message">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-expand_message" class="section-name selfRef">expand_message</a>
         </h3>
-<p id="section-5.4-1">The hash_to_base function is suitable for use with a wide range of hash functions,
-including SHA-2 <span>[<a href="#FIPS180-4" class="xref">FIPS180-4</a>]</span>, SHA-3 <span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span>, BLAKE2 <span>[<a href="#RFC7693" class="xref">RFC7693</a>]</span>, and others.
-In some cases, however, implementors may wish to replace the HKDF-based function
-defined in this section with one built on a different pseudorandom function.
-This section briefly describes the REQUIRED way of doing so.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">The security considerations of <a href="#hashtobase-sec" class="xref">Section 5.1</a> continue to apply.
-In particular, an alternative hash_to_base function:<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.3-1">expand_message is a function that generates a pseudorandom byte string.
+It takes three arguments:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-5.4-3.1">MUST give collision resistance commensurate with the security level of the target elliptic curve.<a href="#section-5.4-3.1" class="pilcrow">¶</a>
+<li id="section-5.3-2.1">msg, a byte string containing the message to hash,<a href="#section-5.3-2.1" class="pilcrow">¶</a>
 </li>
-<li id="section-5.4-3.2">MUST be built on a pseudorandom function that is designed for use in
-applications requiring cryptographic randomness.<a href="#section-5.4-3.2" class="pilcrow">¶</a>
+<li id="section-5.3-2.2">DST, a byte string that acts as a domain separation tag, and<a href="#section-5.3-2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-5.4-3.3">MUST NOT use rejection sampling.<a href="#section-5.4-3.3" class="pilcrow">¶</a>
-</li>
-<li id="section-5.4-3.4">MUST output an element of F whose statistical distance from uniform is commensurate
-with the security level of the target elliptic curve.
-It is RECOMMENDED to follow the guidelines for controlling bias in <a href="#hashtobase-sec" class="xref">Section 5.1</a>.<a href="#section-5.4-3.4" class="pilcrow">¶</a>
-</li>
-<li id="section-5.4-3.5">MUST give independent output values for distinct (msg, ctr) inputs.<a href="#section-5.4-3.5" class="pilcrow">¶</a>
-</li>
-<li id="section-5.4-3.6">MUST support domain separation via a supplied domain separation tag (DST).
-Care is required when implementing domain separation: this document
-assumes that instantiating hash_to_base with distinct DSTs yields
-independent hash functions.<a href="#section-5.4-3.6" class="pilcrow">¶</a>
+<li id="section-5.3-2.3">len_in_bytes, the number of bytes to be generated.<a href="#section-5.3-2.3" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-5.4-4">The efficiency considerations of <a href="#hashtobase-perf" class="xref">Section 5.2</a> should also be followed.
-In particular, it SHOULD be possible to hash one msg with multiple ctr values
-without requiring multiple passes over msg.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
-<p id="section-5.4-5">Finally, the Suite ID value MUST be modified to indicate that an alternative
-hash_to_base function is being used.
-<a href="#suiteIDformat" class="xref">Section 8.2</a> gives details.<a href="#section-5.4-5" class="pilcrow">¶</a></p>
+<p id="section-5.3-3">This document defines two variants of expand_message:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-5.3-4.1">expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>) is appropriate for use
+with a wide range of hash functions, including SHA-2 <span>[<a href="#FIPS180-4" class="xref">FIPS180-4</a>]</span>, SHA-3
+<span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span>, BLAKE2 <span>[<a href="#RFC7693" class="xref">RFC7693</a>]</span>, and others.<a href="#section-5.3-4.1" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3-4.2">expand_message_xof (<a href="#hashtofield-expand-xof" class="xref">Section 5.3.2</a>) is appropriate for use
+with extensible-output functions (XOFs) including functions in the SHAKE
+<span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span> or BLAKE2X <span>[<a href="#BLAKE2X" class="xref">BLAKE2X</a>]</span> families.<a href="#section-5.3-4.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-5.3-5">These two variants should suffice for the vast majority of use cases, but other
+variants are possible; <a href="#hashtofield-expand-other" class="xref">Section 5.3.3</a> discusses requirements.<a href="#section-5.3-5" class="pilcrow">¶</a></p>
+<p id="section-5.3-6">The expand_message variants defined in this section accept domain separation
+tags of at most 255 bytes.
+If a domain separation tag longer than 255 bytes must be used (e.g., because
+of requirements imposed by an invoking protocol), implementors MUST compute
+a short domain separation tag by hashing, as follows:<a href="#section-5.3-6" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-5.3-7">
+<pre>
+DST = H("H2C-OVERSIZE-DST-" || a_very_long_DST)
+</pre><a href="#section-5.3-7" class="pilcrow">¶</a>
+</div>
+<p id="section-5.3-8">Here, a_very_long_DST is the DST whose length is greater than 255 bytes,
+"H2C-OVERSIZE-DST-" is an ASCII string literal, and the hash function H MUST
+meet the criteria given in <a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>.<a href="#section-5.3-8" class="pilcrow">¶</a></p>
+<div id="hashtofield-expand-md">
+<section id="section-5.3.1">
+          <h4 id="name-expand_message_md">
+<a href="#section-5.3.1" class="section-number selfRef">5.3.1. </a><a href="#name-expand_message_md" class="section-name selfRef">expand_message_md</a>
+          </h4>
+<p id="section-5.3.1-1">The expand_message_md function produces a pseudorandom byte string using
+a cryptographic hash function H that outputs b bits.
+For security, H must meet the following requirements:<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-5.3.1-2.1">The number of bits output by H MUST be b &gt;= 2 * k, for k the target
+security level in bits. This ensures k-bit collision resistance.<a href="#section-5.3.1-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.1-2.2">H MAY be a Merkle-Damgaard hash function like SHA-2.
+In this case, security holds when the underlying compression function is
+modeled as a random oracle <span>[<a href="#CDMP05" class="xref">CDMP05</a>]</span>.
+(See <a href="#security-considerations-expand-md" class="xref">Section 10.2</a> for discussion.)<a href="#section-5.3.1-2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.1-2.3">H MAY be a sponge-based hash function like SHA-3 or BLAKE2.
+In this case, security holds when the inner function is modeled as a
+random transformation or as a random permutation <span>[<a href="#BDPV08" class="xref">BDPV08</a>]</span>.<a href="#section-5.3.1-2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.1-2.4">Otherwise, H MUST be a hash function that has been proved indifferentiable
+from a random oracle <span>[<a href="#MRH04" class="xref">MRH04</a>]</span> under a reasonable cryptographic assumption.<a href="#section-5.3.1-2.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-5.3.1-3">SHA-2 <span>[<a href="#FIPS180-4" class="xref">FIPS180-4</a>]</span> and SHA-3 <span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span> are typical and RECOMMENDED choices.
+As an example, for the 128-bit security level, b &gt;= 256 bits and either SHA-256 or
+SHA3-256 would be an appropriate choice.<a href="#section-5.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.3.1-4">The following procedure implements expand_message_md.<a href="#section-5.3.1-4" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-5.3.1-5">
+<pre>
+expand_message_md(msg, DST, len_in_bytes)
+
+Parameters:
+- H, a hash function (see requirements above).
+- b_in_bytes, ceil(b / 8) for b the output size of H in bits.
+  For example, for b = 256, b_in_bytes = 32.
+- k_in_bytes, ceil(k / 8) for k the security parameter.
+  For example, for k = 128, k_in_bytes = 16.
+
+Input:
+- msg, a byte string.
+- DST, a byte string of at most 255 bytes.
+- len_in_bytes, the length of the requested output in bytes.
+
+Output:
+- pseudo_random_bytes, a byte string
+
+Notation:
+- For a byte string str, let str[a : b] be the (b - a)
+  bytes starting at str[a]. For example, "ABC"[0 : 2] == "AB".
+- For a byte string str, let len(str) be the length
+  of str in bytes. For example, len("ABC") == 3.
+
+Steps:
+1. ell = ceil((len_in_bytes + k_in_bytes) / b_in_bytes)
+2. ABORT if ell &gt; 256
+3. DST_prime = I2OSP(len(DST), 1) || DST
+4. b_0 = H(DST_prime || I2OSP(0, 1) || I2OSP(len_in_bytes, 2) || msg)
+5. for i in (1, ..., ell - 1):
+6.   b_i = H(DST_prime || I2OSP(i, 1) || b_(i - 1))
+7. b_0_chopped = b_0[0 : (b_in_bytes - k_in_bytes)]
+8. pseudo_random_bytes = b_0_chopped || b_1 || ... || b_(ell - 1)
+9. return pseudo_random_bytes[0 : len_in_bytes]
+</pre><a href="#section-5.3.1-5" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="hashtofield-expand-xof">
+<section id="section-5.3.2">
+          <h4 id="name-expand_message_xof">
+<a href="#section-5.3.2" class="section-number selfRef">5.3.2. </a><a href="#name-expand_message_xof" class="section-name selfRef">expand_message_xof</a>
+          </h4>
+<p id="section-5.3.2-1">The expand_message_xof function produces a pseudorandom byte string
+using an extensible-output function (XOF) H.
+For security, H must meet the following criteria:<a href="#section-5.3.2-1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-5.3.2-2.1">The collision resistance of H MUST be at least k bits.<a href="#section-5.3.2-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.2-2.2">H MUST be an XOF that has been proved indifferentiable from a random oracle
+under a reasonable cryptographic assumption.<a href="#section-5.3.2-2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-5.3.2-3">The SHAKE <span>[<a href="#FIPS202" class="xref">FIPS202</a>]</span> XOF family is a typical and RECOMMENDED choice.
+As an example, for 128-bit security, SHAKE-128 would be an appropriate choice.<a href="#section-5.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.3.2-4">The following procedure implements expand_message_md.<a href="#section-5.3.2-4" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-5.3.2-5">
+<pre>
+expand_message_xof(msg, DST, len_in_bytes)
+
+Parameters:
+- H, an extensible-output function.
+  H(m, d) hashes message m and returns d bytes.
+
+Input:
+- msg, a byte string.
+- DST, a byte string of at most 255 bytes.
+- len_in_bytes, the length of the requested output in bytes.
+
+Output:
+- pseudo_random_bytes, a byte string
+
+Notation:
+- For a byte string str, let len(str) be the length
+  of str in bytes. For example, len("ABC") == 3.
+
+Steps:
+1. DST_prime = I2OSP(len(DST), 1) || DST
+2. msg_prime = DST_prime || I2OSP(len_in_bytes, 2) || msg
+3. pseudo_random_bytes = H(msg_prime, len_in_bytes)
+4. return pseudo_random_bytes
+</pre><a href="#section-5.3.2-5" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="hashtofield-expand-other">
+<section id="section-5.3.3">
+          <h4 id="name-defining-other-expand_messa">
+<a href="#section-5.3.3" class="section-number selfRef">5.3.3. </a><a href="#name-defining-other-expand_messa" class="section-name selfRef">Defining other expand_message variants</a>
+          </h4>
+<p id="section-5.3.3-1">When defining a new expand_message variant, the most important consideration
+is that hash_to_field models expand_message as a random oracle.
+Thus, implementors SHOULD prove indifferentiability from a random oracle
+under an appropriate assumption about the underlying cryptographic primitives.<a href="#section-5.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3.3-2">In addition, expand_message variants:<a href="#section-5.3.3-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-5.3.3-3.1">MUST give collision resistance commensurate with the security level of
+the target elliptic curve.<a href="#section-5.3.3-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.3-3.2">MUST be built on primitives designed for use in applications requiring
+cryptographic randomness. As examples, a secure stream cipher is an appropriate
+primitive, whereas a Mersenne twister pseudorandom number generator is not.<a href="#section-5.3.3-3.2" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.3-3.3">MUST NOT use any form of rejection sampling.<a href="#section-5.3.3-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.3-3.4">MUST give independent values for distinct (msg, DST, length) inputs.
+Meeting this requirement is slightly subtle.
+As one example, simply hashing the concatenation DST || msg does not work,
+because in this case distinct (DST, msg) pairs whose concatenations are equal
+will return the same output (e.g., ("AB", "CDEF") and ("ABC", "DEF")).
+The variants defined in this document handle this issue by concatenating
+a prefix-free encoding of DST with msg.<a href="#section-5.3.3-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.3-3.5">MUST use the domain separation tag DST to ensure that invocations of
+cryptographic primitives inside of expand_message are domain separated
+from all invocations outside of expand_message.
+For example, if the expand_message variant uses a hash function H, (an encoding of) DST
+MUST be either prepended or appended to the input to each invocation of H
+(for consistency, prepending is the RECOMMENDED approach).<a href="#section-5.3.3-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-5.3.3-3.6">SHOULD read msg exactly once, for efficiency when msg is long.<a href="#section-5.3.3-3.6" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-5.3.3-4">In addition, an expand_message variant MUST specify a unique EXP_TAG
+that identifies that variant in a Suite ID.
+See <a href="#suiteIDformat" class="xref">Section 8.9</a> for more information.<a href="#section-5.3.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -2029,7 +2180,7 @@ used instead.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 explicitly stated otherwise.<a href="#section-6.3-2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-6.3-2.2">u: the input to the mapping function.
-This is an element of F produced by the hash_to_base function.<a href="#section-6.3-2.2" class="pilcrow">¶</a>
+This is an element of F produced by the hash_to_field function.<a href="#section-6.3-2.2" class="pilcrow">¶</a>
 </li>
 <li id="section-6.3-2.3">(x, y), (X, Y), (v, w): the affine coordinates of the point output by the mapping.
 Indexed variables (e.g., x1, y2, ...) are used for candidate values.<a href="#section-6.3-2.3" class="pilcrow">¶</a>
@@ -2109,7 +2260,7 @@ using the corresponding rational map.<a href="#section-6.6.1-2" class="pilcrow">
 <li id="section-6.6.1-5.2">
               <p id="section-6.6.1-5.2.1">Z, an element of F meeting the below criteria.
 <a href="#svdw-z-code" class="xref">Appendix E.1</a> gives a Sage <span>[<a href="#SAGE" class="xref">SAGE</a>]</span> script that outputs the RECOMMENDED Z.<a href="#section-6.6.1-5.2.1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal" id="section-6.6.1-5.2.2">
+<ol start="1" type="1" class="normal type-1" id="section-6.6.1-5.2.2">
                 <li id="section-6.6.1-5.2.2.1">g(Z) != 0 in F.<a href="#section-6.6.1-5.2.2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-6.6.1-5.2.2.2">-(3 * Z^2 + 4 * A) / (4 * g(Z)) != 0 in F.<a href="#section-6.6.1-5.2.2.2" class="pilcrow">¶</a>
@@ -2149,8 +2300,8 @@ to invert this product are exception free.<a href="#section-6.6.1-7" class="pilc
 </div>
 <div id="implementation">
 <section id="section-6.6.1.1">
-            <h5 id="name-implementation-2">
-<a href="#section-6.6.1.1" class="section-number selfRef">6.6.1.1. </a><a href="#name-implementation-2" class="section-name selfRef">Implementation</a>
+            <h5 id="name-implementation">
+<a href="#section-6.6.1.1" class="section-number selfRef">6.6.1.1. </a><a href="#name-implementation" class="section-name selfRef">Implementation</a>
             </h5>
 <p id="section-6.6.1.1-1">The following procedure implements the Shallue and van de Woestijne method in a
 straight-line fashion.<a href="#section-6.6.1.1-1" class="pilcrow">¶</a></p>
@@ -2227,7 +2378,7 @@ al. <span>[<a href="#BCIMRT10" class="xref">BCIMRT10</a>]</span>, which they cal
               <p id="section-6.6.2-4.2.1">Z, an element of F meeting the below criteria.
 <a href="#sswu-z-code" class="xref">Appendix E.2</a> gives a Sage <span>[<a href="#SAGE" class="xref">SAGE</a>]</span> script that outputs the RECOMMENDED Z.
 The criteria are:<a href="#section-6.6.2-4.2.1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal" id="section-6.6.2-4.2.2">
+<ol start="1" type="1" class="normal type-1" id="section-6.6.2-4.2.2">
                 <li id="section-6.6.2-4.2.2.1">Z is non-square in F,<a href="#section-6.6.2-4.2.2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-6.6.2-4.2.2.2">Z != -1 in F,<a href="#section-6.6.2-4.2.2.2" class="pilcrow">¶</a>
@@ -2263,8 +2414,8 @@ is square by the condition on Z given above.<a href="#section-6.6.2-6" class="pi
 </div>
 <div id="implementation-1">
 <section id="section-6.6.2.1">
-            <h5 id="name-implementation-3">
-<a href="#section-6.6.2.1" class="section-number selfRef">6.6.2.1. </a><a href="#name-implementation-3" class="section-name selfRef">Implementation</a>
+            <h5 id="name-implementation-2">
+<a href="#section-6.6.2.1" class="section-number selfRef">6.6.2.1. </a><a href="#name-implementation-2" class="section-name selfRef">Implementation</a>
             </h5>
 <p id="section-6.6.2.1-1">The following procedure implements the simplified SWU mapping in a straight-line fashion.
 <a href="#samplecode" class="xref">Appendix D</a> gives an optimized straight-line procedure for P-256 <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.
@@ -2445,8 +2596,8 @@ Note that this can only happen when q = 3 (mod 4).<a href="#section-6.7.1-5" cla
 </div>
 <div id="implementation-2">
 <section id="section-6.7.1.1">
-            <h5 id="name-implementation-4">
-<a href="#section-6.7.1.1" class="section-number selfRef">6.7.1.1. </a><a href="#name-implementation-4" class="section-name selfRef">Implementation</a>
+            <h5 id="name-implementation-3">
+<a href="#section-6.7.1.1" class="section-number selfRef">6.7.1.1. </a><a href="#name-implementation-3" class="section-name selfRef">Implementation</a>
             </h5>
 <p id="section-6.7.1.1-1">The following procedure implements Elligator 2 in a straight-line fashion.
 <a href="#samplecode" class="xref">Appendix D</a> gives optimized straight-line procedures for curve25519 and
@@ -2701,40 +2852,45 @@ generally give the same result as the fast method, and SHOULD NOT be used.<a hre
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-suites-for-hashing" class="section-name selfRef">Suites for Hashing</a>
       </h2>
 <p id="section-8-1">This section lists recommended suites for hashing to standard elliptic curves.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">A suite fully specifies the procedure for hashing bit strings to
+<p id="section-8-2">A suite fully specifies the procedure for hashing byte strings to
 points on a specific elliptic curve group.
 Each suite comprises the following parameters:<a href="#section-8-2" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-8-3.1">Suite ID, a short name used to refer to a given suite.
-The ID also indicates whether a suite is a random oracle or nonuniform
-encoding (<a href="#term-rom" class="xref">Section 2.2.3</a>, <a href="#roadmap" class="xref">Section 3</a>).
-<a href="#suiteIDformat" class="xref">Section 8.2</a> discusses the naming conventions for suite IDs.<a href="#section-8-3.1" class="pilcrow">¶</a>
+<a href="#suiteIDformat" class="xref">Section 8.9</a> discusses the naming conventions for suite IDs.<a href="#section-8-3.1" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.2">E, the target elliptic curve over a field F.<a href="#section-8-3.2" class="pilcrow">¶</a>
+<li id="section-8-3.2">encoding type, either random oracle (hash_to_curve) or nonuniform (encode_to_curve).
+See <a href="#roadmap" class="xref">Section 3</a> for definitions of these encoding types.<a href="#section-8-3.2" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.3">p, the characteristic of the field F.<a href="#section-8-3.3" class="pilcrow">¶</a>
+<li id="section-8-3.3">E, the target elliptic curve over a field F.<a href="#section-8-3.3" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.4">m, the extension degree of the field F.<a href="#section-8-3.4" class="pilcrow">¶</a>
+<li id="section-8-3.4">p, the characteristic of the field F.<a href="#section-8-3.4" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.5">sgn0, one of the variants specified in <a href="#sgn0-variants" class="xref">Section 4.1</a>.<a href="#section-8-3.5" class="pilcrow">¶</a>
+<li id="section-8-3.5">m, the extension degree of the field F.<a href="#section-8-3.5" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.6">H, the hash function used by hash_to_base (<a href="#hashtobase-sec" class="xref">Section 5.1</a>).<a href="#section-8-3.6" class="pilcrow">¶</a>
+<li id="section-8-3.6">k, the target security level of the suite in bits.<a href="#section-8-3.6" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.7">L, the length of HKDF-Expand output in hash_to_base (<a href="#hashtobase-sec" class="xref">Section 5.1</a>).<a href="#section-8-3.7" class="pilcrow">¶</a>
+<li id="section-8-3.7">sgn0, one of the variants specified in <a href="#sgn0-variants" class="xref">Section 4.1</a>.<a href="#section-8-3.7" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.8">f, a mapping function from <a href="#mappings" class="xref">Section 6</a>.<a href="#section-8-3.8" class="pilcrow">¶</a>
+<li id="section-8-3.8">L, the length parameter for hash_to_field (<a href="#hashtofield-sec" class="xref">Section 5.1</a>).<a href="#section-8-3.8" class="pilcrow">¶</a>
 </li>
-<li id="section-8-3.9">h_eff, the scalar parameter for clear_cofactor (<a href="#cofactor-clearing" class="xref">Section 7</a>).<a href="#section-8-3.9" class="pilcrow">¶</a>
+<li id="section-8-3.9">expand_message, one of the variants specified in <a href="#hashtofield-expand" class="xref">Section 5.3</a>
+plus any parameters required for the specified variant (for example, H,
+the underlying hash function).<a href="#section-8-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8-3.10">f, a mapping function from <a href="#mappings" class="xref">Section 6</a>.<a href="#section-8-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8-3.11">h_eff, the scalar parameter for clear_cofactor (<a href="#cofactor-clearing" class="xref">Section 7</a>).<a href="#section-8-3.11" class="pilcrow">¶</a>
 </li>
 </ul>
 <p id="section-8-4">In addition to the above parameters, the mapping f may require
 additional parameters Z, M, rational_map, E', and/or iso_map.
 These MUST be specified when applicable.<a href="#section-8-4" class="pilcrow">¶</a></p>
 <p id="section-8-5">All applications MUST choose a domain separation tag (DST)
-for use with hash_to_base (<a href="#hashtobase" class="xref">Section 5</a>), in accordance with the
-guidelines of <a href="#domain-separation" class="xref">Section 3.1</a>.
-In addition, applications whose security requires a random oracle MUST use
-a suite specifying hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>); see <a href="#suiteIDformat" class="xref">Section 8.2</a>.<a href="#section-8-5" class="pilcrow">¶</a></p>
+in accordance with the guidelines in <a href="#domain-separation" class="xref">Section 3.1</a>.
+In addition, applications whose security requires a random oracle
+that returns points on the target curve MUST use a suite whose
+encoding type is hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>); see <a href="#suiteIDformat" class="xref">Section 8.9</a>.<a href="#section-8-5" class="pilcrow">¶</a></p>
 <p id="section-8-6">The below table lists the curves for which suites are defined and
 the subsection that gives the corresponding parameters.<a href="#section-8-6" class="pilcrow">¶</a></p>
 <table class="center" id="table-2">
@@ -2749,589 +2905,691 @@ the subsection that gives the corresponding parameters.<a href="#section-8-6" cl
           <tr>
             <td class="text-left" rowspan="1" colspan="1">NIST P-256</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-p256" class="xref">Section 8.3</a>
+              <a href="#suites-p256" class="xref">Section 8.1</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">NIST P-384</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-p384" class="xref">Section 8.4</a>
+              <a href="#suites-p384" class="xref">Section 8.2</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">NIST P-521</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-p521" class="xref">Section 8.5</a>
+              <a href="#suites-p521" class="xref">Section 8.3</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">curve25519 / edwards25519</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-25519" class="xref">Section 8.6</a>
+              <a href="#suites-25519" class="xref">Section 8.4</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">curve448 / edwards448</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-448" class="xref">Section 8.7</a>
+              <a href="#suites-448" class="xref">Section 8.5</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">secp256k1</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-secp256k1" class="xref">Section 8.8</a>
+              <a href="#suites-secp256k1" class="xref">Section 8.6</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">BLS12-381</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#suites-bls12381" class="xref">Section 8.9</a>
+              <a href="#suites-bls12381" class="xref">Section 8.7</a>
 </td>
           </tr>
         </tbody>
       </table>
-<div id="new-suite">
+<div id="suites-p256">
 <section id="section-8.1">
-        <h3 id="name-defining-a-new-hash-to-curv">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-defining-a-new-hash-to-curv" class="section-name selfRef">Defining a new hash-to-curve suite</a>
+        <h3 id="name-suites-for-nist-p-256">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-suites-for-nist-p-256" class="section-name selfRef">Suites for NIST P-256</a>
         </h3>
-<p id="section-8.1-1">The RECOMMENDED way to define a new hash-to-curve suite is:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal" id="section-8.1-2">
-          <li id="section-8.1-2.1">E, F, p, and m are determined by the elliptic curve and the field.<a href="#section-8.1-2.1" class="pilcrow">¶</a>
+<p id="section-8.1-1">This section defines ciphersuites for the NIST P-256 elliptic curve <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">P256-XMD:SHA.256-SSWU-RO- is defined as follows:<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.1-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.1-3.1" class="pilcrow">¶</a>
 </li>
-<li id="section-8.1-2.2">Choose a sgn0 variant following the guidelines in <a href="#sgn0-variants" class="xref">Section 4.1</a>.<a href="#section-8.1-2.2" class="pilcrow">¶</a>
+<li id="section-8.1-3.2">
+            <p id="section-8.1-3.2.1">E: y^2 = x^3 + A * x + B, where<a href="#section-8.1-3.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.1-3.2.2.1">A = -3<a href="#section-8.1-3.2.2.1" class="pilcrow">¶</a>
 </li>
-<li id="section-8.1-2.3">Choose a hash function H meeting the requirements in <a href="#hashtobase-sec" class="xref">Section 5.1</a>,
-and compute L as described in that section.<a href="#section-8.1-2.3" class="pilcrow">¶</a>
+<li id="section-8.1-3.2.2.2">B = 0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b<a href="#section-8.1-3.2.2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-8.1-2.4">Choose a mapping following the guidelines in <a href="#choosing-mapping" class="xref">Section 6.1</a>,
-and select any required parameters for that mapping.<a href="#section-8.1-2.4" class="pilcrow">¶</a>
+</ul>
 </li>
-<li id="section-8.1-2.5">Choose h_eff to be either the cofactor of E or, if a fast cofactor
+<li id="section-8.1-3.3">p: 2^256 - 2^224 + 2^192 + 2^96 - 1<a href="#section-8.1-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.4">m: 1<a href="#section-8.1-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.5">k: 128<a href="#section-8.1-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.6">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.1-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.1-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.8">H: SHA-256<a href="#section-8.1-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.9">L: 48<a href="#section-8.1-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.10">f: Simplified SWU method, <a href="#simple-swu" class="xref">Section 6.6.2</a><a href="#section-8.1-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.11">Z: -10<a href="#section-8.1-3.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-3.12">h_eff: 1<a href="#section-8.1-3.12" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.1-4">P256-XMD:SHA.256-SVDW-RO- is identical to P256-XMD:SHA.256-SSWU-RO-,
+except for the following parameters:<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.1-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.1-5.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.1-5.2">Z: -3<a href="#section-8.1-5.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.1-6">P256-XMD:SHA.256-SSWU-NU- is identical to P256-XMD:SHA.256-SSWU-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.1-6" class="pilcrow">¶</a></p>
+<p id="section-8.1-7">P256-XMD:SHA.256-SVDW-NU- is identical to P256-XMD:SHA.256-SVDW-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.1-7" class="pilcrow">¶</a></p>
+<p id="section-8.1-8">An optimized example implementation of the Simplified SWU mapping
+to P-256 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-p384">
+<section id="section-8.2">
+        <h3 id="name-suites-for-nist-p-384">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-suites-for-nist-p-384" class="section-name selfRef">Suites for NIST P-384</a>
+        </h3>
+<p id="section-8.2-1">This section defines ciphersuites for the NIST P-384 elliptic curve <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">P384-XMD:SHA.512-SSWU-RO- is defined as follows:<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.2-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.2-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.2">
+            <p id="section-8.2-3.2.1">E: y^2 = x^3 + A * x + B, where<a href="#section-8.2-3.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.2-3.2.2.1">A = -3<a href="#section-8.2-3.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.2.2.2">B = 0xb3312fa7e23ee7e4988e056be3f82d19181d9c6efe8141120314088f5013875ac656398d8a2ed19d2a85c8edd3ec2aef<a href="#section-8.2-3.2.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.2-3.3">p: 2^384 - 2^128 - 2^96 + 2^32 - 1<a href="#section-8.2-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.4">m: 1<a href="#section-8.2-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.5">k: 192<a href="#section-8.2-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.6">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.2-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.2-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.8">H: SHA-512<a href="#section-8.2-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.9">L: 72<a href="#section-8.2-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.10">f: Simplified SWU method, <a href="#simple-swu" class="xref">Section 6.6.2</a><a href="#section-8.2-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.11">Z: -12<a href="#section-8.2-3.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-3.12">h_eff: 1<a href="#section-8.2-3.12" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.2-4">P384-XMD:SHA.512-SVDW-RO- is identical to P384-XMD:SHA.512-SSWU-RO-,
+except for the following parameters:<a href="#section-8.2-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.2-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.2-5.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.2-5.2">Z: -1<a href="#section-8.2-5.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.2-6">P384-XMD:SHA.512-SSWU-NU- is identical to P384-XMD:SHA.512-SSWU-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.2-6" class="pilcrow">¶</a></p>
+<p id="section-8.2-7">P384-XMD:SHA.512-SVDW-NU- is identical to P384-XMD:SHA.512-SVDW-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.2-7" class="pilcrow">¶</a></p>
+<p id="section-8.2-8">An optimized example implementation of the Simplified SWU mapping
+to P-384 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.2-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-p521">
+<section id="section-8.3">
+        <h3 id="name-suites-for-nist-p-521">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-suites-for-nist-p-521" class="section-name selfRef">Suites for NIST P-521</a>
+        </h3>
+<p id="section-8.3-1">This section defines ciphersuites for the NIST P-521 elliptic curve <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">P521-XMD:SHA.512-SSWU-RO- is defined as follows:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.3-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.3-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.2">
+            <p id="section-8.3-3.2.1">E: y^2 = x^3 + A * x + B, where<a href="#section-8.3-3.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.3-3.2.2.1">A = -3<a href="#section-8.3-3.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.2.2.2">B = 0x51953eb9618e1c9a1f929a21a0b68540eea2da725b99b315f3b8b489918ef109e156193951ec7e937b1652c0bd3bb1bf073573df883d2c34f1ef451fd46b503f00<a href="#section-8.3-3.2.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.3-3.3">p: 2^521 - 1<a href="#section-8.3-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.4">m: 1<a href="#section-8.3-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.5">k: 256<a href="#section-8.3-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.6">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.3-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.3-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.8">H: SHA-512<a href="#section-8.3-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.9">L: 96<a href="#section-8.3-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.10">f: Simplified SWU method, <a href="#simple-swu" class="xref">Section 6.6.2</a><a href="#section-8.3-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.11">Z: -4<a href="#section-8.3-3.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-3.12">h_eff: 1<a href="#section-8.3-3.12" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.3-4">P521-XMD:SHA.512-SVDW-RO- is identical to P521-XMD:SHA.512-SSWU-RO-,
+except for the following parameters:<a href="#section-8.3-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.3-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.3-5.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.3-5.2">Z: 1<a href="#section-8.3-5.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.3-6">P521-XMD:SHA.512-SSWU-NU- is identical to P512-XMD:SHA.512-SSWU-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.3-6" class="pilcrow">¶</a></p>
+<p id="section-8.3-7">P521-XMD:SHA.512-SVDW-NU- is identical to P512-XMD:SHA.512-SVDW-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.3-7" class="pilcrow">¶</a></p>
+<p id="section-8.3-8">An optimized example implementation of the Simplified SWU mapping
+to P-521 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.3-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-25519">
+<section id="section-8.4">
+        <h3 id="name-suites-for-curve25519-and-e">
+<a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-suites-for-curve25519-and-e" class="section-name selfRef">Suites for curve25519 and edwards25519</a>
+        </h3>
+<p id="section-8.4-1">This section defines ciphersuites for curve25519 and edwards25519 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.4-2">curve25519-XMD:SHA.256-ELL2-RO- is defined as follows:<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.4-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.4-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.2">
+            <p id="section-8.4-3.2.1">E: K * t^2 = s^3 + J * s^2 + s, where<a href="#section-8.4-3.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.4-3.2.2.1">J = 486662<a href="#section-8.4-3.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.2.2.2">K = 1<a href="#section-8.4-3.2.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.4-3.3">p: 2^255 - 19<a href="#section-8.4-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.4">m: 1<a href="#section-8.4-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.5">k: 128<a href="#section-8.4-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.6">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.4-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.4-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.8">H: SHA-256<a href="#section-8.4-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.9">L: 48<a href="#section-8.4-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.10">f: Elligator 2 method, <a href="#elligator2" class="xref">Section 6.7.1</a><a href="#section-8.4-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.11">Z: 2<a href="#section-8.4-3.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-3.12">h_eff: 8<a href="#section-8.4-3.12" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.4-4">edwards25519-XMD:SHA.256-ELL2-RO- is identical to curve25519-XMD:SHA.256-ELL2-RO-,
+except for the following parameters:<a href="#section-8.4-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.4-5.1">
+            <p id="section-8.4-5.1.1">E: a * v^2 + w^2 = 1 + d * v^2 * w^2, where<a href="#section-8.4-5.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.4-5.1.2.1">a = -1<a href="#section-8.4-5.1.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-5.1.2.2">d = 0x52036cee2b6ffe738cc740797779e89800700a4d4141d8ab75eb4dca135978a3<a href="#section-8.4-5.1.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.4-5.2">f: Twisted Edwards Elligator 2 method, <a href="#ell2edwards" class="xref">Section 6.8.2</a><a href="#section-8.4-5.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-5.3">M: curve25519 defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.1<a href="#section-8.4-5.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.4-5.4">rational_map: the birational map defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.1<a href="#section-8.4-5.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.4-6">curve25519-XMD:SHA.256-ELL2-NU- is identical to curve25519-XMD:SHA.256-ELL2-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.4-6" class="pilcrow">¶</a></p>
+<p id="section-8.4-7">edwards25519-XMD:SHA.256-ELL2-NU- is identical to edwards25519-XMD:SHA.256-ELL2-RO-,
+except that ene encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.4-7" class="pilcrow">¶</a></p>
+<p id="section-8.4-8">curve25519-XMD:SHA.512-ELL2-RO- is identical to curve25519-XMD:SHA.256-ELL2-RO-,
+except that H is SHA-512.<a href="#section-8.4-8" class="pilcrow">¶</a></p>
+<p id="section-8.4-9">curve25519-XMD:SHA.512-ELL2-NU- is identical to curve25519-XMD:SHA.256-ELL2-NU-,
+except that H is SHA-512.<a href="#section-8.4-9" class="pilcrow">¶</a></p>
+<p id="section-8.4-10">edwards25519-XMD:SHA.512-ELL2-RO- is identical to edwards25519-XMD:SHA.256-ELL2-RO-,
+except that H is SHA-512.<a href="#section-8.4-10" class="pilcrow">¶</a></p>
+<p id="section-8.4-11">edwards25519-XMD:SHA.512-ELL2-NU- is identical to edwards25519-XMD:SHA.256-ELL2-NU-;
+except that H is SHA-512.<a href="#section-8.4-11" class="pilcrow">¶</a></p>
+<p id="section-8.4-12">Optimized example implementations of the above mappings are given in
+<a href="#map-to-curve25519" class="xref">Appendix D.3</a> and <a href="#map-to-edwards25519" class="xref">Appendix D.4</a>.<a href="#section-8.4-12" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-448">
+<section id="section-8.5">
+        <h3 id="name-suites-for-curve448-and-edw">
+<a href="#section-8.5" class="section-number selfRef">8.5. </a><a href="#name-suites-for-curve448-and-edw" class="section-name selfRef">Suites for curve448 and edwards448</a>
+        </h3>
+<p id="section-8.5-1">This section defines ciphersuites for curve448 and edwards448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>.<a href="#section-8.5-1" class="pilcrow">¶</a></p>
+<p id="section-8.5-2">curve448-XMD:SHA.512-ELL2-RO- is defined as follows:<a href="#section-8.5-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.5-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.5-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.2">
+            <p id="section-8.5-3.2.1">E: K * t^2 = s^3 + J * s^2 + s, where<a href="#section-8.5-3.2.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.5-3.2.2.1">J = 156326<a href="#section-8.5-3.2.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.2.2.2">K = 1<a href="#section-8.5-3.2.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.5-3.3">p: 2^448 - 2^224 - 1<a href="#section-8.5-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.4">m: 1<a href="#section-8.5-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.5">k: 224<a href="#section-8.5-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.6">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.5-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.5-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.8">H: SHA-512<a href="#section-8.5-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.9">L: 84<a href="#section-8.5-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.10">f: Elligator 2 method, <a href="#elligator2" class="xref">Section 6.7.1</a><a href="#section-8.5-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.11">Z: -1<a href="#section-8.5-3.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-3.12">h_eff: 4<a href="#section-8.5-3.12" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.5-4">edwards448-XMD:SHA.512-ELL2-RO- is identical to curve448-XMD:SHA.512-ELL2-RO-,
+except for the following parameters:<a href="#section-8.5-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.5-5.1">
+            <p id="section-8.5-5.1.1">E: a * v^2 + w^2 = 1 + d * v^2 * w^2, where<a href="#section-8.5-5.1.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.5-5.1.2.1">a = 1<a href="#section-8.5-5.1.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-5.1.2.2">d = -39081<a href="#section-8.5-5.1.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.5-5.2">f: Twisted Edwards Elligator 2 method, <a href="#ell2edwards" class="xref">Section 6.8.2</a><a href="#section-8.5-5.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-5.3">M: curve448, defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.2<a href="#section-8.5-5.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.5-5.4">rational_map: the 4-isogeny map defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.2<a href="#section-8.5-5.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.5-6">curve448-XMD:SHA.512-ELL2-NU- is identical to curve448-XMD:SHA.512-ELL2-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.5-6" class="pilcrow">¶</a></p>
+<p id="section-8.5-7">edwards448-XMD:SHA.512-ELL2-NU- is identical to edwards448-XMD:SHA.512-ELL2-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.5-7" class="pilcrow">¶</a></p>
+<p id="section-8.5-8">Optimized example implementations of the above mappings are given in
+<a href="#map-to-curve448" class="xref">Appendix D.5</a> and <a href="#map-to-edwards448" class="xref">Appendix D.6</a>.<a href="#section-8.5-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-secp256k1">
+<section id="section-8.6">
+        <h3 id="name-suites-for-secp256k1">
+<a href="#section-8.6" class="section-number selfRef">8.6. </a><a href="#name-suites-for-secp256k1" class="section-name selfRef">Suites for secp256k1</a>
+        </h3>
+<p id="section-8.6-1">This section defines ciphersuites for the secp256k1 elliptic curve <span>[<a href="#SEC2" class="xref">SEC2</a>]</span>.<a href="#section-8.6-1" class="pilcrow">¶</a></p>
+<p id="section-8.6-2">secp256k1-XMD:SHA.256-SSWU-RO- is defined as follows:<a href="#section-8.6-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.6-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.6-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.2">E: y^2 = x^3 + 7<a href="#section-8.6-3.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.3">p: 2^256 - 2^32 - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1<a href="#section-8.6-3.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.4">m: 1<a href="#section-8.6-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.5">k: 128<a href="#section-8.6-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.6">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.6-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.6-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.8">H: SHA-256<a href="#section-8.6-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.9">L: 48<a href="#section-8.6-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.10">f: Simplified SWU for AB == 0, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a><a href="#section-8.6-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.11">Z: -11<a href="#section-8.6-3.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.12">
+            <p id="section-8.6-3.12.1">E': y'^2 = x'^3 + A' * x' + B', where<a href="#section-8.6-3.12.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.6-3.12.2.1">A': 0x3f8731abdd661adca08a5558f0f5d272e953d363cb6f0e5d405447c01a444533<a href="#section-8.6-3.12.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.12.2.2">B': 1771<a href="#section-8.6-3.12.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.6-3.13">iso_map: the 3-isogeny map from E' to E given in <a href="#appx-iso-secp256k1" class="xref">Appendix C.1</a><a href="#section-8.6-3.13" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-3.14">h_eff: 1<a href="#section-8.6-3.14" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.6-4">secp256k1-XMD:SHA.256-SVDW-RO- is identical to secp256k1-XMD:SHA.256-SSWU-RO-,
+except for the following parameters:<a href="#section-8.6-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.6-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.6-5.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-5.2">Z: 1<a href="#section-8.6-5.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-5.3">E' is not required for this suite<a href="#section-8.6-5.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.6-5.4">iso_map is not required for this suite<a href="#section-8.6-5.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.6-6">secp256k1-XMD:SHA.256-SSWU-NU- is identical to secp256k1-XMD:SHA.256-SSWU-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.6-6" class="pilcrow">¶</a></p>
+<p id="section-8.6-7">secp256k1-XMD:SHA.256-SVDW-NU- is identical to secp256k1-XMD:SHA.256-SVDW-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.6-7" class="pilcrow">¶</a></p>
+<p id="section-8.6-8">An optimized example implementation of the Simplified SWU mapping
+to the curve E' isogenous to secp256k1 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.6-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-bls12381">
+<section id="section-8.7">
+        <h3 id="name-suites-for-bls12-381">
+<a href="#section-8.7" class="section-number selfRef">8.7. </a><a href="#name-suites-for-bls12-381" class="section-name selfRef">Suites for BLS12-381</a>
+        </h3>
+<p id="section-8.7-1">This section defines ciphersuites for groups G1 and G2 of
+the BLS12-381 elliptic curve <span>[<a href="#BLS12-381" class="xref">BLS12-381</a>]</span>.<a href="#section-8.7-1" class="pilcrow">¶</a></p>
+<div id="suites-bls12381-g1">
+<section id="section-8.7.1">
+          <h4 id="name-bls12-381-g1">
+<a href="#section-8.7.1" class="section-number selfRef">8.7.1. </a><a href="#name-bls12-381-g1" class="section-name selfRef">BLS12-381 G1</a>
+          </h4>
+<p id="section-8.7.1-1">BLS12381G1-XMD:SHA.256-SSWU-RO- is defined as follows:<a href="#section-8.7.1-1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.1-2.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.7.1-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.2">E: y^2 = x^3 + 4<a href="#section-8.7.1-2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.3">p: 0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab<a href="#section-8.7.1-2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.4">m: 1<a href="#section-8.7.1-2.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.5">k: 128<a href="#section-8.7.1-2.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.6">sgn0: sgn0_be (<a href="#sgn0-be" class="xref">Section 4.1.1</a>)<a href="#section-8.7.1-2.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.7">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.7.1-2.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.8">H: SHA-256<a href="#section-8.7.1-2.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.9">L: 64<a href="#section-8.7.1-2.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.10">f: Simplified SWU for AB == 0, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a><a href="#section-8.7.1-2.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.11">Z: 11<a href="#section-8.7.1-2.11" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.12">
+              <p id="section-8.7.1-2.12.1">E': y'^2 = x'^3 + A' * x' + B', where<a href="#section-8.7.1-2.12.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.1-2.12.2.1">A' = 0x144698a3b8e9433d693a02c96d4982b0ea985383ee66a8d8e8981aefd881ac98936f8da0e0f97f5cf428082d584c1d<a href="#section-8.7.1-2.12.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.12.2.2">B' = 0x12e2908d11688030018b12e8753eee3b2016c1f0f24f4070a0b9c14fcef35ef55a23215a316ceaa5d1cc48e98e172be0<a href="#section-8.7.1-2.12.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.7.1-2.13">iso_map: the 11-isogeny map from E' to E given in <a href="#appx-iso-bls12381-g1" class="xref">Appendix C.2</a><a href="#section-8.7.1-2.13" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-2.14">h_eff: 0xd201000000010001<a href="#section-8.7.1-2.14" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.7.1-3">BLS12381G1-XMD:SHA.256-SVDW-RO- is identical to BLS12381G1-XMD:SHA.256-SSWU-RO-,
+except for the following parameters:<a href="#section-8.7.1-3" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.1-4.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.7.1-4.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-4.2">Z: -3<a href="#section-8.7.1-4.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-4.3">E' is not required for this suite<a href="#section-8.7.1-4.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.1-4.4">iso_map is not required for this suite<a href="#section-8.7.1-4.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.7.1-5">BLS12381G1-XMD:SHA.256-SSWU-NU- is identical to BLS12381G1-XMD:SHA.256-SSWU-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.7.1-5" class="pilcrow">¶</a></p>
+<p id="section-8.7.1-6">BLS12381G1-XMD:SHA.256-SVDW-NU- is identical to BLS12381G1-XMD:SHA.256-SVDW-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.7.1-6" class="pilcrow">¶</a></p>
+<p id="section-8.7.1-7">Note that the h_eff values for these suites are chosen for compatibility
+with the fast cofactor clearing method described by Scott (<span>[<a href="#WB19" class="xref">WB19</a>]</span> Section 5).<a href="#section-8.7.1-7" class="pilcrow">¶</a></p>
+<p id="section-8.7.1-8">An optimized example implementation of the Simplified SWU mapping
+to the curve E' isogenous to BLS12-381 G1 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.7.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suites-bls12381-g2">
+<section id="section-8.7.2">
+          <h4 id="name-bls12-381-g2">
+<a href="#section-8.7.2" class="section-number selfRef">8.7.2. </a><a href="#name-bls12-381-g2" class="section-name selfRef">BLS12-381 G2</a>
+          </h4>
+<p id="section-8.7.2-1">Group G2 of BLS12-381 is defined over a field F = GF(p^m) defined as:<a href="#section-8.7.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.7.2-2">BLS12381G2-XMD:SHA.256-SSWU-RO- is defined as follows:<a href="#section-8.7.2-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.2-3.1">encoding type: hash_to_curve (<a href="#roadmap" class="xref">Section 3</a>)<a href="#section-8.7.2-3.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.2">E: y^2 = x^3 + 4 * (1 + I)<a href="#section-8.7.2-3.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.3">
+              <p id="section-8.7.2-3.3.1">base field F is GF(p^m), where<a href="#section-8.7.2-3.3.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.2-3.3.2.1">p: 0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab<a href="#section-8.7.2-3.3.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.3.2.2">m: 2<a href="#section-8.7.2-3.3.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.3.2.3">(1, I) is the basis for F, where I^2 + 1 == 0 in F<a href="#section-8.7.2-3.3.2.3" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.7.2-3.4">k: 128<a href="#section-8.7.2-3.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.5">sgn0: sgn0_be (<a href="#sgn0-be" class="xref">Section 4.1.1</a>)<a href="#section-8.7.2-3.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.6">expand_message: expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>)<a href="#section-8.7.2-3.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.7">H: SHA-256<a href="#section-8.7.2-3.7" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.8">L: 64<a href="#section-8.7.2-3.8" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.9">f: Simplified SWU for AB == 0, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a><a href="#section-8.7.2-3.9" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.10">Z: -(2 + I)<a href="#section-8.7.2-3.10" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.11">
+              <p id="section-8.7.2-3.11.1">E': y'^2 = x'^3 + A' * x' + B', where<a href="#section-8.7.2-3.11.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.2-3.11.2.1">A' = 240 * I<a href="#section-8.7.2-3.11.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.11.2.2">B' = 1012 * (1 + I)<a href="#section-8.7.2-3.11.2.2" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.7.2-3.12">iso_map: the isogeny map from E' to E given in <a href="#appx-iso-bls12381-g2" class="xref">Appendix C.3</a><a href="#section-8.7.2-3.12" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-3.13">h_eff: 0xbc69f08f2ee75b3584c6a0ea91b352888e2a8e9145ad7689986ff031508ffe1329c2f178731db956d82bf015d1212b02ec0ec69d7477c1ae954cbc06689f6a359894c0adebbf6b4e8020005aaa95551<a href="#section-8.7.2-3.13" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.7.2-4">BLS12381G2-XMD:SHA.256-SVDW-RO- is identical to BLS12381G2-XMD:SHA.256-SSWU-RO-,
+except for the following parameters:<a href="#section-8.7.2-4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.7.2-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.7.2-5.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-5.2">Z: I<a href="#section-8.7.2-5.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-5.3">E' is not required for this suite<a href="#section-8.7.2-5.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.7.2-5.4">iso_map is not required for this suite<a href="#section-8.7.2-5.4" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.7.2-6">BLS12381G2-XMD:SHA.256-SSWU-NU- is identical to BLS12381G2-XMD:SHA.256-SSWU-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.7.2-6" class="pilcrow">¶</a></p>
+<p id="section-8.7.2-7">BLS12381G2-XMD:SHA.256-SVDW-NU- is identical to BLS12381G2-XMD:SHA.256-SVDW-RO-,
+except that the encoding type is encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.7.2-7" class="pilcrow">¶</a></p>
+<p id="section-8.7.2-8">Note that the h_eff values for these suites are chosen for compatibility
+with the fast cofactor clearing method described by
+Budroni and Pintore (<span>[<a href="#BP18" class="xref">BP18</a>]</span>, Section 4.1).<a href="#section-8.7.2-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="new-suite">
+<section id="section-8.8">
+        <h3 id="name-defining-a-new-hash-to-curv">
+<a href="#section-8.8" class="section-number selfRef">8.8. </a><a href="#name-defining-a-new-hash-to-curv" class="section-name selfRef">Defining a new hash-to-curve suite</a>
+        </h3>
+<p id="section-8.8-1">The RECOMMENDED way to define a new hash-to-curve suite is:<a href="#section-8.8-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8.8-2">
+          <li id="section-8.8-2.1">E, F, p, and m are determined by the elliptic curve and its base field;
+k is determined by the security level of the elliptic curve.<a href="#section-8.8-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.8-2.2">Choose encoding type, either hash_to_curve or encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.8-2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.8-2.3">Choose a sgn0 variant following the guidelines in <a href="#sgn0-variants" class="xref">Section 4.1</a>.<a href="#section-8.8-2.3" class="pilcrow">¶</a>
+</li>
+<li id="section-8.8-2.4">Compute L as described in <a href="#hashtofield-sec" class="xref">Section 5.1</a>.<a href="#section-8.8-2.4" class="pilcrow">¶</a>
+</li>
+<li id="section-8.8-2.5">Choose an expand_message variant from <a href="#hashtofield-expand" class="xref">Section 5.3</a> plus any
+underlying cryptographic primitives (e.g., a hash function H).<a href="#section-8.8-2.5" class="pilcrow">¶</a>
+</li>
+<li id="section-8.8-2.6">Choose a mapping following the guidelines in <a href="#choosing-mapping" class="xref">Section 6.1</a>,
+and select any required parameters for that mapping.<a href="#section-8.8-2.6" class="pilcrow">¶</a>
+</li>
+<li id="section-8.8-2.7">Choose h_eff to be either the cofactor of E or, if a fast cofactor
 clearing method is to be used, a value appropriate to that method
-as discussed in <a href="#cofactor-clearing" class="xref">Section 7</a>.<a href="#section-8.1-2.5" class="pilcrow">¶</a>
+as discussed in <a href="#cofactor-clearing" class="xref">Section 7</a>.<a href="#section-8.8-2.7" class="pilcrow">¶</a>
 </li>
-<li id="section-8.1-2.6">Construct a Suite ID following the guidelines in <a href="#suiteIDformat" class="xref">Section 8.2</a>.<a href="#section-8.1-2.6" class="pilcrow">¶</a>
+<li id="section-8.8-2.8">Construct a Suite ID following the guidelines in <a href="#suiteIDformat" class="xref">Section 8.9</a>.<a href="#section-8.8-2.8" class="pilcrow">¶</a>
 </li>
 </ol>
-<p id="section-8.1-3">When hashing to an elliptic curve not listed in this section, corresponding
-hash-to-curve suites SHOULD be specified as described in this section.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.8-3">When hashing to an elliptic curve not listed in this section, corresponding
+hash-to-curve suites SHOULD be specified as described in this section.<a href="#section-8.8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="suiteIDformat">
-<section id="section-8.2">
+<section id="section-8.9">
         <h3 id="name-suite-id-naming-conventions">
-<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-suite-id-naming-conventions" class="section-name selfRef">Suite ID naming conventions</a>
+<a href="#section-8.9" class="section-number selfRef">8.9. </a><a href="#name-suite-id-naming-conventions" class="section-name selfRef">Suite ID naming conventions</a>
         </h3>
-<p id="section-8.2-1">Suite IDs MUST be constructed as follows:<a href="#section-8.2-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-8.2-2">
+<p id="section-8.9-1">Suite IDs MUST be constructed as follows:<a href="#section-8.9-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-8.9-2">
 <pre>
 CURVE_ID || "-" || HASH_ID || "-" || MAP_ID || "-" || ENC_VAR || "-"
-</pre><a href="#section-8.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-8.9-2" class="pilcrow">¶</a>
 </div>
-<p id="section-8.2-3">The fields CURVE_ID, HASH_ID, MAP_ID, and ENC_VAR are
+<p id="section-8.9-3">The fields CURVE_ID, HASH_ID, MAP_ID, and ENC_VAR are
 ASCII-encoded strings of at most 64 characters each.
 Fields can contain only ASCII characters between 0x21 and 0x7E (inclusive)
-other than hyphen and underscore (i.e., 0x2d, and 0x5f).
-As indicated above, each field (including the last) is followed by a hyphen
-("-", ASCII 0x2d); this helps to ensure that Suite IDs are prefix free.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
-<p id="section-8.2-4">Fields MUST be chosen as follows:<a href="#section-8.2-4" class="pilcrow">¶</a></p>
+other than hyphen and underscore (i.e., 0x2d, and 0x5f).<a href="#section-8.9-3" class="pilcrow">¶</a></p>
+<p id="section-8.9-4">As indicated above, each field (including the last) is followed by a hyphen
+("-", ASCII 0x2d).
+This helps to ensure that Suite IDs are prefix free.
+Suite IDs MUST include the final hyphen and MUST NOT include any characters
+after the final hyphen.<a href="#section-8.9-4" class="pilcrow">¶</a></p>
+<p id="section-8.9-5">Fields MUST be chosen as follows:<a href="#section-8.9-5" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-8.2-5.1">CURVE_ID: a human-readable representation of the target elliptic curve.<a href="#section-8.2-5.1" class="pilcrow">¶</a>
+<li id="section-8.9-6.1">CURVE_ID: a human-readable representation of the target elliptic curve.<a href="#section-8.9-6.1" class="pilcrow">¶</a>
 </li>
-<li id="section-8.2-5.2">
-            <p id="section-8.2-5.2.1">HASH_ID: a human-readable representation of the hash function used in
-hash_to_base (<a href="#hashtobase" class="xref">Section 5</a>).<a href="#section-8.2-5.2.1" class="pilcrow">¶</a></p>
-<p id="section-8.2-5.2.2">
-If a suite uses an alternative hash_to_base function (<a href="#hashtobase-alt" class="xref">Section 5.4</a>),
-a short descriptive name MUST be chosen for that function using only the
-allowed characters listed above.
-That name MUST be appended to the HASH_ID field, separated by a colon.
-For example, a hash_to_base function based on KMAC128 <span>[<a href="#SP.800-185" class="xref">SP.800-185</a>]</span> might
-use the short name "h2b/kmac128", and a reasonable value for the HASH_ID field
-would be "SHA3:h2b/kmac128".<a href="#section-8.2-5.2.2" class="pilcrow">¶</a></p>
-</li>
-<li id="section-8.2-5.3">MAP_ID: a human-readable representation of the map_to_curve function
-(<a href="#mappings" class="xref">Section 6</a>).<a href="#section-8.2-5.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.2-5.4">
-            <p id="section-8.2-5.4.1">ENC_VAR: a string indicating the encoding type and other information.
-The first two characters of this string indicate whether the suite
-represents a hash_to_curve or an encode_to_curve operation
-(<a href="#roadmap" class="xref">Section 3</a>), as follows:<a href="#section-8.2-5.4.1" class="pilcrow">¶</a></p>
+<li id="section-8.9-6.2">
+            <p id="section-8.9-6.2.1">HASH_ID: a human-readable representation of the expand_message function
+and any underlying hash primitives used in hash_to_field (<a href="#hashtofield" class="xref">Section 5</a>).
+This field MUST be constructed as follows:<a href="#section-8.9-6.2.1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-8.9-6.2.2">
+<pre>
+  EXP_TAG || ":" || HASH_NAME
+</pre><a href="#section-8.9-6.2.2" class="pilcrow">¶</a>
+</div>
+<p id="section-8.9-6.2.3">
+EXP_TAG indicates the expand_message variant:<a href="#section-8.9-6.2.3" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-8.2-5.4.2.1">If ENC_VAR begins with "RO", the suite uses hash_to_curve.<a href="#section-8.2-5.4.2.1" class="pilcrow">¶</a>
+<li id="section-8.9-6.2.4.1">"XMD" for expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>).<a href="#section-8.9-6.2.4.1" class="pilcrow">¶</a>
 </li>
-<li id="section-8.2-5.4.2.2">If ENC_VAR begins with "NU", the suite uses encode_to_curve.<a href="#section-8.2-5.4.2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.2-5.4.2.3">ENC_VAR MUST NOT begin with any other string.<a href="#section-8.2-5.4.2.3" class="pilcrow">¶</a>
+<li id="section-8.9-6.2.4.2">"XOF" for expand_message_xof (<a href="#hashtofield-expand-xof" class="xref">Section 5.3.2</a>).<a href="#section-8.9-6.2.4.2" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-8.2-5.4.3">
+<p id="section-8.9-6.2.5">
+HASH_NAME is a human-readable name for the underlying hash primitive.
+As stated above, hyphens are not allowed. Any hyphens in the name of the
+hash function SHOULD be replaced with "." (ASCII 0x2e).<a href="#section-8.9-6.2.5" class="pilcrow">¶</a></p>
+<p id="section-8.9-6.2.6">
+As examples:<a href="#section-8.9-6.2.6" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-8.9-6.2.7">
+              <li id="section-8.9-6.2.7.1">For expand_message_xof (<a href="#hashtofield-expand-xof" class="xref">Section 5.3.2</a>) with SHAKE-128,
+HASH_ID is "XOF:SHAKE.128".<a href="#section-8.9-6.2.7.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.9-6.2.7.2">For expand_message_md (<a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a>) with SHA3-256,
+HASH_ID is "XMD:SHA3.256".<a href="#section-8.9-6.2.7.2" class="pilcrow">¶</a>
+</li>
+</ol>
+</li>
+<li id="section-8.9-6.3">
+            <p id="section-8.9-6.3.1">MAP_ID: a human-readable representation of the map_to_curve function
+as defined in <a href="#mappings" class="xref">Section 6</a>. These are defined as follows:<a href="#section-8.9-6.3.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.9-6.3.2.1">"SVDW" for or Shallue and van de Woestijne (<a href="#svdw" class="xref">Section 6.6.1</a>).<a href="#section-8.9-6.3.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.9-6.3.2.2">"SSWU" for Simplified SWU (<a href="#simple-swu" class="xref">Section 6.6.2</a>, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a>).<a href="#section-8.9-6.3.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.9-6.3.2.3">"ELL2" for Elligator 2 (<a href="#elligator2" class="xref">Section 6.7.1</a>, <a href="#ell2edwards" class="xref">Section 6.8.2</a>).<a href="#section-8.9-6.3.2.3" class="pilcrow">¶</a>
+</li>
+</ul>
+</li>
+<li id="section-8.9-6.4">
+            <p id="section-8.9-6.4.1">ENC_VAR: a string indicating the encoding type and other information.
+The first two characters of this string indicate whether the suite
+represents a hash_to_curve or an encode_to_curve operation
+(<a href="#roadmap" class="xref">Section 3</a>), as follows:<a href="#section-8.9-6.4.1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-8.9-6.4.2.1">If ENC_VAR begins with "RO", the suite uses hash_to_curve.<a href="#section-8.9-6.4.2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-8.9-6.4.2.2">If ENC_VAR begins with "NU", the suite uses encode_to_curve.<a href="#section-8.9-6.4.2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-8.9-6.4.2.3">ENC_VAR MUST NOT begin with any other string.<a href="#section-8.9-6.4.2.3" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-8.9-6.4.3">
 ENC_VAR MAY also be used to encode other information used to identify
   variants, for example, a version number.
   The RECOMMENDED way to do so is to add one or more subfields separated
   by colons.
   For example, "RO:V02" is an appropriate ENC_VAR value for the second
   version of a random-oracle suite, while "RO:V02:FOO01:BAR17" might be
-  used to indicate a variant of that suite.<a href="#section-8.2-5.4.3" class="pilcrow">¶</a></p>
+  used to indicate a variant of that suite.<a href="#section-8.9-6.4.3" class="pilcrow">¶</a></p>
 </li>
 </ul>
-</section>
-</div>
-<div id="suites-p256">
-<section id="section-8.3">
-        <h3 id="name-suites-for-nist-p-256">
-<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-suites-for-nist-p-256" class="section-name selfRef">Suites for NIST P-256</a>
-        </h3>
-<p id="section-8.3-1">This section defines ciphersuites for the NIST P-256 elliptic curve <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3-2">The suites P256-SHA256-SSWU-RO- and P256-SHA256-SSWU-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.3-3.1">f: Simplified SWU method, <a href="#simple-swu" class="xref">Section 6.6.2</a><a href="#section-8.3-3.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-3.2">Z: -10<a href="#section-8.3-3.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.3-4">The suites P256-SHA256-SVDW-RO- and P256-SHA256-SVDW-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.3-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.3-5.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-5.2">Z: -3<a href="#section-8.3-5.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.3-6">The common parameters for the above suites are:<a href="#section-8.3-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.3-7.1">
-            <p id="section-8.3-7.1.1">E: y^2 = x^3 + A * x + B, where<a href="#section-8.3-7.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.3-7.1.2.1">A = -3<a href="#section-8.3-7.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-7.1.2.2">B = 0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b<a href="#section-8.3-7.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.3-7.2">p: 2^256 - 2^224 + 2^192 + 2^96 - 1<a href="#section-8.3-7.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-7.3">m: 1<a href="#section-8.3-7.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-7.4">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.3-7.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-7.5">H: SHA-256<a href="#section-8.3-7.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-7.6">L: 48<a href="#section-8.3-7.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.3-7.7">h_eff: 1<a href="#section-8.3-7.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.3-8">An optimized example implementation of the Simplified SWU mapping
-to P-256 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.3-8" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-p384">
-<section id="section-8.4">
-        <h3 id="name-suites-for-nist-p-384">
-<a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-suites-for-nist-p-384" class="section-name selfRef">Suites for NIST P-384</a>
-        </h3>
-<p id="section-8.4-1">This section defines ciphersuites for the NIST P-384 elliptic curve <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
-<p id="section-8.4-2">The suites P384-SHA512-SSWU-RO- and P384-SHA512-SSWU-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.4-3.1">f: Simplified SWU method, <a href="#simple-swu" class="xref">Section 6.6.2</a><a href="#section-8.4-3.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-3.2">Z: -12<a href="#section-8.4-3.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.4-4">The suites P384-SHA512-SVDW-RO- and P384-SHA512-SVDW-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.4-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.4-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.4-5.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-5.2">Z: -1<a href="#section-8.4-5.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.4-6">The common parameters for the above suites are:<a href="#section-8.4-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.4-7.1">
-            <p id="section-8.4-7.1.1">E: y^2 = x^3 + A * x + B, where<a href="#section-8.4-7.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.4-7.1.2.1">A = -3<a href="#section-8.4-7.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-7.1.2.2">B = 0xb3312fa7e23ee7e4988e056be3f82d19181d9c6efe8141120314088f5013875ac656398d8a2ed19d2a85c8edd3ec2aef<a href="#section-8.4-7.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.4-7.2">p: 2^384 - 2^128 - 2^96 + 2^32 - 1<a href="#section-8.4-7.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-7.3">m: 1<a href="#section-8.4-7.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-7.4">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.4-7.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-7.5">H: SHA-512<a href="#section-8.4-7.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-7.6">L: 72<a href="#section-8.4-7.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.4-7.7">h_eff: 1<a href="#section-8.4-7.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.4-8">An optimized example implementation of the Simplified SWU mapping
-to P-384 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.4-8" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-p521">
-<section id="section-8.5">
-        <h3 id="name-suites-for-nist-p-521">
-<a href="#section-8.5" class="section-number selfRef">8.5. </a><a href="#name-suites-for-nist-p-521" class="section-name selfRef">Suites for NIST P-521</a>
-        </h3>
-<p id="section-8.5-1">This section defines ciphersuites for the NIST P-521 elliptic curve <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span>.<a href="#section-8.5-1" class="pilcrow">¶</a></p>
-<p id="section-8.5-2">The suites P521-SHA512-SSWU-RO- and P521-SHA512-SSWU-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.5-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.5-3.1">f: Simplified SWU method, <a href="#simple-swu" class="xref">Section 6.6.2</a><a href="#section-8.5-3.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-3.2">Z: -4<a href="#section-8.5-3.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.5-4">The suites P521-SHA512-SVDW-RO- and P521-SHA512-SVDW-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.5-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.5-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.5-5.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-5.2">Z: 1<a href="#section-8.5-5.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.5-6">The common parameters for the above suites are:<a href="#section-8.5-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.5-7.1">
-            <p id="section-8.5-7.1.1">E: y^2 = x^3 + A * x + B, where<a href="#section-8.5-7.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.5-7.1.2.1">A = -3<a href="#section-8.5-7.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-7.1.2.2">B = 0x51953eb9618e1c9a1f929a21a0b68540eea2da725b99b315f3b8b489918ef109e156193951ec7e937b1652c0bd3bb1bf073573df883d2c34f1ef451fd46b503f00<a href="#section-8.5-7.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.5-7.2">p: 2^521 - 1<a href="#section-8.5-7.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-7.3">m: 1<a href="#section-8.5-7.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-7.4">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.5-7.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-7.5">H: SHA-512<a href="#section-8.5-7.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-7.6">L: 96<a href="#section-8.5-7.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.5-7.7">h_eff: 1<a href="#section-8.5-7.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.5-8">An optimized example implementation of the Simplified SWU mapping
-to P-521 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.5-8" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-25519">
-<section id="section-8.6">
-        <h3 id="name-suites-for-curve25519-and-e">
-<a href="#section-8.6" class="section-number selfRef">8.6. </a><a href="#name-suites-for-curve25519-and-e" class="section-name selfRef">Suites for curve25519 and edwards25519</a>
-        </h3>
-<p id="section-8.6-1">This section defines ciphersuites for curve25519 and edwards25519 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>.<a href="#section-8.6-1" class="pilcrow">¶</a></p>
-<p id="section-8.6-2">The suites curve25519-SHA256-ELL2-RO- and curve25519-SHA256-ELL2-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.6-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.6-3.1">
-            <p id="section-8.6-3.1.1">E: K * t^2 = s^3 + J * s^2 + s, where<a href="#section-8.6-3.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.6-3.1.2.1">J = 486662<a href="#section-8.6-3.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-3.1.2.2">K = 1<a href="#section-8.6-3.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.6-3.2">f: Elligator 2 method, <a href="#elligator2" class="xref">Section 6.7.1</a><a href="#section-8.6-3.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.6-4">The suites edwards25519-SHA256-EDELL2-RO- and edwards25519-SHA256-EDELL2-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.6-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.6-5.1">
-            <p id="section-8.6-5.1.1">E: a * v^2 + w^2 = 1 + d * v^2 * w^2, where<a href="#section-8.6-5.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.6-5.1.2.1">a = -1<a href="#section-8.6-5.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-5.1.2.2">d = 0x52036cee2b6ffe738cc740797779e89800700a4d4141d8ab75eb4dca135978a3<a href="#section-8.6-5.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.6-5.2">f: Twisted Edwards Elligator 2 method, <a href="#ell2edwards" class="xref">Section 6.8.2</a><a href="#section-8.6-5.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-5.3">M: curve25519 defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.1<a href="#section-8.6-5.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-5.4">rational_map: the birational map defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.1<a href="#section-8.6-5.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.6-6">The common parameters for all of the above suites are:<a href="#section-8.6-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.6-7.1">p: 2^255 - 19<a href="#section-8.6-7.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-7.2">m: 1<a href="#section-8.6-7.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-7.3">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.6-7.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-7.4">H: SHA-256<a href="#section-8.6-7.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-7.5">L: 48<a href="#section-8.6-7.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-7.6">Z: 2<a href="#section-8.6-7.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.6-7.7">h_eff: 8<a href="#section-8.6-7.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.6-8">The suites curve25519-SHA512-ELL2-RO-, curve25519-SHA512-ELL2-NU-,
-edwards25519-SHA512-EDELL2-RO-, and edwards25519-SHA512-EDELL2-NU-
-are identical to the correspondingly named suites defined above,
-except that H is SHA-512.<a href="#section-8.6-8" class="pilcrow">¶</a></p>
-<p id="section-8.6-9">Optimized example implementations of the above mappings are given in
-<a href="#map-to-curve25519" class="xref">Appendix D.3</a> and <a href="#map-to-edwards25519" class="xref">Appendix D.4</a>.<a href="#section-8.6-9" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-448">
-<section id="section-8.7">
-        <h3 id="name-suites-for-curve448-and-edw">
-<a href="#section-8.7" class="section-number selfRef">8.7. </a><a href="#name-suites-for-curve448-and-edw" class="section-name selfRef">Suites for curve448 and edwards448</a>
-        </h3>
-<p id="section-8.7-1">This section defines ciphersuites for curve448 and edwards448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>.<a href="#section-8.7-1" class="pilcrow">¶</a></p>
-<p id="section-8.7-2">The suites curve448-SHA512-ELL2-RO- and curve448-SHA512-ELL2-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.7-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.7-3.1">
-            <p id="section-8.7-3.1.1">E: K * t^2 = s^3 + J * s^2 + s, where<a href="#section-8.7-3.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.7-3.1.2.1">J = 156326<a href="#section-8.7-3.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-3.1.2.2">K = 1<a href="#section-8.7-3.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.7-3.2">f: Elligator 2 method, <a href="#elligator2" class="xref">Section 6.7.1</a><a href="#section-8.7-3.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.7-4">The suites edwards448-SHA512-EDELL2-RO- and edwards448-SHA512-EDELL2-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.7-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.7-5.1">
-            <p id="section-8.7-5.1.1">E: a * v^2 + w^2 = 1 + d * v^2 * w^2, where<a href="#section-8.7-5.1.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.7-5.1.2.1">a = 1<a href="#section-8.7-5.1.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-5.1.2.2">d = -39081<a href="#section-8.7-5.1.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.7-5.2">f: Twisted Edwards Elligator 2 method, <a href="#ell2edwards" class="xref">Section 6.8.2</a><a href="#section-8.7-5.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-5.3">M: curve448, defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.2<a href="#section-8.7-5.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-5.4">rational_map: the 4-isogeny map defined in <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.2<a href="#section-8.7-5.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.7-6">The common parameters for all of the above suites are:<a href="#section-8.7-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.7-7.1">p: 2^448 - 2^224 - 1<a href="#section-8.7-7.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-7.2">m: 1<a href="#section-8.7-7.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-7.3">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.7-7.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-7.4">H: SHA-512<a href="#section-8.7-7.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-7.5">L: 84<a href="#section-8.7-7.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-7.6">Z: -1<a href="#section-8.7-7.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.7-7.7">h_eff: 4<a href="#section-8.7-7.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.7-8">Optimized example implementations of the above mappings are given in
-<a href="#map-to-curve448" class="xref">Appendix D.5</a> and <a href="#map-to-edwards448" class="xref">Appendix D.6</a>.<a href="#section-8.7-8" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-secp256k1">
-<section id="section-8.8">
-        <h3 id="name-suites-for-secp256k1">
-<a href="#section-8.8" class="section-number selfRef">8.8. </a><a href="#name-suites-for-secp256k1" class="section-name selfRef">Suites for secp256k1</a>
-        </h3>
-<p id="section-8.8-1">This section defines ciphersuites for the secp256k1 elliptic curve <span>[<a href="#SEC2" class="xref">SEC2</a>]</span>.<a href="#section-8.8-1" class="pilcrow">¶</a></p>
-<p id="section-8.8-2">The suites secp256k1-SHA256-SSWU-RO- and secp256k1-SHA256-SSWU-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.8-2" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.8-3.1">f: Simplified SWU for AB == 0, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a><a href="#section-8.8-3.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-3.2">Z: -11<a href="#section-8.8-3.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-3.3">
-            <p id="section-8.8-3.3.1">E': y'^2 = x'^3 + A' * x' + B', where<a href="#section-8.8-3.3.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.8-3.3.2.1">A': 0x3f8731abdd661adca08a5558f0f5d272e953d363cb6f0e5d405447c01a444533<a href="#section-8.8-3.3.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-3.3.2.2">B': 1771<a href="#section-8.8-3.3.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.8-3.4">iso_map: the 3-isogeny map from E' to E given in <a href="#appx-iso-secp256k1" class="xref">Appendix C.1</a><a href="#section-8.8-3.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.8-4">The suites secp256k1-SHA256-SVDW-RO- and secp256k1-SHA256-SVDW-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.8-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.8-5.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.8-5.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-5.2">Z: 1<a href="#section-8.8-5.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.8-6">The common parameters for all of the above suites are:<a href="#section-8.8-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.8-7.1">E: y^2 = x^3 + 7<a href="#section-8.8-7.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-7.2">p: 2^256 - 2^32 - 2^9 - 2^8 - 2^7 - 2^6 - 2^4 - 1<a href="#section-8.8-7.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-7.3">m: 1<a href="#section-8.8-7.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-7.4">sgn0: sgn0_le (<a href="#sgn0-le" class="xref">Section 4.1.2</a>)<a href="#section-8.8-7.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-7.5">H: SHA-256<a href="#section-8.8-7.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-7.6">L: 48<a href="#section-8.8-7.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.8-7.7">h_eff: 1<a href="#section-8.8-7.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.8-8">An optimized example implementation of the Simplified SWU mapping
-to the curve E' isogenous to secp256k1 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.8-8" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-bls12381">
-<section id="section-8.9">
-        <h3 id="name-suites-for-bls12-381">
-<a href="#section-8.9" class="section-number selfRef">8.9. </a><a href="#name-suites-for-bls12-381" class="section-name selfRef">Suites for BLS12-381</a>
-        </h3>
-<p id="section-8.9-1">This section defines ciphersuites for groups G1 and G2 of
-the BLS12-381 elliptic curve <span>[<a href="#BLS12-381" class="xref">BLS12-381</a>]</span>.<a href="#section-8.9-1" class="pilcrow">¶</a></p>
-<div id="suites-bls12381-g1">
-<section id="section-8.9.1">
-          <h4 id="name-bls12-381-g1">
-<a href="#section-8.9.1" class="section-number selfRef">8.9.1. </a><a href="#name-bls12-381-g1" class="section-name selfRef">BLS12-381 G1</a>
-          </h4>
-<p id="section-8.9.1-1">The suites BLS12381G1-SHA256-SSWU-RO- and BLS12381G1-SHA256-SSWU-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.9.1-1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.1-2.1">f: Simplified SWU for AB == 0, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a><a href="#section-8.9.1-2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-2.2">Z: 11<a href="#section-8.9.1-2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-2.3">
-              <p id="section-8.9.1-2.3.1">E': y'^2 = x'^3 + A' * x' + B', where<a href="#section-8.9.1-2.3.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.1-2.3.2.1">A' = 0x144698a3b8e9433d693a02c96d4982b0ea985383ee66a8d8e8981aefd881ac98936f8da0e0f97f5cf428082d584c1d<a href="#section-8.9.1-2.3.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-2.3.2.2">B' = 0x12e2908d11688030018b12e8753eee3b2016c1f0f24f4070a0b9c14fcef35ef55a23215a316ceaa5d1cc48e98e172be0<a href="#section-8.9.1-2.3.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.9.1-2.4">iso_map: the 11-isogeny map from E' to E given in <a href="#appx-iso-bls12381-g1" class="xref">Appendix C.2</a><a href="#section-8.9.1-2.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.1-3">The suites BLS12381G1-SHA256-SVDW-RO- and BLS12381G1-SHA256-SVDW-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.9.1-3" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.1-4.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.9.1-4.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-4.2">Z: -3<a href="#section-8.9.1-4.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.1-5">The common parameters for the above suites are:<a href="#section-8.9.1-5" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.1-6.1">E: y^2 = x^3 + 4<a href="#section-8.9.1-6.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-6.2">p: 0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab<a href="#section-8.9.1-6.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-6.3">m: 1<a href="#section-8.9.1-6.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-6.4">sgn0: sgn0_be (<a href="#sgn0-be" class="xref">Section 4.1.1</a>)<a href="#section-8.9.1-6.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-6.5">H: SHA-256<a href="#section-8.9.1-6.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-6.6">L: 64<a href="#section-8.9.1-6.6" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.1-6.7">h_eff: 0xd201000000010001<a href="#section-8.9.1-6.7" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.1-7">Note that this h_eff value is chosen for compatibility
-with the fast cofactor clearing method described by Scott (<span>[<a href="#WB19" class="xref">WB19</a>]</span> Section 5).<a href="#section-8.9.1-7" class="pilcrow">¶</a></p>
-<p id="section-8.9.1-8">An optimized example implementation of the Simplified SWU mapping
-to the curve E' isogenous to BLS12-381 G1 is given in <a href="#sswu-map-to-3mod4" class="xref">Appendix D.2</a>.<a href="#section-8.9.1-8" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="suites-bls12381-g2">
-<section id="section-8.9.2">
-          <h4 id="name-bls12-381-g2">
-<a href="#section-8.9.2" class="section-number selfRef">8.9.2. </a><a href="#name-bls12-381-g2" class="section-name selfRef">BLS12-381 G2</a>
-          </h4>
-<p id="section-8.9.2-1">Group G2 of BLS12-381 is defined over a field F = GF(p^m) defined as:<a href="#section-8.9.2-1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.2-2.1">p: 0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab<a href="#section-8.9.2-2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-2.2">m: 2<a href="#section-8.9.2-2.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-2.3">(1, I) is the basis for F, where I^2 + 1 == 0 in F<a href="#section-8.9.2-2.3" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.2-3">The suites BLS12381G2-SHA256-SSWU-RO- and BLS12381G2-SHA256-SSWU-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.9.2-3" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.2-4.1">f: Simplified SWU for AB == 0, <a href="#simple-swu-AB0" class="xref">Section 6.6.3</a><a href="#section-8.9.2-4.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-4.2">Z: -(2 + I)<a href="#section-8.9.2-4.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-4.3">
-              <p id="section-8.9.2-4.3.1">E': y'^2 = x'^3 + A' * x' + B', where<a href="#section-8.9.2-4.3.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.2-4.3.2.1">A' = 240 * I<a href="#section-8.9.2-4.3.2.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-4.3.2.2">B' = 1012 * (1 + I)<a href="#section-8.9.2-4.3.2.2" class="pilcrow">¶</a>
-</li>
-</ul>
-</li>
-<li id="section-8.9.2-4.4">iso_map: the isogeny map from E' to E given in <a href="#appx-iso-bls12381-g2" class="xref">Appendix C.3</a><a href="#section-8.9.2-4.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.2-5">The suites BLS12381G2-SHA256-SVDW-RO- and BLS12381G2-SHA256-SVDW-NU-
-share the following parameters, in addition to the common parameters below.<a href="#section-8.9.2-5" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.2-6.1">f: Shallue-van de Woestijne method, <a href="#svdw" class="xref">Section 6.6.1</a><a href="#section-8.9.2-6.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-6.2">Z: I<a href="#section-8.9.2-6.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.2-7">The common parameters for the above suites are:<a href="#section-8.9.2-7" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-8.9.2-8.1">E: y^2 = x^3 + 4 * (1 + I)<a href="#section-8.9.2-8.1" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-8.2">p, m, F: defined above<a href="#section-8.9.2-8.2" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-8.3">sgn0: sgn0_be (<a href="#sgn0-be" class="xref">Section 4.1.1</a>)<a href="#section-8.9.2-8.3" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-8.4">H: SHA-256<a href="#section-8.9.2-8.4" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-8.5">L: 64<a href="#section-8.9.2-8.5" class="pilcrow">¶</a>
-</li>
-<li id="section-8.9.2-8.6">h_eff: 0xbc69f08f2ee75b3584c6a0ea91b352888e2a8e9145ad7689986ff031508ffe1329c2f178731db956d82bf015d1212b02ec0ec69d7477c1ae954cbc06689f6a359894c0adebbf6b4e8020005aaa95551<a href="#section-8.9.2-8.6" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-8.9.2-9">Note that this h_eff value is chosen for compatibility
-with the fast cofactor clearing method described by
-Budroni and Pintore (<span>[<a href="#BP18" class="xref">BP18</a>]</span>, Section 4.1).<a href="#section-8.9.2-9" class="pilcrow">¶</a></p>
-</section>
-</div>
 </section>
 </div>
 </section>
@@ -3351,19 +3609,24 @@ Budroni and Pintore (<span>[<a href="#BP18" class="xref">BP18</a>]</span>, Secti
       </h2>
 <p id="section-10-1">When constant-time implementations are required, all basic operations and
 utility functions must be implemented in constant time, as discussed in
-<a href="#utility" class="xref">Section 4</a>.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">Each encoding function accepts arbitrary input and maps it to a pseudorandom
-point on the curve.
-Directly evaluating the mappings of <a href="#mappings" class="xref">Section 6</a> produces an output that is
-distinguishable from random.
-<a href="#roadmap" class="xref">Section 3</a> shows how to use these mappings to construct a function approximating a
-random oracle.<a href="#section-10-2" class="pilcrow">¶</a></p>
-<p id="section-10-3"><a href="#domain-separation" class="xref">Section 3.1</a> describes considerations related to domain separation
-for random oracle encodings.<a href="#section-10-3" class="pilcrow">¶</a></p>
-<p id="section-10-4"><a href="#hashtobase" class="xref">Section 5</a> describes considerations for uniformly hashing to field elements.<a href="#section-10-4" class="pilcrow">¶</a></p>
-<p id="section-10-5">When the hash_to_curve function (<a href="#roadmap" class="xref">Section 3</a>) is instantiated
-with hash_to_base (<a href="#hashtobase" class="xref">Section 5</a>), the resulting function is
-indifferentiable from a random oracle (<span>[<a href="#FFSTV13" class="xref">FFSTV13</a>]</span>, <span>[<a href="#LBB19" class="xref">LBB19</a>]</span>, <span>[<a href="#MRH04" class="xref">MRH04</a>]</span>).
+<a href="#utility" class="xref">Section 4</a>.
+In some applications (e.g., embedded systems), leakage through other side
+channels (e.g., power or electromagnetic side channels) may be pertinent.
+Defending against such leakage is outside the scope of this document, because
+the nature of the leakage and the appropriate defense depends on the protocol
+from which a hash-to-curve function is invoked.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">Each encoding variant (<a href="#roadmap" class="xref">Section 3</a>) accepts an arbitrary byte string and maps
+it to a pseudorandom point on the curve.
+Note, however, that directly evaluating the mappings of <a href="#mappings" class="xref">Section 6</a> produces
+an output that is distinguishable from random.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-3"><a href="#domain-separation" class="xref">Section 3.1</a> describes considerations related to domain separation.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-4"><a href="#hashtofield" class="xref">Section 5</a> describes considerations for uniformly hashing to field elements;
+see <a href="#security-considerations-hash-to-field" class="xref">Section 10.1</a> and <a href="#security-considerations-expand-md" class="xref">Section 10.2</a>
+for further discussion.<a href="#section-10-4" class="pilcrow">¶</a></p>
+<p id="section-10-5">When the hash_to_curve function (<a href="#roadmap" class="xref">Section 3</a>) is instantiated with a
+hash_to_field function that is indifferentiable from a random oracle
+(<a href="#hashtofield" class="xref">Section 5</a>), the resulting function is indifferentiable from a random
+oracle (<span>[<a href="#FFSTV13" class="xref">FFSTV13</a>]</span>, <span>[<a href="#LBB19" class="xref">LBB19</a>]</span>, <span>[<a href="#MRH04" class="xref">MRH04</a>]</span>).
 In most cases such a function can be safely used in protocols whose security
 analysis assumes a random oracle that outputs points on an elliptic curve.
 As Ristenpart et al. discuss in <span>[<a href="#RSS11" class="xref">RSS11</a>]</span>, however, not all security proofs
@@ -3373,12 +3636,88 @@ This limitation should be considered when analyzing the security of protocols
 relying on the hash_to_curve function.<a href="#section-10-5" class="pilcrow">¶</a></p>
 <p id="section-10-6">When hashing passwords using any function described in this document, an adversary
 who learns the output of the hash function (or potentially any intermediate value,
-e.g., the output of hash_to_base) may be able to carry out a dictionary attack.
+e.g., the output of hash_to_field) may be able to carry out a dictionary attack.
 To mitigate such attacks, it is recommended to first execute a more costly key
 derivation function (e.g., PBKDF2 <span>[<a href="#RFC2898" class="xref">RFC2898</a>]</span> or scrypt <span>[<a href="#RFC7914" class="xref">RFC7914</a>]</span>) on the password,
 then hash the output of that function to the target elliptic curve.
 For collision resistance, the hash underlying the key derivation function
-should be chosen according to the guidelines listed in <a href="#hashtobase-sec" class="xref">Section 5.1</a>.<a href="#section-10-6" class="pilcrow">¶</a></p>
+should be chosen according to the guidelines listed in <a href="#hashtofield-expand" class="xref">Section 5.3</a>.<a href="#section-10-6" class="pilcrow">¶</a></p>
+<div id="security-considerations-hash-to-field">
+<section id="section-10.1">
+        <h3 id="name-hash_to_field-security">
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-hash_to_field-security" class="section-name selfRef">hash_to_field security</a>
+        </h3>
+<p id="section-10.1-1">The hash_to_field function defined in <a href="#hashtofield" class="xref">Section 5</a> is indifferentiable
+from a random oracle <span>[<a href="#MRH04" class="xref">MRH04</a>]</span> when expand_message (<a href="#hashtofield-expand" class="xref">Section 5.3</a>)
+is modeled as a random oracle.
+By composability of indifferentiability proofs, this also holds when
+expand_message is proved indifferentiable from a random oracle relative
+to an underlying primitive that is modeled as a random oracle.
+When following the guidelines in <a href="#hashtofield-expand" class="xref">Section 5.3</a>, both variants
+of expand_message defined in that section meet this requirement
+(see also <a href="#security-considerations-expand-md" class="xref">Section 10.2</a>).<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.1-2">We very briefly sketch the indifferentiability argument for hash_to_field.
+Notice that each integer mod p that hash_to_field returns (i.e., each element
+of the vector representation of F) is a member of an equivalence class of roughly
+2^k integers of length log2(p) + k bits, all of which are equal modulo p.
+For each integer mod p that hash_to_field returns, the simulator samples
+one member of this equivalence class at random and outputs the byte string
+returned by I2OSP.
+(Notice that this is essentially the inverse of the hash_to_field procedure.)<a href="#section-10.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.1-3">Finally, we note that in the expand_message variants defined in this document
+(<a href="#hashtofield-expand" class="xref">Section 5.3</a>), the argument to every invocation of H (the underlying
+hash or extensible output function) is prepended with a prefix-free encoding of
+the domain separation tag DST, namely,<a href="#section-10.1-3" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-10.1-4">
+<pre>
+DST_prime = I2OSP(len(DST), 1) || DST
+</pre><a href="#section-10.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-10.1-5">The reason for this design is that it allows invocations of H outside of hash_to_field
+to be separated from those inside of hash_to_field, just by prepending the outside
+invocations with some other tag distinct from DST_prime.
+Other expand_message variants that follow the guidelines in
+<a href="#hashtofield-expand-other" class="xref">Section 5.3.3</a> are expected to have similar properties,
+but these should be analyzed on a case-by-case basis.<a href="#section-10.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations-expand-md">
+<section id="section-10.2">
+        <h3 id="name-expand_message_md-security">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-expand_message_md-security" class="section-name selfRef">expand_message_md security</a>
+        </h3>
+<p id="section-10.2-1">The expand_message_md function defined in <a href="#hashtofield-expand-md" class="xref">Section 5.3.1</a> is indifferentiable
+from a random oracle <span>[<a href="#MRH04" class="xref">MRH04</a>]</span> when any of the following hold:<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-10.2-2">
+          <li id="section-10.2-2.1">H is indifferentiable from a random oracle,<a href="#section-10.2-2.1" class="pilcrow">¶</a>
+</li>
+<li id="section-10.2-2.2">H is a sponge-based hash function whose inner function
+is modeled as a random transformation or random permutation <span>[<a href="#BDPV08" class="xref">BDPV08</a>]</span>, or<a href="#section-10.2-2.2" class="pilcrow">¶</a>
+</li>
+<li id="section-10.2-2.3">H is a Merkle-Damgaard hash function and the compression function is
+modeled as a random oracle <span>[<a href="#CDMP05" class="xref">CDMP05</a>]</span>.<a href="#section-10.2-2.3" class="pilcrow">¶</a>
+</li>
+</ol>
+<p id="section-10.2-3">The first and second cases are true by the composability of indifferentiability
+proofs.
+For the third case, we now briefly sketch an indifferentiability argument.
+Here, H is a Merkle-Damgaard function; we model H's underlying compression
+function as a random oracle.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
+<p id="section-10.2-4">First, we argue that each of the b_i values, i &gt;= 1, is generated by a hash
+function that is indifferentiable from a random oracle.
+This follows from Theorem 3.4 of <span>[<a href="#CDMP05" class="xref">CDMP05</a>]</span> and the fact that each call to H
+that generates one of these b_i values has a unique prefix, DST || I2OSP(i, 1).<a href="#section-10.2-4" class="pilcrow">¶</a></p>
+<p id="section-10.2-5">Next, we argue that b_0_chopped is generated by a hash function that is
+indifferentiable from a random oracle.
+This follows from Theorem 3.3 of <span>[<a href="#CDMP05" class="xref">CDMP05</a>]</span>; <span>[<a href="#MT07" class="xref">MT07</a>]</span>, <span>[<a href="#CN08" class="xref">CN08</a>]</span>, and <span>[<a href="#DFL12" class="xref">DFL12</a>]</span>
+improve the analysis, giving tighter security bounds.<a href="#section-10.2-5" class="pilcrow">¶</a></p>
+<p id="section-10.2-6">Finally, since b_0_chopped and all b_i, i &gt;= 1, are the outputs of hash
+functions indifferentiable from random oracles, their concatenation
+is also indifferentiable from a random oracle by the composability of
+indifferentiability proofs, as is a len_in_bytes prefix of this concatenation.
+(See also <span>[<a href="#CDMP05" class="xref">CDMP05</a>]</span>, Section 5.)<a href="#section-10.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="acknowledgements">
@@ -3431,9 +3770,6 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="RFC2898">[RFC2898]</dt>
 <dd>
 <span class="refAuthor">Kaliski, B.</span>, <span class="refTitle">"PKCS #5: Password-Based Cryptography Specification Version 2.0"</span>, <span class="seriesInfo">RFC 2898</span>, <span class="seriesInfo">DOI 10.17487/RFC2898</span>, <time datetime="2000-09">September 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2898">https://www.rfc-editor.org/info/rfc2898</a>&gt;</span>. </dd>
-<dt id="RFC5869">[RFC5869]</dt>
-<dd>
-<span class="refAuthor">Krawczyk, H.</span><span class="refAuthor"> and P. Eronen</span>, <span class="refTitle">"HMAC-based Extract-and-Expand Key Derivation Function (HKDF)"</span>, <span class="seriesInfo">RFC 5869</span>, <span class="seriesInfo">DOI 10.17487/RFC5869</span>, <time datetime="2010-05">May 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5869">https://www.rfc-editor.org/info/rfc5869</a>&gt;</span>. </dd>
 <dt id="RFC7748">[RFC7748]</dt>
 <dd>
 <span class="refAuthor">Langley, A.</span><span class="refAuthor">, Hamburg, M.</span><span class="refAuthor">, and S. Turner</span>, <span class="refTitle">"Elliptic Curves for Security"</span>, <span class="seriesInfo">RFC 7748</span>, <span class="seriesInfo">DOI 10.17487/RFC7748</span>, <time datetime="2016-01">January 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7748">https://www.rfc-editor.org/info/rfc7748</a>&gt;</span>. </dd>
@@ -3464,7 +3800,10 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <span class="refAuthor">Bernstein, D.J.</span><span class="refAuthor">, Birkner, P.</span><span class="refAuthor">, Joye, M.</span><span class="refAuthor">, Lange, T.</span><span class="refAuthor">, and C. Peters</span>, <span class="refTitle">"Twisted Edwards curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-68164-9_26</span>, <span class="seriesInfo">pages 389-405</span>, <span class="seriesInfo">In AFRICACRYPT 2008</span>, <time datetime="2008">2008</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-68164-9_26">https://doi.org/10.1007/978-3-540-68164-9_26</a>&gt;</span>. </dd>
 <dt id="BCIMRT10">[BCIMRT10]</dt>
 <dd>
-<span class="refAuthor">Brier, E.</span><span class="refAuthor">, Coron, J.S.</span><span class="refAuthor">, Icart, T.</span><span class="refAuthor">, Madore, D.</span><span class="refAuthor">, Randriam, H.</span><span class="refAuthor">, and M. Tibouchi</span>, <span class="refTitle">"Efficient Indifferentiable Hashing into Ordinary Elliptic Curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-14623-7_13</span>, <span class="seriesInfo">pages 237-254</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2010</span>, <time datetime="2010">2010</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-14623-7_13">https://doi.org/10.1007/978-3-642-14623-7_13</a>&gt;</span>. </dd>
+<span class="refAuthor">Brier, E.</span><span class="refAuthor">, Coron, J-S.</span><span class="refAuthor">, Icart, T.</span><span class="refAuthor">, Madore, D.</span><span class="refAuthor">, Randriam, H.</span><span class="refAuthor">, and M. Tibouchi</span>, <span class="refTitle">"Efficient Indifferentiable Hashing into Ordinary Elliptic Curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-14623-7_13</span>, <span class="seriesInfo">pages 237-254</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2010</span>, <time datetime="2010">2010</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-14623-7_13">https://doi.org/10.1007/978-3-642-14623-7_13</a>&gt;</span>. </dd>
+<dt id="BDPV08">[BDPV08]</dt>
+<dd>
+<span class="refAuthor">Bertoni,, G.</span><span class="refAuthor">, Daemen, J.</span><span class="refAuthor">, Peeters, M.</span><span class="refAuthor">, and G. Van Assche</span>, <span class="refTitle">"On the Indifferentiability of the Sponge Construction"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-78967-3_11</span>, <span class="seriesInfo">pages 181-197</span>, <span class="seriesInfo">In Advances in Cryptology - EUROCRYPT 2008</span>, <time datetime="2008">2008</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-78967-3_11">https://doi.org/10.1007/978-3-540-78967-3_11</a>&gt;</span>. </dd>
 <dt id="BF01">[BF01]</dt>
 <dd>
 <span class="refAuthor">Boneh, D.</span><span class="refAuthor"> and M. Franklin</span>, <span class="refTitle">"Identity-based encryption from the Weil pairing"</span>, <span class="seriesInfo">DOI 10.1007/3-540-44647-8_13</span>, <span class="seriesInfo">pages 213-229</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2001</span>, <time datetime="2001-08">August 2001</time>, <span>&lt;<a href="https://doi.org/10.1007/3-540-44647-8_13">https://doi.org/10.1007/3-540-44647-8_13</a>&gt;</span>. </dd>
@@ -3498,12 +3837,21 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="C93">[C93]</dt>
 <dd>
 <span class="refAuthor">Cohen, H.</span>, <span class="refTitle">"A Course in Computational Algebraic Number Theory"</span>, <span class="seriesInfo">ISBN 9783642081422</span>, <span class="seriesInfo">publisher Springer-Verlag</span>, <time datetime="1993">1993</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-662-02945-9">https://doi.org/10.1007/978-3-662-02945-9</a>&gt;</span>. </dd>
+<dt id="CDMP05">[CDMP05]</dt>
+<dd>
+<span class="refAuthor">Coron, J-S.</span><span class="refAuthor">, Dodis, Y.</span><span class="refAuthor">, Malinaud, C.</span><span class="refAuthor">, and P. Puniya</span>, <span class="refTitle">"Merkle-Damgaard Revisited: How to Construct a Hash Function"</span>, <span class="seriesInfo">DOI 10.1007/11535218_26</span>, <span class="seriesInfo">pages 430-448</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2005</span>, <time datetime="2005">2005</time>, <span>&lt;<a href="https://doi.org/10.1007/11535218_26">https://doi.org/10.1007/11535218_26</a>&gt;</span>. </dd>
 <dt id="CFADLNV05">[CFADLNV05]</dt>
 <dd>
 <span class="refAuthor">Cohen, H.</span><span class="refAuthor">, Frey, G.</span><span class="refAuthor">, Avanzi, R.</span><span class="refAuthor">, Doche, C.</span><span class="refAuthor">, Lange, T.</span><span class="refAuthor">, Nguyen, K.</span><span class="refAuthor">, and F. Vercauteren</span>, <span class="refTitle">"Handbook of Elliptic and Hyperelliptic Curve Cryptography"</span>, <span class="seriesInfo">ISBN 9781584885184</span>, <span class="seriesInfo">publisher Chapman and Hall / CRC</span>, <time datetime="2005">2005</time>, <span>&lt;<a href="https://www.crcpress.com/9781584885184">https://www.crcpress.com/9781584885184</a>&gt;</span>. </dd>
 <dt id="CK11">[CK11]</dt>
 <dd>
 <span class="refAuthor">Couveignes, J.</span><span class="refAuthor"> and J. Kammerer</span>, <span class="refTitle">"The geometry of flex tangents to a cubic curve and its parameterizations"</span>, <span class="seriesInfo">DOI 10.1016/j.jsc.2011.11.003</span>, <span class="seriesInfo">pages 266-281</span>, <span class="seriesInfo">In Journal of Symbolic Computation, vol 47 issue 3</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1016/j.jsc.2011.11.003">https://doi.org/10.1016/j.jsc.2011.11.003</a>&gt;</span>. </dd>
+<dt id="CN08">[CN08]</dt>
+<dd>
+<span class="refAuthor">Chang, D.</span><span class="refAuthor"> and M. Nandi</span>, <span class="refTitle">"Improved indifferentiability security analysis for ChopMD hash function"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-71039-4_27</span>, <span class="seriesInfo">pages 429-443</span>, <span class="seriesInfo">In FSE</span>, <time datetime="2008">2008</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-71039-4_27">https://doi.org/10.1007/978-3-540-71039-4_27</a>&gt;</span>. </dd>
+<dt id="DFL12">[DFL12]</dt>
+<dd>
+<span class="refAuthor">Daubignard, M.</span><span class="refAuthor">, Fouque, P-A.</span><span class="refAuthor">, and Y. Lakhnech</span>, <span class="refTitle">"Generic indifferentiability proofs of hash designs"</span>, <span class="seriesInfo">DOI 10.1109/CSF.2012.13</span>, <span class="seriesInfo">pages 340-353</span>, <span class="seriesInfo">In CSF</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1109/CSF.2012.13">https://doi.org/10.1109/CSF.2012.13</a>&gt;</span>. </dd>
 <dt id="DRST12">[DRST12]</dt>
 <dd>
 <span class="refAuthor">Dodis, Y.</span><span class="refAuthor">, Ristenpart, T.</span><span class="refAuthor">, Steinberger, J.</span><span class="refAuthor">, and S. Tessaro</span>, <span class="refTitle">"To hash or not to hash again? (In)differentiability results for H^2 and HMAC"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-32009-5_21</span>, <span class="seriesInfo">pages 348-366</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2012</span>, <time datetime="2012-08">August 2012</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-32009-5_21">https://doi.org/10.1007/978-3-642-32009-5_21</a>&gt;</span>. </dd>
@@ -3524,7 +3872,7 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <span class="refAuthor">National Institute of Standards and Technology (NIST)</span>, <span class="refTitle">"SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions"</span>, <time datetime="2015-08">August 2015</time>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf</a>&gt;</span>. </dd>
 <dt id="FJT13">[FJT13]</dt>
 <dd>
-<span class="refAuthor">Fouque, P.</span><span class="refAuthor">, Joux, A.</span><span class="refAuthor">, and M. Tibouchi</span>, <span class="refTitle">"Injective encodings to elliptic curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-39059-3_14</span>, <span class="seriesInfo">pages 203-218</span>, <span class="seriesInfo">In ACISP 2013</span>, <time datetime="2013">2013</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-39059-3_14">https://doi.org/10.1007/978-3-642-39059-3_14</a>&gt;</span>. </dd>
+<span class="refAuthor">Fouque, P-A.</span><span class="refAuthor">, Joux, A.</span><span class="refAuthor">, and M. Tibouchi</span>, <span class="refTitle">"Injective encodings to elliptic curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-39059-3_14</span>, <span class="seriesInfo">pages 203-218</span>, <span class="seriesInfo">In ACISP 2013</span>, <time datetime="2013">2013</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-39059-3_14">https://doi.org/10.1007/978-3-642-39059-3_14</a>&gt;</span>. </dd>
 <dt id="FKR11">[FKR11]</dt>
 <dd>
 <span class="refAuthor">Fuentes-Castaneda, L.</span><span class="refAuthor">, Knapp, E.</span><span class="refAuthor">, and F. Rodriguez-Henriquez</span>, <span class="refTitle">"Fast Hashing to G2 on Pairing-Friendly Curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-28496-0_25</span>, <span class="seriesInfo">pages 412-430</span>, <span class="seriesInfo">In Selected Areas in Cryptography</span>, <time datetime="2011">2011</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-28496-0_25">https://doi.org/10.1007/978-3-642-28496-0_25</a>&gt;</span>. </dd>
@@ -3533,10 +3881,10 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <span class="refAuthor">Farashahi, R.R.</span><span class="refAuthor">, Shparlinski, I.E.</span><span class="refAuthor">, and J.F. Voloch</span>, <span class="refTitle">"On hashing into elliptic curves"</span>, <span class="seriesInfo">DOI 10.1515/JMC.2009.022</span>, <span class="seriesInfo">pages 353-360</span>, <span class="seriesInfo">In Journal of Mathematical Cryptology, vol 3 no 4</span>, <time datetime="2009">2009</time>, <span>&lt;<a href="https://doi.org/10.1515/JMC.2009.022">https://doi.org/10.1515/JMC.2009.022</a>&gt;</span>. </dd>
 <dt id="FT10">[FT10]</dt>
 <dd>
-<span class="refAuthor">Fouque, P.</span><span class="refAuthor"> and M. Tibouchi</span>, <span class="refTitle">"Estimating the size of the image of deterministic hash functions to elliptic curves."</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-14712-8_5</span>, <span class="seriesInfo">pages 81-91</span>, <span class="seriesInfo">In Progress in Cryptology - LATINCRYPT 2010</span>, <time datetime="2010">2010</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-14712-8_5">https://doi.org/10.1007/978-3-642-14712-8_5</a>&gt;</span>. </dd>
+<span class="refAuthor">Fouque, P-A.</span><span class="refAuthor"> and M. Tibouchi</span>, <span class="refTitle">"Estimating the size of the image of deterministic hash functions to elliptic curves."</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-14712-8_5</span>, <span class="seriesInfo">pages 81-91</span>, <span class="seriesInfo">In Progress in Cryptology - LATINCRYPT 2010</span>, <time datetime="2010">2010</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-14712-8_5">https://doi.org/10.1007/978-3-642-14712-8_5</a>&gt;</span>. </dd>
 <dt id="FT12">[FT12]</dt>
 <dd>
-<span class="refAuthor">Fouque, P.</span><span class="refAuthor"> and M. Tibouchi</span>, <span class="refTitle">"Indifferentiable Hashing to Barreto-Naehrig Curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-33481-8_1</span>, <span class="seriesInfo">pages 1-7</span>, <span class="seriesInfo">In Progress in Cryptology - LATINCRYPT 2012</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-33481-8_1">https://doi.org/10.1007/978-3-642-33481-8_1</a>&gt;</span>. </dd>
+<span class="refAuthor">Fouque, P-A.</span><span class="refAuthor"> and M. Tibouchi</span>, <span class="refTitle">"Indifferentiable Hashing to Barreto-Naehrig Curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-33481-8_1</span>, <span class="seriesInfo">pages 1-7</span>, <span class="seriesInfo">In Progress in Cryptology - LATINCRYPT 2012</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-33481-8_1">https://doi.org/10.1007/978-3-642-33481-8_1</a>&gt;</span>. </dd>
 <dt id="hash2curve-repo">[hash2curve-repo]</dt>
 <dd>
 <span class="refTitle">"Hashing to Elliptic Curves - GitHub repository"</span>, <time datetime="2019">2019</time>, <span>&lt;<a href="https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve">https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve</a>&gt;</span>. </dd>
@@ -3561,6 +3909,9 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="MRH04">[MRH04]</dt>
 <dd>
 <span class="refAuthor">Maurer, U.</span><span class="refAuthor">, Renner, R.</span><span class="refAuthor">, and C. Holenstein</span>, <span class="refTitle">"Indifferentiability, impossibility results on reductions, and applications to the random oracle methodology"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-24638-1_2</span>, <span class="seriesInfo">pages 21-39</span>, <span class="seriesInfo">In TCC 2004: Theory of Cryptography</span>, <time datetime="2004-02">February 2004</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-24638-1_2">https://doi.org/10.1007/978-3-540-24638-1_2</a>&gt;</span>. </dd>
+<dt id="MT07">[MT07]</dt>
+<dd>
+<span class="refAuthor">Maurer, U.</span><span class="refAuthor"> and S. Tessaro</span>, <span class="refTitle">"Domain extension of public random functions: Beyond the birthday barrier"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-74143-5_11</span>, <span class="seriesInfo">pages 187-204</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2007</span>, <time datetime="2007">2007</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-74143-5_11">https://doi.org/10.1007/978-3-540-74143-5_11</a>&gt;</span>. </dd>
 <dt id="p1363a">[p1363a]</dt>
 <dd>
 <span class="refAuthor">IEEE Computer Society</span>, <span class="refTitle">"IEEE Standard Specifications for Public-Key Cryptography---Amendment 1: Additional Techniques"</span>, <time datetime="2004-03">March 2004</time>, <span>&lt;<a href="https://standards.ieee.org/standard/1363a-2004.html">https://standards.ieee.org/standard/1363a-2004.html</a>&gt;</span>. </dd>
@@ -3842,7 +4193,7 @@ that constructs these isogenies.<a href="#section-appendix.c-3" class="pilcrow">
         <h2 id="name-3-isogeny-map-for-secp256k1">
 <a href="#section-c.1" class="section-number selfRef">C.1. </a><a href="#name-3-isogeny-map-for-secp256k1" class="section-name selfRef">3-isogeny map for secp256k1</a>
         </h2>
-<p id="section-c.1-1">This section specifies the isogeny map for the secp256k1 suite listed in <a href="#suites-secp256k1" class="xref">Section 8.8</a>.<a href="#section-c.1-1" class="pilcrow">¶</a></p>
+<p id="section-c.1-1">This section specifies the isogeny map for the secp256k1 suite listed in <a href="#suites-secp256k1" class="xref">Section 8.6</a>.<a href="#section-c.1-1" class="pilcrow">¶</a></p>
 <p id="section-c.1-2">The 3-isogeny map from (x', y') on E' to (x, y) on E is given by the following rational functions:<a href="#section-c.1-2" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-c.1-3.1">
@@ -4176,16 +4527,16 @@ compute (X', Y', Z') = (xn * xd * yd^2, yn * yd^2 * xd^3, xd * yd).<a href="#sec
 <p id="section-d.2-1">The following is a straight-line implementation of the Simplified SWU
 mapping that applies to any curve over GF(p) for p = 3 (mod 4).
 This includes the ciphersuites for NIST curves P-256, P-384, and P-521 <span>[<a href="#FIPS186-4" class="xref">FIPS186-4</a>]</span> given in <a href="#suites" class="xref">Section 8</a>.
-It also includes the curves isogenous to secp256k1 (<a href="#suites-secp256k1" class="xref">Section 8.8</a>) and BLS12-381 G1 (<a href="#suites-bls12381-g1" class="xref">Section 8.9.1</a>).<a href="#section-d.2-1" class="pilcrow">¶</a></p>
+It also includes the curves isogenous to secp256k1 (<a href="#suites-secp256k1" class="xref">Section 8.6</a>) and BLS12-381 G1 (<a href="#suites-bls12381-g1" class="xref">Section 8.7.1</a>).<a href="#section-d.2-1" class="pilcrow">¶</a></p>
 <p id="section-d.2-2">The implementations for these curves differ only in the constants
 and the base field.
 The constant definitions below are given in terms of the parameters for the
 Simplified SWU mapping; for parameter values for the curves listed above, see
-<a href="#suites-p256" class="xref">Section 8.3</a> (P-256),
-<a href="#suites-p384" class="xref">Section 8.4</a> (P-384),
-<a href="#suites-p521" class="xref">Section 8.5</a> (P-521),
-<a href="#suites-secp256k1" class="xref">Section 8.8</a> (E' isogenous to secp256k1), and
-<a href="#suites-bls12381-g1" class="xref">Section 8.9.1</a> (E' isogenous to BLS12-381 G1).<a href="#section-d.2-2" class="pilcrow">¶</a></p>
+<a href="#suites-p256" class="xref">Section 8.1</a> (P-256),
+<a href="#suites-p384" class="xref">Section 8.2</a> (P-384),
+<a href="#suites-p521" class="xref">Section 8.3</a> (P-521),
+<a href="#suites-secp256k1" class="xref">Section 8.6</a> (E' isogenous to secp256k1), and
+<a href="#suites-bls12381-g1" class="xref">Section 8.7.1</a> (E' isogenous to BLS12-381 G1).<a href="#section-d.2-2" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-d.2-3">
 <pre>
 map_to_curve_simple_swu_3mod4(u)
@@ -4243,7 +4594,7 @@ Steps:
 <a href="#section-d.3" class="section-number selfRef">D.3. </a><a href="#name-curve25519-elligator-2" class="section-name selfRef">curve25519 (Elligator 2)</a>
         </h2>
 <p id="section-d.3-1">The following is a straight-line implementation of Elligator 2
-for curve25519 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-25519" class="xref">Section 8.6</a>.<a href="#section-d.3-1" class="pilcrow">¶</a></p>
+for curve25519 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-25519" class="xref">Section 8.4</a>.<a href="#section-d.3-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-d.3-2">
 <pre>
 map_to_curve_elligator2_curve25519(u)
@@ -4309,7 +4660,7 @@ Steps:
 <a href="#section-d.4" class="section-number selfRef">D.4. </a><a href="#name-edwards25519-elligator-2" class="section-name selfRef">edwards25519 (Elligator 2)</a>
         </h2>
 <p id="section-d.4-1">The following is a straight-line implementation of Elligator 2
-for edwards25519 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-25519" class="xref">Section 8.6</a>.
+for edwards25519 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-25519" class="xref">Section 8.4</a>.
 The subroutine map_to_curve_elligator2_curve25519
 is defined in <a href="#map-to-curve25519" class="xref">Appendix D.3</a>.<a href="#section-d.4-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-d.4-2">
@@ -4347,7 +4698,7 @@ Steps:
 <a href="#section-d.5" class="section-number selfRef">D.5. </a><a href="#name-curve448-elligator-2" class="section-name selfRef">curve448 (Elligator 2)</a>
         </h2>
 <p id="section-d.5-1">The following is a straight-line implementation of Elligator 2
-for curve448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-448" class="xref">Section 8.7</a>.<a href="#section-d.5-1" class="pilcrow">¶</a></p>
+for curve448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-448" class="xref">Section 8.5</a>.<a href="#section-d.5-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-d.5-2">
 <pre>
 map_to_curve_elligator2_curve448(u)
@@ -4398,7 +4749,7 @@ Steps:
 <a href="#section-d.6" class="section-number selfRef">D.6. </a><a href="#name-edwards448-elligator-2" class="section-name selfRef">edwards448 (Elligator 2)</a>
         </h2>
 <p id="section-d.6-1">The following is a straight-line implementation of Elligator 2
-for edwards448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-448" class="xref">Section 8.7</a>.
+for edwards448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span> as specified in <a href="#suites-448" class="xref">Section 8.5</a>.
 The subroutine map_to_curve_elligator2_curve448
 is defined in <a href="#map-to-curve448" class="xref">Appendix D.5</a>.<a href="#section-d.6-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-d.6-2">
@@ -4763,45 +5114,13 @@ Procedure:
 </address>
 </section>
 </div>
-<script>var toc = document.getElementById("toc");
-var tocToggle = toc.querySelector("h2");
-var tocNav = toc.querySelector("nav");
-
-// mobile menu toggle
-tocToggle.onclick = function(event) {
-    if (window.innerWidth < 1024) {
- var tocNavDisplay = tocNav.currentStyle ? tocNav.currentStyle.display : getComputedStyle(tocNav, null).display;
- if (tocNavDisplay == "none") {
-     tocNav.style.display = "block";
- } else {
-     tocNav.style.display = "none";
- }
-    }
-}
-
-// toc anchor scroll to anchor
-tocNav.addEventListener("click", function (event) {
-    event.preventDefault();
-    if (event.target.nodeName == 'A') {
- if (window.innerWidth < 1024) {
-     tocNav.style.display = "none";
- }
- var href = event.target.getAttribute("href");
- var anchorId = href.substr(1);
- var anchor =  document.getElementById(anchorId);
- anchor.scrollIntoView(true);
- window.history.pushState("","",href);
-    }
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
 });
-
-// switch toc mode when window resized
-window.onresize = function () {
-    if (window.innerWidth < 1024) {
- tocNav.style.display = "none";
-    } else {
- tocNav.style.display = "block";
-    }
-}
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
 </script>
 </body>
 </html>
