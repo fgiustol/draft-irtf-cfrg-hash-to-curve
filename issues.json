@@ -1,6 +1,200 @@
 [
 
   {
+    "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/216",
+    "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
+    "labels_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/216/labels{/name}",
+    "comments_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/216/comments",
+    "events_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/216/events",
+    "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/216",
+    "id": 573585369,
+    "node_id": "MDU6SXNzdWU1NzM1ODUzNjk=",
+    "number": 216,
+    "title": "Test vectors",
+    "user": {
+      "login": "dot-asm",
+      "id": 9038069,
+      "node_id": "MDQ6VXNlcjkwMzgwNjk=",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9038069?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/dot-asm",
+      "html_url": "https://github.com/dot-asm",
+      "followers_url": "https://api.github.com/users/dot-asm/followers",
+      "following_url": "https://api.github.com/users/dot-asm/following{/other_user}",
+      "gists_url": "https://api.github.com/users/dot-asm/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/dot-asm/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/dot-asm/subscriptions",
+      "organizations_url": "https://api.github.com/users/dot-asm/orgs",
+      "repos_url": "https://api.github.com/users/dot-asm/repos",
+      "events_url": "https://api.github.com/users/dot-asm/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/dot-asm/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "open",
+    "locked": false,
+    "assignee": {
+      "login": "kwantam",
+      "id": 716593,
+      "node_id": "MDQ6VXNlcjcxNjU5Mw==",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/716593?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/kwantam",
+      "html_url": "https://github.com/kwantam",
+      "followers_url": "https://api.github.com/users/kwantam/followers",
+      "following_url": "https://api.github.com/users/kwantam/following{/other_user}",
+      "gists_url": "https://api.github.com/users/kwantam/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/kwantam/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/kwantam/subscriptions",
+      "organizations_url": "https://api.github.com/users/kwantam/orgs",
+      "repos_url": "https://api.github.com/users/kwantam/repos",
+      "events_url": "https://api.github.com/users/kwantam/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/kwantam/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "assignees": [
+      {
+        "login": "kwantam",
+        "id": 716593,
+        "node_id": "MDQ6VXNlcjcxNjU5Mw==",
+        "avatar_url": "https://avatars1.githubusercontent.com/u/716593?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/kwantam",
+        "html_url": "https://github.com/kwantam",
+        "followers_url": "https://api.github.com/users/kwantam/followers",
+        "following_url": "https://api.github.com/users/kwantam/following{/other_user}",
+        "gists_url": "https://api.github.com/users/kwantam/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/kwantam/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/kwantam/subscriptions",
+        "organizations_url": "https://api.github.com/users/kwantam/orgs",
+        "repos_url": "https://api.github.com/users/kwantam/repos",
+        "events_url": "https://api.github.com/users/kwantam/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/kwantam/received_events",
+        "type": "User",
+        "site_admin": false
+      }
+    ],
+    "milestone": null,
+    "comments": 13,
+    "created_at": "2020-03-01T17:40:48Z",
+    "updated_at": "2020-03-03T17:12:13Z",
+    "closed_at": null,
+    "author_association": "NONE",
+    "body": "I'd like to argue that it wouldn't be inappropriate to have test vectors exercise conditions in algorithms, or more specifically both outcomes of CMOVs/if conditions. As opposite to just a limited number of specific strings fed to all algorithms,the set that is obviously too small to trigger all conditions in any chosen algorithm. Given current state [when test input is passed to hash_to_field] it naturally ~causes~ poses a challenge, as one would have to search for inputs that trigger specific conditions, but it shouldn't be a heavy computational problem.\r\n\r\nOn related note one can also wonder if it would be beneficial to ensure that [sufficient amount of] inputs to sgn0 are \"endian-unambiguous\". By \"endian ambiguity\" I mean that a specific input can yield same sign for both little- and big-endian variants of sgn0, in which case implementation invoking wrong sgn0 would pass the corresponding test.\r\n\r\nAlso, it might be useful to provide intermediate results from inputs to corresponding map_to_curves, as opposite for complete stack, so that map_to_curves can be tested by themselves. Does it make sense?\r\n"
+  },
+  {
+    "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/215",
+    "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
+    "labels_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/215/labels{/name}",
+    "comments_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/215/comments",
+    "events_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/215/events",
+    "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/215",
+    "id": 573054466,
+    "node_id": "MDExOlB1bGxSZXF1ZXN0MzgxNjM3NTAy",
+    "number": 215,
+    "title": "remove explicit use of \"Long\" Weierstrass equations",
+    "user": {
+      "login": "kwantam",
+      "id": 716593,
+      "node_id": "MDQ6VXNlcjcxNjU5Mw==",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/716593?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/kwantam",
+      "html_url": "https://github.com/kwantam",
+      "followers_url": "https://api.github.com/users/kwantam/followers",
+      "following_url": "https://api.github.com/users/kwantam/following{/other_user}",
+      "gists_url": "https://api.github.com/users/kwantam/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/kwantam/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/kwantam/subscriptions",
+      "organizations_url": "https://api.github.com/users/kwantam/orgs",
+      "repos_url": "https://api.github.com/users/kwantam/repos",
+      "events_url": "https://api.github.com/users/kwantam/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/kwantam/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2020-02-28T23:05:02Z",
+    "updated_at": "2020-03-03T18:57:29Z",
+    "closed_at": "2020-03-03T18:57:29Z",
+    "author_association": "COLLABORATOR",
+    "pull_request": {
+      "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/pulls/215",
+      "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/215",
+      "diff_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/215.diff",
+      "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/215.patch"
+    },
+    "body": "This PR addresses the issues discussed in #195 by making the \"long Weierstrass\" transformations part of the Elligator2 map. The hope is that this makes the Elligator2 section clearer.\r\n\r\nIt also updates the code in `poc/` to match the descriptions in the text.\r\n\r\nCloses #195"
+  },
+  {
+    "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/214",
+    "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
+    "labels_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/214/labels{/name}",
+    "comments_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/214/comments",
+    "events_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/214/events",
+    "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/214",
+    "id": 573053095,
+    "node_id": "MDExOlB1bGxSZXF1ZXN0MzgxNjM2MzIw",
+    "number": 214,
+    "title": "new hash_to_field code",
+    "user": {
+      "login": "kwantam",
+      "id": 716593,
+      "node_id": "MDQ6VXNlcjcxNjU5Mw==",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/716593?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/kwantam",
+      "html_url": "https://github.com/kwantam",
+      "followers_url": "https://api.github.com/users/kwantam/followers",
+      "following_url": "https://api.github.com/users/kwantam/following{/other_user}",
+      "gists_url": "https://api.github.com/users/kwantam/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/kwantam/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/kwantam/subscriptions",
+      "organizations_url": "https://api.github.com/users/kwantam/orgs",
+      "repos_url": "https://api.github.com/users/kwantam/repos",
+      "events_url": "https://api.github.com/users/kwantam/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/kwantam/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "open",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 14,
+    "created_at": "2020-02-28T23:00:56Z",
+    "updated_at": "2020-03-03T18:49:16Z",
+    "closed_at": null,
+    "author_association": "COLLABORATOR",
+    "pull_request": {
+      "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/pulls/214",
+      "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/214",
+      "diff_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/214.diff",
+      "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/214.patch"
+    },
+    "body": "This PR updates the code in `poc/` to use the new hash_to_field function from #212.\r\n\r\nI have not yet regenerated the test vectors. Shall I do that?"
+  },
+  {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/213",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
     "labels_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/213/labels{/name}",
@@ -91,7 +285,7 @@
     "milestone": null,
     "comments": 9,
     "created_at": "2020-02-24T06:08:08Z",
-    "updated_at": "2020-02-28T22:45:15Z",
+    "updated_at": "2020-02-28T22:46:24Z",
     "closed_at": "2020-02-28T22:45:15Z",
     "author_association": "COLLABORATOR",
     "pull_request": {
@@ -996,7 +1190,7 @@
     "labels": [
 
     ],
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "assignee": null,
     "assignees": [
@@ -1005,8 +1199,8 @@
     "milestone": null,
     "comments": 6,
     "created_at": "2019-11-20T04:27:50Z",
-    "updated_at": "2019-11-20T21:07:09Z",
-    "closed_at": null,
+    "updated_at": "2020-03-03T18:57:29Z",
+    "closed_at": "2020-03-03T18:57:29Z",
     "author_association": "COLLABORATOR",
     "body": "@armfazh points out that there's an inconsistency that we probably want to address in the \"Rational maps from Montgomery to twisted Edwards curves\" section: it talks about Montgomery and Long Weierstrass curves interchangeably, which could be confusing.\r\n\r\n[link to @armfazh's comment](https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/189#discussion_r348238478) and [my follow-up](https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/189#discussion_r348284336).\r\n\r\nOne way to address this is to split the \"Long Weierstrass to Edwards\" map into its own section, and make explicit everywhere that the Edwards mapping works for either one. I like this approach because it lets us keep talking about equivalent *Montgomery* curves when such curves are standardized (as I mentioned in my post linked above, I think this makes more explicit the kind of reusability we're aiming for).\r\n\r\nIt might be more consistent to always talk about Montgomery or always talk about Weierstrass. We should think about this to try and understand whether this can be made clean and clear; it's not obvious to me right now."
   },
@@ -1437,7 +1631,10 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/187.patch"
     },
     "body": "This only adds a couple functions to poc/map_check.sage that might be useful in the future."
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/186",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -1599,10 +1796,7 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/184.patch"
     },
     "body": "Slight text improvement in the DST section, I think."
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/183",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -1752,9 +1946,9 @@
 
     ],
     "milestone": null,
-    "comments": 1,
+    "comments": 2,
     "created_at": "2019-10-27T06:13:12Z",
-    "updated_at": "2019-11-05T07:19:52Z",
+    "updated_at": "2020-03-01T16:20:02Z",
     "closed_at": null,
     "author_association": "COLLABORATOR",
     "body": "Right now we have only the P-256, curve/edwards25519, and curve/edwards448.\r\n\r\nTODO: add others\r\n\r\n- [x] P-384\r\n- [x] P-521\r\n- [x] SECP256k1\r\n- [x] BLS12-381 G1\r\n- [ ] BLS12-381 G2\r\n- [ ] SSWU for p = 5 mod 8 --- for P-224 and some other curves\r\n\r\nThe potential optimizations for Shallue-van de Woestijne are pretty minimal, so I am assuming that for all of the above we would give straight-line impls only of Simplified SWU. Glad to consider doing otherwise, though."
@@ -3066,7 +3260,10 @@
     "closed_at": "2019-10-26T19:16:28Z",
     "author_association": "COLLABORATOR",
     "body": "Some of the maps use constants whose definitions include sqrts. The document should specify for these that the intended constant value is the one computed for the \"positive\" sqrt branch, i.e., the value `c = sqrt(something)` such that `sgn0(c) == 1` to avoid ambiguity about the value of `c`."
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/156",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -3216,10 +3413,7 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/154.patch"
     },
     "body": "`msg` can be large so we want to avoid rehashing it. As I understand it, `HKDF-Extract(DST, msg)` imposes an \"arbitrary\" hashing of `msg`, namely `H(DST XOR ipad, msg)` where `ipad` is the byte `0x36` repeated 64 times. (See section 2 in [RFC 2104](https://tools.ietf.org/html/rfc2104).) Since various applications will have `H(msg)` readily computed, it makes sense to use `H(msg)` in `HKDF-Extract` as a \"natural\" way to minimise the chances of hashing `msg` multiple times."
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/153",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -4655,7 +4849,10 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/127.patch"
     },
     "body": "This PR doesn't make major content changes, it just clarifies and simplifies the text.\r\n\r\nWhat's changed:\r\n\r\n- kramdown-rfc2629 seems to produce broken HTML output from fenced code inside bulleted lists. The first commit pulls the fenced code back to the left margin, which fixes the issue.\r\n\r\n- I reworked and streamlined the terminology section. It had been growing organically for a little while and needed some pruning and harmonizing with the terminology in the rest of the document\r\n\r\n- I renamed \"injective encoding\" to \"nonuniform encoding,\" because I realized that the term \"injective\" is not correct: by a simple counting argument, hash2base must produce collisions for some inputs, so composing hash2base with map2curve cannot produce an injective function. **I'm not fixed on \"nonuniform\"**---does anyone have a better suggestion?\r\n\r\n- bibliography cleanup: moved most cites to \"informative\" from \"normative\" bib, added a couple general cites for further reading on elliptic curves, corrected a couple labels, and got rid of redundant entries.\r\n\r\n- Some very small edits in roadmap for clarity."
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/126",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -4805,10 +5002,7 @@
     "closed_at": "2019-10-27T06:07:26Z",
     "author_association": "COLLABORATOR",
     "body": "Chris and I discussed the issue of ciphersuites and domain separation in hash-to-curve. Put concisely, the question is, should hash-to-curve provide domain separation among the suites, or should domain separation be left to the upper-level protocol? We decided that the best way to proceed is to get feedback from the CFRG list by coming up with and sending two specific proposals along with a discussion of pros and cons.\r\n\r\nFrom chatting with the BLS and VRF folks, my impression is that they prefer to keep ciphersuites out of hash-to-curve. Their argument is (paraphrasing), the upper-level protocol needs to ensure domain separation, so what's the point of doing it redundantly in hash-to-curve? There was also serious concern about variable-length ciphersuite strings (currently used in the poc impls but not specified in the document), because that is a potential source of confusion and bugs. [Right now](https://github.com/pairingwg/bls_standard/blob/master/minutes/spec-v1.md), the BLS sigs standard is proceeding with no ciphersuite in hash-to-curve, only in the BLS signature itself.\r\n\r\nBut there may be room to meet in the middle. For example, it would be essentially free to add a short, fixed-length ciphersuite (say, <20 bytes) in hash2base. It might be worth running this by the BLS and VRF folks before we go to the list, to hear out the likely objectors first and see if we can get buy-in.\r\n\r\nConcretely, I propose that we consider the following two options.\r\n\r\n#### option 1: no ciphersuite\r\n\r\nThis preserves the current version of hash2base as specified in the document. The important line is the one in which msg gets hashed. In the current version, that's\r\n\r\n```\r\nm' = H(msg) || I2OSP(ctr, 1)\r\n```\r\n\r\n#### option 2: fixed string + 4-byte ciphersuite in hash2base\r\n\r\n```\r\nm' = H(\"HASH-TO-CURVE\" || ciphersuite || msg) || I2OSP(ctr, 1)\r\n```\r\n\r\nEDIT: or, maybe slightly preferable so that \"prehash-for-free\" still works:\r\n\r\n```\r\nm' = \"HASH-TO-CURVE\" || ciphersuite || H(msg) || I2OSP(ctr, 1)\r\n```\r\n\r\nEDIT 2: I think it's safe to assume that \"ciphersuite\" here would be generated following something like the procedure in [this comment, below](https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/124#issuecomment-507069455). This avoids issues with ciphersuites for curves not discussed in the spec document.\r\n\r\nNote that the string \"HASH-TO-CURVE\" ensures domain separation even from other protocols that use a 4-byte ciphersuite tag. It might be nice for protocols to adopt this approach more genreally.\r\n\r\n(Actually, I kind of like the idea of using the RFC number (e.g., \"RFC1234\" for RFC 1234's domain separation string), but that has the downside that the protocol's test vectors can't be finalized until the RFC number is assigned.)\r\n\r\nThoughts on the above two proposals? Any other issues we should consider?"
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/123",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -6316,7 +6510,10 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/97.patch"
     },
     "body": "I did a lot of changes in the text but I tried to keep the same structure of the document. You will notice that I remove some lines and comments. Hopefully, I did not erase something relevant; otherwise we can included again.\r\n\r\n"
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/96",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -6466,10 +6663,7 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/94.patch"
     },
     "body": "The reference code for hash2base is compliant with the specification in the main file.\r\nThis function must be correct as it has effect on all encodings.\r\n"
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/93",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -7866,7 +8060,10 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/67.patch"
     },
     "body": "Fixes #61."
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/66",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -8022,10 +8219,7 @@
       "patch_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/64.patch"
     },
     "body": ""
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/63",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -9403,7 +9597,10 @@
     "closed_at": "2019-03-01T16:28:29Z",
     "author_association": "COLLABORATOR",
     "body": ""
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/36",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -9585,10 +9782,7 @@
     "closed_at": "2019-02-09T21:24:56Z",
     "author_association": "COLLABORATOR",
     "body": "https://eprint.iacr.org/2014/043.pdf"
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/33",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -11046,7 +11240,10 @@
     "closed_at": "2018-06-01T00:31:18Z",
     "author_association": "COLLABORATOR",
     "body": "t &= \\mathsf{H}(\\alpha) \\\\\r\nx &= -t^2 \\\\ \r\nx_2 &= (-b / a) \\cdot (1 + (1 / (t^2 + t))) \\\\\r\nx_3 &= t \\cdot x_2 \\\\\r\nh_2 &= f(x_2) \\\\\r\nh_3 &= f(x_3) \\\\\r\n\\mathsf{Output} & (x_2, h_2^{(q + 1)/4}) \\text{ if } h_2 \\text{ is square, else} (x_3, h_3^{(q + 1)/4}) \r\n\r\nt & = \\mathsf{H}(\\alpha) \\\\\r\nv &= ((3A - t^4) / 6t) \\\\\r\nx & = (v^2 - b - (t^6 / 27))^{1/3} + (t^2 / 3) \\\\\r\ny & = tx + v \\\\\r\n\\mathsf{Output} & (x, y)\r\n\r\nr &= \\mathsf{H}(\\alpha) \\\\\r\nd &= -A / (1 + ur^2) \\\\\r\ne &= f(d)^{(p-1)/2} \\\\ \r\nu &= ed - (1 - e)A/u \\\\\r\n\\mathsf{Output} & (u, f(u))"
-  },
+  }
+
+,
+
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/6",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
@@ -11274,10 +11471,7 @@
     "closed_at": "2019-07-08T23:30:52Z",
     "author_association": "COLLABORATOR",
     "body": ""
-  }
-
-,
-
+  },
   {
     "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/issues/3",
     "repository_url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve",
