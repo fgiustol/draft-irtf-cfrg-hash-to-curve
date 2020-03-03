@@ -467,13 +467,13 @@ hr.addr {
   max-width: calc(100% - 16px);
 }
 @media (min-width: 600px) {
-  #authors-addresses {
+  #authors-addresses > section {
     display: relative;
     padding: 32px 0 0;
     column-count: 2;
     column-gap: 20px;
   }
-  #name-authors-addresses {
+  #name-authors-address {
     position: absolute;
     top: 0px;
     column-span: all;
@@ -481,6 +481,7 @@ hr.addr {
   /* hack for break-inside: avoid-column */
   #authors-addresses address {
     display: inline-block;
+    break-inside: avoid-column;
   }
 }
 
@@ -517,7 +518,7 @@ hr.addr {
     padding: 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
-    opacity: 0.9; /* TODO fix when Henrik takes the patch. */
+    opacity: 0.6;
   }
   #toc.active {
       opacity: 1;
@@ -819,16 +820,15 @@ table.left {
 <link href="rfc-local.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<script src="metadata.min.js"></script>
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">hash-to-curve</td>
-<td class="right">February 2020</td>
+<td class="right">March 2020</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Faz-Hernandez, et al.</td>
-<td class="center">Expires 31 August 2020</td>
+<td class="center">Expires 4 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -841,12 +841,12 @@ table.left {
 <dd class="internet-draft">draft-irtf-cfrg-hash-to-curve-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-02-28" class="published">28 February 2020</time>
+<time datetime="2020-03-03" class="published">3 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-08-31">31 August 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-04">4 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -897,7 +897,7 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 August 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1148,7 +1148,7 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
             <p id="section-toc.1-1.15.1"><a href="#section-appendix.b" class="xref">Appendix B</a>.  <a href="#name-rational-maps" class="xref">Rational maps</a><a href="#section-toc.1-1.15.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
 <li class="toc ulEmpty" id="section-toc.1-1.15.2.1">
-                <p id="section-toc.1-1.15.2.1.1"><a href="#section-b.1" class="xref">B.1</a>.  <a href="#name-twisted-edwards-to-weierstr" class="xref">Twisted Edwards to Weierstrass and Montgomery curves</a><a href="#section-toc.1-1.15.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.15.2.1.1"><a href="#section-b.1" class="xref">B.1</a>.  <a href="#name-twisted-edwards-to-montgome" class="xref">Twisted Edwards to Montgomery curves</a><a href="#section-toc.1-1.15.2.1.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.15.2.2">
                 <p id="section-toc.1-1.15.2.2.1"><a href="#section-b.2" class="xref">B.2</a>.  <a href="#name-montgomery-to-weierstrass-c" class="xref">Montgomery to Weierstrass curves</a><a href="#section-toc.1-1.15.2.2.1" class="pilcrow">¶</a></p>
@@ -2182,7 +2182,7 @@ explicitly stated otherwise.<a href="#section-6.3-2.1" class="pilcrow">¶</a>
 <li id="section-6.3-2.2">u: the input to the mapping function.
 This is an element of F produced by the hash_to_field function.<a href="#section-6.3-2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-6.3-2.3">(x, y), (X, Y), (v, w): the affine coordinates of the point output by the mapping.
+<li id="section-6.3-2.3">(x, y), (s, t), (v, w): the affine coordinates of the point output by the mapping.
 Indexed variables (e.g., x1, y2, ...) are used for candidate values.<a href="#section-6.3-2.3" class="pilcrow">¶</a>
 </li>
 <li id="section-6.3-2.4">tv1, tv2, ...: reusable temporary variables.<a href="#section-6.3-2.4" class="pilcrow">¶</a>
@@ -2228,7 +2228,7 @@ cases that result from attempting to compute the inverse of 0.<a href="#section-
         <h3 id="name-mappings-for-weierstrass-cu">
 <a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-mappings-for-weierstrass-cu" class="section-name selfRef">Mappings for Weierstrass curves</a>
         </h3>
-<p id="section-6.6-1">The following mappings apply to elliptic curves defined by the equation<a href="#section-6.6-1" class="pilcrow">¶</a></p>
+<p id="section-6.6-1">The mappings in this section apply to a target curve E defined by the equation<a href="#section-6.6-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-6.6-2">
 <pre>
     y^2 = g(x) = x^3 + A * x + B
@@ -2522,76 +2522,46 @@ Exceptional cases of iso_map MUST return the identity point on E.<a href="#secti
         <h3 id="name-mappings-for-montgomery-cur">
 <a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-mappings-for-montgomery-cur" class="section-name selfRef">Mappings for Montgomery curves</a>
         </h3>
-<p id="section-6.7-1">The mapping defined in <a href="#elligator2" class="xref">Section 6.7.1</a> implements Elligator 2 <span>[<a href="#BHKL13" class="xref">BHKL13</a>]</span> for
-curves defined by the Weierstrass equation<a href="#section-6.7-1" class="pilcrow">¶</a></p>
+<p id="section-6.7-1">The mapping defined in this section applies to a target curve M defined by the equation<a href="#section-6.7-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-6.7-2">
 <pre>
-    Y^2 = X^3 + C * X^2 + D * X
+    K * t^2 = s^3 + J * s^2 + s
 </pre><a href="#section-6.7-2" class="pilcrow">¶</a>
 </div>
-<p id="section-6.7-3">(Note that this equation is different from the one used in <a href="#weierstrass" class="xref">Section 6.6</a>.)
-This Weierstrass curve is equivalent to the Montgomery curve<a href="#section-6.7-3" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-6.7-4">
-<pre>
-    K * t^2 = s^3 + J * s^2 + s
-</pre><a href="#section-6.7-4" class="pilcrow">¶</a>
-</div>
-<p id="section-6.7-5">by the following change of variables:<a href="#section-6.7-5" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-6.7-6.1">C = J / K<a href="#section-6.7-6.1" class="pilcrow">¶</a>
-</li>
-<li id="section-6.7-6.2">D = 1 / K^2<a href="#section-6.7-6.2" class="pilcrow">¶</a>
-</li>
-<li id="section-6.7-6.3">X = s / K<a href="#section-6.7-6.3" class="pilcrow">¶</a>
-</li>
-<li id="section-6.7-6.4">Y = t / K<a href="#section-6.7-6.4" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-6.7-7">The Elligator 2 mapping given below returns a point (X, Y) on the
-Weierstrass curve defined above.
-This point can be converted to a point (s, t) on the equivalent
-Montgomery curve by computing<a href="#section-6.7-7" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-6.7-8.1">s = K * X<a href="#section-6.7-8.1" class="pilcrow">¶</a>
-</li>
-<li id="section-6.7-8.2">t = K * Y<a href="#section-6.7-8.2" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-6.7-9">Note that when D == K == 1, the above two curve equations
-are identical and no conversion is necessary.
-This is the case, for example, for Curve25519 and Curve448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>.<a href="#section-6.7-9" class="pilcrow">¶</a></p>
 <div id="elligator2">
 <section id="section-6.7.1">
           <h4 id="name-elligator-2-method">
 <a href="#section-6.7.1" class="section-number selfRef">6.7.1. </a><a href="#name-elligator-2-method" class="section-name selfRef">Elligator 2 Method</a>
           </h4>
-<p id="section-6.7.1-1">Preconditions: A Weierstrass curve Y^2 = X^3 + C * X^2 + D * X
-where C != 0, D != 0, and C^2 - 4 * D is non-zero and non-square in F.<a href="#section-6.7.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.7.1-1">Preconditions: A Montgomery curve K * t^2 = s^3 + J * s^2 + s where
+J != 0, K != 0, and (J^2 - 4) / K^2 is non-zero and non-square in F.<a href="#section-6.7.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.7.1-2">Constants:<a href="#section-6.7.1-2" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-6.7.1-3.1">C and D, the parameters of the elliptic curve.<a href="#section-6.7.1-3.1" class="pilcrow">¶</a>
+<li id="section-6.7.1-3.1">J and K, the parameters of the elliptic curve.<a href="#section-6.7.1-3.1" class="pilcrow">¶</a>
 </li>
 <li id="section-6.7.1-3.2">Z, a non-square element of F.
 <a href="#elligator-z-code" class="xref">Appendix E.3</a> gives a Sage <span>[<a href="#SAGE" class="xref">SAGE</a>]</span> script that outputs the RECOMMENDED Z.<a href="#section-6.7.1-3.2" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-6.7.1-4">Sign of Y: Inputs u and -u give the same X-coordinate.
-Thus, we set sgn0(Y) == sgn0(u).<a href="#section-6.7.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.7.1-4">Sign of t: Inputs u and -u give the same s-coordinate.
+Thus, we set sgn0(t) == sgn0(u).<a href="#section-6.7.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.7.1-5">Exceptions: The exceptional case is Z * u^2 == -1, i.e., 1 + Z * u^2 == 0.
-Implementations must detect this case and set X1 = -C.
+Implementations must detect this case and set x1 = -(J / K).
 Note that this can only happen when q = 3 (mod 4).<a href="#section-6.7.1-5" class="pilcrow">¶</a></p>
 <p id="section-6.7.1-6">Operations:<a href="#section-6.7.1-6" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-6.7.1-7">
 <pre>
-1.  X1 = -C * inv0(1 + Z * u^2)
-2.  If X1 == 0, set X1 = -C
-3. gX1 = X1^3 + C * X1^2 + D * X1
-4.  X2 = -X1 - C
-5. gX2 = X2^3 + C * X2^2 + D * X2
-6.  If is_square(gX1), set X = X1 and Y = sqrt(gX1)
-7.  Else set X = X2 and Y = sqrt(gX2)
-8.  If sgn0(u) != sgn0(Y), set Y = -Y
-9.  return (X, Y)
+1.  x1 = -(J / K) * inv0(1 + Z * u^2)
+2.  If x1 == 0, set x1 = -(J / K)
+3. gx1 = x1^3 + (J / K) * x1^2 + x1 / K^2
+4.  x2 = -x1 - (J / K)
+5. gx2 = x2^3 + (J / K) * x2^2 + x2 / K^2
+6.  If is_square(gx1), set x = x1 and y = sqrt(gx1)
+7.  Else set x = x2 and y = sqrt(gx2)
+8.   s = x * K
+9.   t = y * K
+10. If sgn0(u) != sgn0(t), set t = -t
+11. return (s, t)
 </pre><a href="#section-6.7.1-7" class="pilcrow">¶</a>
 </div>
 <div id="implementation-2">
@@ -2606,29 +2576,35 @@ curve448 <span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>.<a href="#se
 <pre>
 map_to_curve_elligator2(u)
 Input: u, an element of F.
-Output: (X, Y), a point on E.
+Output: (s, t), a point on M.
+
+Constants:
+1.   c1 = J / K
+2.   c2 = 1 / K^2
 
 Steps:
 1.  tv1 = u^2
 2.  tv1 = Z * tv1             # Z * u^2
 3.   e1 = tv1 == -1           # exceptional case: Z * u^2 == -1
 4.  tv1 = CMOV(tv1, 0, e1)    # if tv1 == -1, set tv1 = 0
-5.   X1 = tv1 + 1
-6.   X1 = inv0(X1)
-7.   X1 = -C * X1             # X1 = -C / (1 + Z * u^2)
-8.  gX1 = X1 + C
-9.  gX1 = gX1 * X1
-10. gX1 = gX1 + D
-11. gX1 = gX1 * X1            # gX1 = X1^3 + C * X1^2 + D * X1
-12.  X2 = -X1 - C
-13. gX2 = tv1 * gX1
-14.  e2 = is_square(gX1)
-15.   X = CMOV(X2, X1, e2)    # If is_square(gX1), X = X1, else X = X2
-16.  Y2 = CMOV(gX2, gX1, e2)  # If is_square(gX1), Y2 = gX1, else Y2 = gX2
-17.   Y = sqrt(Y2)
-18.  e3 = sgn0(u) == sgn0(Y)  # Fix sign of Y
-19.   Y = CMOV(-Y, Y, e3)
-20. return (X, Y)
+5.   x1 = tv1 + 1
+6.   x1 = inv0(x1)
+7.   x1 = -c1 * x1             # x1 = -(J / K) / (1 + Z * u^2)
+8.  gx1 = x1 + c1
+9.  gx1 = gx1 * x1
+10. gx1 = gx1 + c2
+11. gx1 = gx1 * x1            # gx1 = x1^3 + (J / K) * x1^2 + x1 / K^2
+12.  x2 = -x1 - c1
+13. gx2 = tv1 * gx1
+14.  e2 = is_square(gx1)
+15.   x = CMOV(x2, x1, e2)    # If is_square(gx1), x = x1, else x = x2
+16.  y2 = CMOV(gx2, gx1, e2)  # If is_square(gx1), y2 = gx1, else y2 = gx2
+17.   y = sqrt(y2)
+18.   s = x * K
+19.   t = y * K
+20.  e3 = sgn0(u) == sgn0(t)  # Fix sign of t
+21.   t = CMOV(-t, t, e3)
+22. return (s, t)
 </pre><a href="#section-6.7.1.1-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -2695,37 +2671,35 @@ For a twisted Edwards curve given by<a href="#section-6.8.1-6" class="pilcrow">�
     a * v^2 + w^2 = 1 + d * v^2 * w^2
 </pre><a href="#section-6.8.1-7" class="pilcrow">¶</a>
 </div>
-<p id="section-6.8.1-8">first compute C and D, the parameters of the equivalent Weierstrass
+<p id="section-6.8.1-8">first compute J and K, the parameters of the equivalent Montgomery
 curve given by<a href="#section-6.8.1-8" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-6.8.1-9">
 <pre>
-    Y^2 = X^3 + C * X^2 + D * X
+    K * t^2 = s^3 + J * s^2 + s
 </pre><a href="#section-6.8.1-9" class="pilcrow">¶</a>
 </div>
 <p id="section-6.8.1-10">as follows:<a href="#section-6.8.1-10" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-6.8.1-11.1">C = (a + d) / 2<a href="#section-6.8.1-11.1" class="pilcrow">¶</a>
+<li id="section-6.8.1-11.1">J = 2 * (a + d) / (a - d)<a href="#section-6.8.1-11.1" class="pilcrow">¶</a>
 </li>
-<li id="section-6.8.1-11.2">D = (a - d)^2 / 16<a href="#section-6.8.1-11.2" class="pilcrow">¶</a>
+<li id="section-6.8.1-11.2">K = 4 / (a - d)<a href="#section-6.8.1-11.2" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-6.8.1-12">(Note that the above curve is given in the Weierstrass form required
-by the Elligator 2 mapping of <a href="#elligator2" class="xref">Section 6.7.1</a>.)
-The rational map from the point (X, Y) on this Weierstrass curve
+<p id="section-6.8.1-12">Note that this curve has the form required by the Elligator 2
+mapping of <a href="#elligator2" class="xref">Section 6.7.1</a>.
+The rational map from the point (s, t) on this Montgomery curve
 to the point (v, w) on the twisted Edwards curve is given by<a href="#section-6.8.1-12" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-6.8.1-13.1">invSqrtD = 4 / (a - d)<a href="#section-6.8.1-13.1" class="pilcrow">¶</a>
+<li id="section-6.8.1-13.1">v = s / t<a href="#section-6.8.1-13.1" class="pilcrow">¶</a>
 </li>
-<li id="section-6.8.1-13.2">v = X / Y<a href="#section-6.8.1-13.2" class="pilcrow">¶</a>
-</li>
-<li id="section-6.8.1-13.3">w = (invSqrtD * X - 1) / (invSqrtD * X + 1)<a href="#section-6.8.1-13.3" class="pilcrow">¶</a>
+<li id="section-6.8.1-13.2">w = (s - 1) / (s + 1)<a href="#section-6.8.1-13.2" class="pilcrow">¶</a>
 </li>
 </ul>
 <p id="section-6.8.1-14">(For completeness, we give the inverse map in <a href="#appx-rational-map-edw" class="xref">Appendix B.1</a>.
 Note that the inverse map is not used when hashing to a twisted Edwards curve.)<a href="#section-6.8.1-14" class="pilcrow">¶</a></p>
 <p id="section-6.8.1-15">Rational maps may be undefined on certain inputs, e.g., when the
 denominator of one of the rational functions is zero.
-In the map described above, the exceptional cases are Y == 0 or invSqrtD * X == -1.
+In the map described above, the exceptional cases are t == 0 or s == -1.
 Implementations MUST detect exceptional cases and return the value
 (v, w) = (0, 1), which is the identity point
 on all twisted Edwards curves.<a href="#section-6.8.1-15" class="pilcrow">¶</a></p>
@@ -2735,22 +2709,21 @@ Implementations of other rational maps (e.g., the ones give in <span>[<a href="#
 are analogous.<a href="#section-6.8.1-16" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-6.8.1-17">
 <pre>
-rational_map(X, Y)
-Input: (X, Y), a point on the curve Y^2 = X^3 + C * X^2 + D * X.
+rational_map(s, t)
+Input: (s, t), a point on the curve K * t^2 = s^3 + J * s^2 + s.
 Output: (v, w), a point on an equivalent twisted Edwards curve.
 
-1. tv1 = X * invSqrtD
-2. tv2 = tv1 + 1
-3. tv3 = Y * tv2
-4. tv3 = inv0(tv3)
-5.   v = tv2 * tv3
-6.   v = v * X
-7.   w = tv1 - 1
-8.   w = w * Y
-9.   w = w * tv3
-10.  e = w == 0
-11.  w = CMOV(w, 1, e)
-12. return (v, w)
+1. tv1 = s + 1
+2. tv2 = tv1 * t        # (s + 1) * t
+3. tv2 = inv0(tv2)      # 1 / ((s + 1) * t)
+4.   v = tv2 * tv1      # 1 / t
+5.   v = v * s          # s / t
+6.   w = tv2 * t        # 1 / (s + 1)
+7. tv1 = s - 1
+8.   w = w * tv1        # (s - 1) / (s + 1)
+9.   e = tv2 == 0
+10.  w = CMOV(w, 1, e)  # handle exceptional case
+11. return (v, w)
 </pre><a href="#section-6.8.1-17" class="pilcrow">¶</a>
 </div>
 </section>
@@ -2760,17 +2733,17 @@ Output: (v, w), a point on an equivalent twisted Edwards curve.
           <h4 id="name-elligator-2-method-2">
 <a href="#section-6.8.2" class="section-number selfRef">6.8.2. </a><a href="#name-elligator-2-method-2" class="section-name selfRef">Elligator 2 Method</a>
           </h4>
-<p id="section-6.8.2-1">Preconditions: A twisted Edwards curve E and an equivalent curve M
-meeting the requirements in <a href="#rational-map" class="xref">Section 6.8.1</a>.<a href="#section-6.8.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.8.2-1">Preconditions: A twisted Edwards curve E and an equivalent Montgomery
+curve M meeting the requirements in <a href="#rational-map" class="xref">Section 6.8.1</a>.<a href="#section-6.8.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.8.2-2">Helper functions:<a href="#section-6.8.2-2" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-6.8.2-3.1">map_to_curve_elligator2 is the mapping of <a href="#elligator2" class="xref">Section 6.7.1</a> to the curve M.<a href="#section-6.8.2-3.1" class="pilcrow">¶</a>
 </li>
-<li id="section-6.8.2-3.2">rational_map is a function that takes a point (X, Y) on M and
+<li id="section-6.8.2-3.2">rational_map is a function that takes a point (s, t) on M and
 returns a point (v, w) on E, as defined in <a href="#rational-map" class="xref">Section 6.8.1</a>.<a href="#section-6.8.2-3.2" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-6.8.2-4">Sign of Y (and v): for this map, the sign is determined by map_to_curve_elligator2.
+<p id="section-6.8.2-4">Sign of t (and v): for this map, the sign is determined by map_to_curve_elligator2.
 No further sign adjustments are required.<a href="#section-6.8.2-4" class="pilcrow">¶</a></p>
 <p id="section-6.8.2-5">Exceptions: The exceptions for the Elligator 2 mapping are as given in
 <a href="#elligator2" class="xref">Section 6.7.1</a>.
@@ -2786,8 +2759,8 @@ map_to_curve_elligator2_edwards(u)
 Input: u, an element of F.
 Output: (v, w), a point on E.
 
-1. (X, Y) = map_to_curve_elligator2(u)      # (X, Y) is on M
-2. (v, w) = rational_map(X, Y)              # (v, w) is on E
+1. (s, t) = map_to_curve_elligator2(u)      # (s, t) is on M
+2. (v, w) = rational_map(s, t)              # (v, w) is on E
 3. return (v, w)
 </pre><a href="#section-6.8.2-7" class="pilcrow">¶</a>
 </div>
@@ -3852,9 +3825,6 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="DFL12">[DFL12]</dt>
 <dd>
 <span class="refAuthor">Daubignard, M.</span><span class="refAuthor">, Fouque, P-A.</span><span class="refAuthor">, and Y. Lakhnech</span>, <span class="refTitle">"Generic indifferentiability proofs of hash designs"</span>, <span class="seriesInfo">DOI 10.1109/CSF.2012.13</span>, <span class="seriesInfo">pages 340-353</span>, <span class="seriesInfo">In CSF</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1109/CSF.2012.13">https://doi.org/10.1109/CSF.2012.13</a>&gt;</span>. </dd>
-<dt id="DRST12">[DRST12]</dt>
-<dd>
-<span class="refAuthor">Dodis, Y.</span><span class="refAuthor">, Ristenpart, T.</span><span class="refAuthor">, Steinberger, J.</span><span class="refAuthor">, and S. Tessaro</span>, <span class="refTitle">"To hash or not to hash again? (In)differentiability results for H^2 and HMAC"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-32009-5_21</span>, <span class="seriesInfo">pages 348-366</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2012</span>, <time datetime="2012-08">August 2012</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-32009-5_21">https://doi.org/10.1007/978-3-642-32009-5_21</a>&gt;</span>. </dd>
 <dt id="F11">[F11]</dt>
 <dd>
 <span class="refAuthor">Farashahi, R.R.</span>, <span class="refTitle">"Hashing into Hessian curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-21969-6_17</span>, <span class="seriesInfo">pages 278-289</span>, <span class="seriesInfo">In AFRICACRYPT 2011</span>, <time datetime="2011">2011</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-21969-6_17">https://doi.org/10.1007/978-3-642-21969-6_17</a>&gt;</span>. </dd>
@@ -3939,9 +3909,6 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="SEC2">[SEC2]</dt>
 <dd>
 <span class="refAuthor">Standards for Efficient Cryptography Group (SECG)</span>, <span class="refTitle">"SEC 2: Recommended Elliptic Curve Domain Parameters"</span>, <time datetime="2010-01">January 2010</time>, <span>&lt;<a href="http://www.secg.org/sec2-v2.pdf">http://www.secg.org/sec2-v2.pdf</a>&gt;</span>. </dd>
-<dt id="SP.800-185">[SP.800-185]</dt>
-<dd>
-<span class="refAuthor">Kelsey, J.</span><span class="refAuthor">, Chang, S.</span><span class="refAuthor">, and R. Perlner</span>, <span class="refTitle">"SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash and ParallelHash"</span>, <time datetime="2016-12">December 2016</time>, <span>&lt;<a href="https://doi.org/10.6028/NIST.SP.800-185">https://doi.org/10.6028/NIST.SP.800-185</a>&gt;</span>. </dd>
 <dt id="SS04">[SS04]</dt>
 <dd>
 <span class="refAuthor">Schinzel, A.</span><span class="refAuthor"> and M. Skalba</span>, <span class="refTitle">"On equations y^2 = x^n + k in a finite field."</span>, <span class="seriesInfo">DOI 10.4064/ba52-3-1</span>, <span class="seriesInfo">pages 223-226</span>, <span class="seriesInfo">In Bulletin Polish Acad. Sci. Math. vol 52, no 3</span>, <time datetime="2004">2004</time>, <span>&lt;<a href="https://doi.org/10.4064/ba52-3-1">https://doi.org/10.4064/ba52-3-1</a>&gt;</span>. </dd>
@@ -4063,75 +4030,73 @@ This document does not deal with this complementary problem.<a href="#section-ap
 <p id="section-appendix.b-1">This section gives several useful rational maps.<a href="#section-appendix.b-1" class="pilcrow">¶</a></p>
 <div id="appx-rational-map-edw">
 <section id="section-b.1">
-        <h2 id="name-twisted-edwards-to-weierstr">
-<a href="#section-b.1" class="section-number selfRef">B.1. </a><a href="#name-twisted-edwards-to-weierstr" class="section-name selfRef">Twisted Edwards to Weierstrass and Montgomery curves</a>
+        <h2 id="name-twisted-edwards-to-montgome">
+<a href="#section-b.1" class="section-number selfRef">B.1. </a><a href="#name-twisted-edwards-to-montgome" class="section-name selfRef">Twisted Edwards to Montgomery curves</a>
         </h2>
-<p id="section-b.1-1">The inverse of the rational map specified in <a href="#rational-map" class="xref">Section 6.8.1</a>, i.e.,
-the map from the point (v, w) on the twisted Edwards curve<a href="#section-b.1-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-b.1-2">
+<p id="section-b.1-1">This section gives a generic birational map between twisted Edwards
+and Montgomery curves.
+This birational map comprises the rational map specified in
+<a href="#rational-map" class="xref">Section 6.8.1</a> and its inverse.<a href="#section-b.1-1" class="pilcrow">¶</a></p>
+<p id="section-b.1-2">The twisted Edwards curve<a href="#section-b.1-2" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-b.1-3">
 <pre>
     a * v^2 + w^2 = 1 + d * v^2 * w^2
-</pre><a href="#section-b.1-2" class="pilcrow">¶</a>
+</pre><a href="#section-b.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-b.1-3">to the point (X, Y) on the Weierstrass curve<a href="#section-b.1-3" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-b.1-4">
-<pre>
-    Y^2 = X^3 + C * X^2 + D * X
-</pre><a href="#section-b.1-4" class="pilcrow">¶</a>
-</div>
-<p id="section-b.1-5">is given by:<a href="#section-b.1-5" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-b.1-6.1">C = (a + d) / 2<a href="#section-b.1-6.1" class="pilcrow">¶</a>
-</li>
-<li id="section-b.1-6.2">D = (a - d)^2 / 16<a href="#section-b.1-6.2" class="pilcrow">¶</a>
-</li>
-<li id="section-b.1-6.3">invSqrtD = 4 / (a - d)<a href="#section-b.1-6.3" class="pilcrow">¶</a>
-</li>
-<li id="section-b.1-6.4">X = (1 + w) / (invSqrtD * (1 - w))<a href="#section-b.1-6.4" class="pilcrow">¶</a>
-</li>
-<li id="section-b.1-6.5">Y = (1 + w) / (invSqrtD * v * (1 - w))<a href="#section-b.1-6.5" class="pilcrow">¶</a>
-</li>
-</ul>
-<p id="section-b.1-7">This map is undefined when v == 0 or w == 1.
-If (v, w) = (0, -1), return the point (X, Y) = (0, 0).
-Otherwise, return the identity point on the Weierstrass curve.
-(This follows from <span>[<a href="#BBJLP08" class="xref">BBJLP08</a>]</span>, Section 3.)<a href="#section-b.1-7" class="pilcrow">¶</a></p>
-<p id="section-b.1-8">It may also be useful to map to a Montgomery curve
-of the form<a href="#section-b.1-8" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-b.1-9">
+<p id="section-b.1-4">is birationally equivalent to the Montgomery curve<a href="#section-b.1-4" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-b.1-5">
 <pre>
     K * t^2 = s^3 + J * s^2 + s
-</pre><a href="#section-b.1-9" class="pilcrow">¶</a>
+</pre><a href="#section-b.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-b.1-10">This curve is equivalent to the twisted Edwards curve above via the
-following rational map (<span>[<a href="#BBJLP08" class="xref">BBJLP08</a>]</span>, Theorem 3.2):<a href="#section-b.1-10" class="pilcrow">¶</a></p>
+<p id="section-b.1-6">by the following mappings (<span>[<a href="#BBJLP08" class="xref">BBJLP08</a>]</span>, Theorem 3.2).
+To convert from twisted Edwards to Montgomery form, the mapping is<a href="#section-b.1-6" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-b.1-11.1">J = 2 * (a + d) / (a - d)<a href="#section-b.1-11.1" class="pilcrow">¶</a>
+<li id="section-b.1-7.1">J = 2 * (a + d) / (a - d)<a href="#section-b.1-7.1" class="pilcrow">¶</a>
 </li>
-<li id="section-b.1-11.2">K = 4 / (a - d)<a href="#section-b.1-11.2" class="pilcrow">¶</a>
+<li id="section-b.1-7.2">K = 4 / (a - d)<a href="#section-b.1-7.2" class="pilcrow">¶</a>
 </li>
-<li id="section-b.1-11.3">s = (1 + w) / (1 - w)<a href="#section-b.1-11.3" class="pilcrow">¶</a>
+<li id="section-b.1-7.3">s = (1 + w) / (1 - w)<a href="#section-b.1-7.3" class="pilcrow">¶</a>
 </li>
-<li id="section-b.1-11.4">t = (1 + w) / (v * (1 - w))<a href="#section-b.1-11.4" class="pilcrow">¶</a>
+<li id="section-b.1-7.4">t = (1 + w) / (v * (1 - w))<a href="#section-b.1-7.4" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-b.1-12">whose inverse is given by:<a href="#section-b.1-12" class="pilcrow">¶</a></p>
+<p id="section-b.1-8">This mapping is defined when a != d, which is guaranteed by the definition
+of twisted Edwards curves.
+The mapping is undefined when v == 0 or w == 1.
+If (v, w) == (0, -1), return the point (s, t) = (0, 0).
+For all other undefined inputs, return the identity point on the Montgomery curve.
+(This follows from <span>[<a href="#BBJLP08" class="xref">BBJLP08</a>]</span>, Section 3.)<a href="#section-b.1-8" class="pilcrow">¶</a></p>
+<p id="section-b.1-9">To convert from Montgomery to twisted Edwards form, the mapping is<a href="#section-b.1-9" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-b.1-13.1">a = (J + 2) / K<a href="#section-b.1-13.1" class="pilcrow">¶</a>
+<li id="section-b.1-10.1">a = (J + 2) / K<a href="#section-b.1-10.1" class="pilcrow">¶</a>
 </li>
-<li id="section-b.1-13.2">d = (J - 2) / K<a href="#section-b.1-13.2" class="pilcrow">¶</a>
+<li id="section-b.1-10.2">d = (J - 2) / K<a href="#section-b.1-10.2" class="pilcrow">¶</a>
 </li>
-<li id="section-b.1-13.3">v = s / t<a href="#section-b.1-13.3" class="pilcrow">¶</a>
+<li id="section-b.1-10.3">v = s / t<a href="#section-b.1-10.3" class="pilcrow">¶</a>
 </li>
-<li id="section-b.1-13.4">w = (s - 1) / (s + 1)<a href="#section-b.1-13.4" class="pilcrow">¶</a>
+<li id="section-b.1-10.4">w = (s - 1) / (s + 1)<a href="#section-b.1-10.4" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-b.1-14">Composing the mapping immediately above with the mapping from
+<p id="section-b.1-11">This mapping is defined when J != 2, J != -2, and K != 0; all Montgomery
+curves meet these criteria.
+The mapping is undefined when t == 0 or s == -1.
+If (s, t) == (0, 0), return the point (v, w) = (0, -1).
+For all other undefined inputs, return the identity point on the twisted
+Edwards curve, namely, (v, w) = (0, 1).
+(This follows from <span>[<a href="#BBJLP08" class="xref">BBJLP08</a>]</span>, Section 3.)<a href="#section-b.1-11" class="pilcrow">¶</a></p>
+<p id="section-b.1-12">(Note that <a href="#rational-map" class="xref">Section 6.8.1</a> gives a simpler rule for handling undefined
+inputs to this rational map: always return the identity point.
+The simpler rule gives the same result when used as part of an encoding
+function (<a href="#roadmap" class="xref">Section 3</a>), because the cofactor clearing step will always
+map the point (v, w) = (0, -1) to the identity point.)<a href="#section-b.1-12" class="pilcrow">¶</a></p>
+<p id="section-b.1-13">Composing the mapping of this section with the mapping from
 Montgomery to Weierstrass curves in <a href="#appx-rational-map-mont" class="xref">Appendix B.2</a>
-yields a mapping from twisted Edwards curves to Weierstrass curves
-of the form required by the mappings in <a href="#weierstrass" class="xref">Section 6.6</a>.
-This mapping can be used to apply the Shallue-van de Woestijne method
-(<a href="#svdw" class="xref">Section 6.6.1</a>) to twisted Edwards curves.<a href="#section-b.1-14" class="pilcrow">¶</a></p>
+yields a mapping from twisted Edwards curves to Weierstrass curves,
+which is the form required by the mappings in <a href="#weierstrass" class="xref">Section 6.6</a>.
+This composition of mappings can be used to apply the Shallue-van
+de Woestijne (<a href="#svdw" class="xref">Section 6.6.1</a>) or Simplified SWU (<a href="#simple-swu" class="xref">Section 6.6.2</a>) method
+to twisted Edwards curves.<a href="#section-b.1-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="appx-rational-map-mont">
@@ -4169,8 +4134,9 @@ This mapping can be used to apply the Shallue-van de Woestijne method
 <li id="section-b.2-8.2">t = y * K<a href="#section-b.2-8.2" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-b.2-9">This mapping can be used to apply the Shallue-van de Woestijne method
-(<a href="#svdw" class="xref">Section 6.6.1</a>) to Montgomery curves.<a href="#section-b.2-9" class="pilcrow">¶</a></p>
+<p id="section-b.2-9">This mapping can be used to apply the Shallue-van de Woestijne
+(<a href="#svdw" class="xref">Section 6.6.1</a>) or Simplified SWU (<a href="#simple-swu" class="xref">Section 6.6.2</a>) method to
+Montgomery curves.<a href="#section-b.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -4572,7 +4538,7 @@ Steps:
 20. tv4 = tv4 * tv2            # gx1 * gxd^3
 21.  y1 = tv4^c1               # (gx1 * gxd^3)^((p - 3) / 4)
 22.  y1 = y1 * tv2             # gx1 * gxd * (gx1 * gxd^3)^((p - 3) / 4)
-23. x2n = tv3 * x1n            # x2 = x2n / xd = -10 * u^2 * x1n / xd
+23. x2n = tv3 * x1n            # x2 = x2n / xd = Z * u^2 * x1n / xd
 24.  y2 = y1 * c2              # y2 = y1 * sqrt(-Z^3)
 25.  y2 = y2 * tv1
 26.  y2 = y2 * u
