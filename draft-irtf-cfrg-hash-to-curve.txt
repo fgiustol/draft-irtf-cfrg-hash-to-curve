@@ -1906,7 +1906,7 @@ Faz-Hernandez, et al.   Expires 8 September 2020               [Page 34]
 Internet-Draft                hash-to-curve                   March 2020
 
 
-      Pintore [BP18] give concrete instantiations of these methods for
+      Pintore [BP17] give concrete instantiations of these methods for
       Barreto-Lynn-Scott pairing-friendly curves [BLS03].
 
    *  Wahby and Boneh ([WB19], Section 5) describe a trick due to Scott
@@ -2584,7 +2584,7 @@ Internet-Draft                hash-to-curve                   March 2020
 
    Note that the h_eff values for these suites are chosen for
    compatibility with the fast cofactor clearing method described by
-   Budroni and Pintore ([BP18], Section 4.1).
+   Budroni and Pintore ([BP17], Section 4.1).
 
 8.8.  Defining a new hash-to-curve suite
 
@@ -2997,7 +2997,7 @@ Internet-Draft                hash-to-curve                   March 2020
               pages 319-331, In Selected Areas in Cryptography 2005,
               2006, <https://doi.org/10.1007/11693383_22>.
 
-   [BP18]     Budroni, A. and F. Pintore, "Efficient hash maps to G2 on
+   [BP17]     Budroni, A. and F. Pintore, "Efficient hash maps to G2 on
               BLS curves", ePrint 2017/419, May 2017,
               <https://eprint.iacr.org/2017/419>.
 
