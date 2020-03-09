@@ -45,7 +45,7 @@
     "created_at": "2020-03-07T00:02:40Z",
     "updated_at": "2020-03-07T00:15:02Z",
     "closed_at": "2020-03-07T00:14:38Z",
-    "author_association": "NONE",
+    "author_association": "CONTRIBUTOR",
     "body": "BP18 appears to be a poster summary of real thing. Wouldn't it be more appropriate to point at \"Efficient hash maps to G2 on BLS curves\" instead?\r\n"
   },
   {
@@ -58,7 +58,7 @@
     "id": 576238787,
     "node_id": "MDExOlB1bGxSZXF1ZXN0Mzg0MjY0MDM1",
     "number": 217,
-    "title": "Collect test vector data in suite.vector dictionary.",
+    "title": "test vectors: add intermediate values, update DSTs, add vectors to document",
     "user": {
       "login": "dot-asm",
       "id": 9038069,
@@ -82,18 +82,18 @@
     "labels": [
 
     ],
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "assignee": null,
     "assignees": [
 
     ],
     "milestone": null,
-    "comments": 2,
+    "comments": 12,
     "created_at": "2020-03-05T13:04:21Z",
-    "updated_at": "2020-03-06T22:37:12Z",
-    "closed_at": null,
-    "author_association": "FIRST_TIME_CONTRIBUTOR",
+    "updated_at": "2020-03-09T17:21:08Z",
+    "closed_at": "2020-03-09T17:21:08Z",
+    "author_association": "CONTRIBUTOR",
     "pull_request": {
       "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/pulls/217",
       "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/217",
@@ -181,11 +181,11 @@
       }
     ],
     "milestone": null,
-    "comments": 13,
+    "comments": 14,
     "created_at": "2020-03-01T17:40:48Z",
-    "updated_at": "2020-03-03T17:12:13Z",
+    "updated_at": "2020-03-09T06:12:36Z",
     "closed_at": null,
-    "author_association": "NONE",
+    "author_association": "CONTRIBUTOR",
     "body": "I'd like to argue that it wouldn't be inappropriate to have test vectors exercise conditions in algorithms, or more specifically both outcomes of CMOVs/if conditions. As opposite to just a limited number of specific strings fed to all algorithms,the set that is obviously too small to trigger all conditions in any chosen algorithm. Given current state [when test input is passed to hash_to_field] it naturally ~causes~ poses a challenge, as one would have to search for inputs that trigger specific conditions, but it shouldn't be a heavy computational problem.\r\n\r\nOn related note one can also wonder if it would be beneficial to ensure that [sufficient amount of] inputs to sgn0 are \"endian-unambiguous\". By \"endian ambiguity\" I mean that a specific input can yield same sign for both little- and big-endian variants of sgn0, in which case implementation invoking wrong sgn0 would pass the corresponding test.\r\n\r\nAlso, it might be useful to provide intermediate results from inputs to corresponding map_to_curves, as opposite for complete stack, so that map_to_curves can be tested by themselves. Does it make sense?\r\n"
   },
   {
@@ -443,7 +443,7 @@
     "created_at": "2020-02-19T17:45:01Z",
     "updated_at": "2020-02-28T09:56:51Z",
     "closed_at": "2020-02-28T09:56:50Z",
-    "author_association": "FIRST_TIME_CONTRIBUTOR",
+    "author_association": "CONTRIBUTOR",
     "pull_request": {
       "url": "https://api.github.com/repos/cfrg/draft-irtf-cfrg-hash-to-curve/pulls/211",
       "html_url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/211",
@@ -1505,7 +1505,7 @@
     "milestone": null,
     "comments": 3,
     "created_at": "2019-11-07T19:14:41Z",
-    "updated_at": "2020-02-27T12:34:20Z",
+    "updated_at": "2020-03-07T00:16:14Z",
     "closed_at": null,
     "author_association": "FIRST_TIME_CONTRIBUTOR",
     "pull_request": {
@@ -5412,7 +5412,7 @@
     "milestone": null,
     "comments": 5,
     "created_at": "2019-05-31T20:57:22Z",
-    "updated_at": "2020-03-05T22:11:25Z",
+    "updated_at": "2020-03-07T00:16:14Z",
     "closed_at": null,
     "author_association": "COLLABORATOR",
     "pull_request": {
