@@ -479,7 +479,7 @@ hr.addr {
     column-count: 2;
     column-gap: 20px;
   }
-  #name-authors-address {
+  #name-authors-addresses {
     position: absolute;
     top: 0px;
     column-span: all;
@@ -834,7 +834,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Faz-Hernandez, et al.</td>
-<td class="center">Expires 11 September 2020</td>
+<td class="center">Expires 14 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,12 +847,12 @@ table.left {
 <dd class="internet-draft">draft-irtf-cfrg-hash-to-curve-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-10" class="published">10 March 2020</time>
+<time datetime="2020-03-13" class="published">13 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-11">11 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-14">14 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -903,7 +903,7 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1014,7 +1014,10 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
                     <p id="section-toc.1-1.5.2.3.2.2.1"><a href="#section-5.3.2" class="xref">5.3.2</a>.  <a href="#name-expand_message_xof" class="xref">expand_message_xof</a><a href="#section-toc.1-1.5.2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.3">
-                    <p id="section-toc.1-1.5.2.3.2.3.1"><a href="#section-5.3.3" class="xref">5.3.3</a>.  <a href="#name-defining-other-expand_messa" class="xref">Defining other expand_message variants</a><a href="#section-toc.1-1.5.2.3.2.3.1" class="pilcrow">¶</a></p>
+                    <p id="section-toc.1-1.5.2.3.2.3.1"><a href="#section-5.3.3" class="xref">5.3.3</a>.  <a href="#name-using-dsts-longer-than-255-" class="xref">Using DSTs longer than 255 bytes</a><a href="#section-toc.1-1.5.2.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.4">
+                    <p id="section-toc.1-1.5.2.3.2.4.1"><a href="#section-5.3.4" class="xref">5.3.4</a>.  <a href="#name-defining-other-expand_messa" class="xref">Defining other expand_message variants</a><a href="#section-toc.1-1.5.2.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -2115,20 +2118,7 @@ with extensible-output functions (XOFs) including functions in the SHAKE
 </li>
 </ul>
 <p id="section-5.3-5">These variants should suffice for the vast majority of use cases, but other
-variants are possible; <a href="#hashtofield-expand-other" class="xref">Section 5.3.3</a> discusses requirements.<a href="#section-5.3-5" class="pilcrow">¶</a></p>
-<p id="section-5.3-6">The expand_message variants defined in this section accept domain separation
-tags of at most 255 bytes.
-If a domain separation tag longer than 255 bytes must be used (e.g., because
-of requirements imposed by an invoking protocol), implementors MUST compute
-a short domain separation tag by hashing, as follows:<a href="#section-5.3-6" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-5.3-7">
-<pre>
-DST = H("H2C-OVERSIZE-DST-" || a_very_long_DST)
-</pre><a href="#section-5.3-7" class="pilcrow">¶</a>
-</div>
-<p id="section-5.3-8">Here, a_very_long_DST is the DST whose length is greater than 255 bytes,
-"H2C-OVERSIZE-DST-" is an ASCII string literal, and the hash function H MUST
-meet the criteria given in <a href="#hashtofield-expand-xmd" class="xref">Section 5.3.1</a>.<a href="#section-5.3-8" class="pilcrow">¶</a></p>
+variants are possible; <a href="#hashtofield-expand-other" class="xref">Section 5.3.4</a> discusses requirements.<a href="#section-5.3-5" class="pilcrow">¶</a></p>
 <div id="hashtofield-expand-xmd">
 <section id="section-5.3.1">
           <h4 id="name-expand_message_xmd">
@@ -2172,6 +2162,7 @@ Parameters:
 Input:
 - msg, a byte string.
 - DST, a byte string of at most 255 bytes.
+  See below for information on using longer DSTs.
 - len_in_bytes, the length of the requested output in bytes.
 
 Output:
@@ -2235,6 +2226,7 @@ Parameters:
 Input:
 - msg, a byte string.
 - DST, a byte string of at most 255 bytes.
+  See below for information on using longer DSTs.
 - len_in_bytes, the length of the requested output in bytes.
 
 Output:
@@ -2249,47 +2241,80 @@ Steps:
 </div>
 </section>
 </div>
-<div id="hashtofield-expand-other">
+<div id="hashtofield-expand-dst">
 <section id="section-5.3.3">
-          <h4 id="name-defining-other-expand_messa">
-<a href="#section-5.3.3" class="section-number selfRef">5.3.3. </a><a href="#name-defining-other-expand_messa" class="section-name selfRef">Defining other expand_message variants</a>
+          <h4 id="name-using-dsts-longer-than-255-">
+<a href="#section-5.3.3" class="section-number selfRef">5.3.3. </a><a href="#name-using-dsts-longer-than-255-" class="section-name selfRef">Using DSTs longer than 255 bytes</a>
           </h4>
-<p id="section-5.3.3-1">When defining a new expand_message variant, the most important consideration
+<p id="section-5.3.3-1">The expand_message variants defined in this section accept domain separation
+tags of at most 255 bytes.
+If a domain separation tag longer than 255 bytes must be used (e.g., because
+of requirements imposed by an invoking protocol), implementors MUST compute
+a short domain separation tag by hashing, as follows:<a href="#section-5.3.3-1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-5.3.3-2.1">For expand_message_xmd using hash function H, DST is computed as<a href="#section-5.3.3-2.1" class="pilcrow">¶</a>
+</li>
+</ul>
+<div class="artwork art-text alignLeft" id="section-5.3.3-3">
+<pre>
+DST = H("H2C-OVERSIZE-DST-" || a_very_long_DST)
+</pre><a href="#section-5.3.3-3" class="pilcrow">¶</a>
+</div>
+<ul>
+<li id="section-5.3.3-4.1">For expand_message_xof using extensible-output function H, DST is computed as<a href="#section-5.3.3-4.1" class="pilcrow">¶</a>
+</li>
+</ul>
+<div class="artwork art-text alignLeft" id="section-5.3.3-5">
+<pre>
+DST = H("H2C-OVERSIZE-DST-" || a_very_long_DST, ceil(2 * k / 8))
+</pre><a href="#section-5.3.3-5" class="pilcrow">¶</a>
+</div>
+<p id="section-5.3.3-6">Here, a_very_long_DST is the DST whose length is greater than 255 bytes,
+"H2C-OVERSIZE-DST-" is a 17-byte ASCII string literal, and
+k is the target security level in bits.<a href="#section-5.3.3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="hashtofield-expand-other">
+<section id="section-5.3.4">
+          <h4 id="name-defining-other-expand_messa">
+<a href="#section-5.3.4" class="section-number selfRef">5.3.4. </a><a href="#name-defining-other-expand_messa" class="section-name selfRef">Defining other expand_message variants</a>
+          </h4>
+<p id="section-5.3.4-1">When defining a new expand_message variant, the most important consideration
 is that hash_to_field models expand_message as a random oracle.
 Thus, implementors SHOULD prove indifferentiability from a random oracle
-under an appropriate assumption about the underlying cryptographic primitives.<a href="#section-5.3.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3.3-2">In addition, expand_message variants:<a href="#section-5.3.3-2" class="pilcrow">¶</a></p>
+under an appropriate assumption about the underlying cryptographic primitives.<a href="#section-5.3.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.3.4-2">In addition, expand_message variants:<a href="#section-5.3.4-2" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-5.3.3-3.1">MUST give collision resistance commensurate with the security level of
-the target elliptic curve.<a href="#section-5.3.3-3.1" class="pilcrow">¶</a>
+<li id="section-5.3.4-3.1">MUST give collision resistance commensurate with the security level of
+the target elliptic curve.<a href="#section-5.3.4-3.1" class="pilcrow">¶</a>
 </li>
-<li id="section-5.3.3-3.2">MUST be built on primitives designed for use in applications requiring
+<li id="section-5.3.4-3.2">MUST be built on primitives designed for use in applications requiring
 cryptographic randomness. As examples, a secure stream cipher is an appropriate
-primitive, whereas a Mersenne twister pseudorandom number generator is not.<a href="#section-5.3.3-3.2" class="pilcrow">¶</a>
+primitive, whereas a Mersenne twister pseudorandom number generator is not.<a href="#section-5.3.4-3.2" class="pilcrow">¶</a>
 </li>
-<li id="section-5.3.3-3.3">MUST NOT use any form of rejection sampling.<a href="#section-5.3.3-3.3" class="pilcrow">¶</a>
+<li id="section-5.3.4-3.3">MUST NOT use any form of rejection sampling.<a href="#section-5.3.4-3.3" class="pilcrow">¶</a>
 </li>
-<li id="section-5.3.3-3.4">MUST give independent values for distinct (msg, DST, length) inputs.
+<li id="section-5.3.4-3.4">MUST give independent values for distinct (msg, DST, length) inputs.
 Meeting this requirement is slightly subtle.
 As a simplified example, hashing the concatenation msg || DST does not work,
 because in this case distinct (msg, DST) pairs whose concatenations are equal
 will return the same output (e.g., ("AB", "CDEF") and ("ABC", "DEF")).
 The variants defined in this document use a prefix-free encoding of DST
-to avoid this issue.<a href="#section-5.3.3-3.4" class="pilcrow">¶</a>
+to avoid this issue.<a href="#section-5.3.4-3.4" class="pilcrow">¶</a>
 </li>
-<li id="section-5.3.3-3.5">MUST use the domain separation tag DST to ensure that invocations of
+<li id="section-5.3.4-3.5">MUST use the domain separation tag DST to ensure that invocations of
 cryptographic primitives inside of expand_message are domain separated
 from invocations outside of expand_message.
 For example, if the expand_message variant uses a hash function H, an encoding
 of DST MUST be either prepended or appended to the input to each invocation
-of H (appending is the RECOMMENDED approach).<a href="#section-5.3.3-3.5" class="pilcrow">¶</a>
+of H (appending is the RECOMMENDED approach).<a href="#section-5.3.4-3.5" class="pilcrow">¶</a>
 </li>
-<li id="section-5.3.3-3.6">SHOULD read msg exactly once, for efficiency when msg is long.<a href="#section-5.3.3-3.6" class="pilcrow">¶</a>
+<li id="section-5.3.4-3.6">SHOULD read msg exactly once, for efficiency when msg is long.<a href="#section-5.3.4-3.6" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-5.3.3-4">In addition, an expand_message variant MUST specify a unique EXP_TAG
+<p id="section-5.3.4-4">In addition, an expand_message variant MUST specify a unique EXP_TAG
 that identifies that variant in a Suite ID.
-See <a href="#suiteIDformat" class="xref">Section 8.9</a> for more information.<a href="#section-5.3.3-4" class="pilcrow">¶</a></p>
+See <a href="#suiteIDformat" class="xref">Section 8.9</a> for more information.<a href="#section-5.3.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3825,7 +3850,7 @@ This means that invocations of H outside of hash_to_field can be separated
 from those inside of hash_to_field by appending a tag distinct from DST to
 their inputs.
 Other expand_message variants that follow the guidelines in
-<a href="#hashtofield-expand-other" class="xref">Section 5.3.3</a> are expected to have similar properties,
+<a href="#hashtofield-expand-other" class="xref">Section 5.3.4</a> are expected to have similar properties,
 but these should be analyzed on a case-by-case basis.<a href="#section-10.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3994,12 +4019,6 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="CK11">[CK11]</dt>
 <dd>
 <span class="refAuthor">Couveignes, J.</span><span class="refAuthor"> and J. Kammerer</span>, <span class="refTitle">"The geometry of flex tangents to a cubic curve and its parameterizations"</span>, <span class="seriesInfo">DOI 10.1016/j.jsc.2011.11.003</span>, <span class="seriesInfo">pages 266-281</span>, <span class="seriesInfo">In Journal of Symbolic Computation, vol 47 issue 3</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1016/j.jsc.2011.11.003">https://doi.org/10.1016/j.jsc.2011.11.003</a>&gt;</span>. </dd>
-<dt id="CN08">[CN08]</dt>
-<dd>
-<span class="refAuthor">Chang, D.</span><span class="refAuthor"> and M. Nandi</span>, <span class="refTitle">"Improved indifferentiability security analysis for ChopMD hash function"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-71039-4_27</span>, <span class="seriesInfo">pages 429-443</span>, <span class="seriesInfo">In FSE</span>, <time datetime="2008">2008</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-71039-4_27">https://doi.org/10.1007/978-3-540-71039-4_27</a>&gt;</span>. </dd>
-<dt id="DFL12">[DFL12]</dt>
-<dd>
-<span class="refAuthor">Daubignard, M.</span><span class="refAuthor">, Fouque, P-A.</span><span class="refAuthor">, and Y. Lakhnech</span>, <span class="refTitle">"Generic indifferentiability proofs of hash designs"</span>, <span class="seriesInfo">DOI 10.1109/CSF.2012.13</span>, <span class="seriesInfo">pages 340-353</span>, <span class="seriesInfo">In CSF</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1109/CSF.2012.13">https://doi.org/10.1109/CSF.2012.13</a>&gt;</span>. </dd>
 <dt id="F11">[F11]</dt>
 <dd>
 <span class="refAuthor">Farashahi, R.R.</span>, <span class="refTitle">"Hashing into Hessian curves"</span>, <span class="seriesInfo">DOI 10.1007/978-3-642-21969-6_17</span>, <span class="seriesInfo">pages 278-289</span>, <span class="seriesInfo">In AFRICACRYPT 2011</span>, <time datetime="2011">2011</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-642-21969-6_17">https://doi.org/10.1007/978-3-642-21969-6_17</a>&gt;</span>. </dd>
@@ -4054,9 +4073,6 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <dt id="MRH04">[MRH04]</dt>
 <dd>
 <span class="refAuthor">Maurer, U.</span><span class="refAuthor">, Renner, R.</span><span class="refAuthor">, and C. Holenstein</span>, <span class="refTitle">"Indifferentiability, impossibility results on reductions, and applications to the random oracle methodology"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-24638-1_2</span>, <span class="seriesInfo">pages 21-39</span>, <span class="seriesInfo">In TCC 2004: Theory of Cryptography</span>, <time datetime="2004-02">February 2004</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-24638-1_2">https://doi.org/10.1007/978-3-540-24638-1_2</a>&gt;</span>. </dd>
-<dt id="MT07">[MT07]</dt>
-<dd>
-<span class="refAuthor">Maurer, U.</span><span class="refAuthor"> and S. Tessaro</span>, <span class="refTitle">"Domain extension of public random functions: Beyond the birthday barrier"</span>, <span class="seriesInfo">DOI 10.1007/978-3-540-74143-5_11</span>, <span class="seriesInfo">pages 187-204</span>, <span class="seriesInfo">In Advances in Cryptology - CRYPTO 2007</span>, <time datetime="2007">2007</time>, <span>&lt;<a href="https://doi.org/10.1007/978-3-540-74143-5_11">https://doi.org/10.1007/978-3-540-74143-5_11</a>&gt;</span>. </dd>
 <dt id="p1363a">[p1363a]</dt>
 <dd>
 <span class="refAuthor">IEEE Computer Society</span>, <span class="refTitle">"IEEE Standard Specifications for Public-Key Cryptography---Amendment 1: Additional Techniques"</span>, <time datetime="2004-03">March 2004</time>, <span>&lt;<a href="https://standards.ieee.org/standard/1363a-2004.html">https://standards.ieee.org/standard/1363a-2004.html</a>&gt;</span>. </dd>
@@ -4104,7 +4120,7 @@ Ela.Lee.2010@live.rhul.ac.uk<a href="#section-12-1.2.3" class="pilcrow">¶</a></
 <span class="refAuthor">Washington, L.C.</span>, <span class="refTitle">"Elliptic curves: Number theory and cryptography"</span>, <span class="seriesInfo">ISBN 9781420071467</span>, <span class="seriesInfo">publisher Chapman and Hall / CRC</span>, <span class="seriesInfo">edition 2nd</span>, <time datetime="2008">2008</time>, <span>&lt;<a href="https://www.crcpress.com/9781420071467">https://www.crcpress.com/9781420071467</a>&gt;</span>. </dd>
 <dt id="W19">[W19]</dt>
 <dd>
-<span class="refAuthor">Wahby, R.S.</span>, <span class="refTitle">"An explicit, generic parameterization for the Shallue--van de Woestijne map"</span>, <time datetime="2019">2019</time>, <span>&lt;<a href="https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/doc/svdw_params.pdf">https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/doc/svdw_params.pdf</a>&gt;</span>. </dd>
+<span class="refAuthor">Wahby, R.S.</span>, <span class="refTitle">"An explicit, generic parameterization for the Shallue--van de Woestijne map"</span>, <time datetime="2019">2019</time>, <span>&lt;<a href="https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/raw/master/doc/svdw_params.pdf">https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/raw/master/doc/svdw_params.pdf</a>&gt;</span>. </dd>
 <dt id="WB19">[WB19]</dt>
 <dd>
 <span class="refAuthor">Wahby, R.S.</span><span class="refAuthor"> and D. Boneh</span>, <span class="refTitle">"Fast and simple constant-time hashing to the BLS12-381 elliptic curve"</span>, <span class="seriesInfo">DOI 10.13154/tches.v2019.i4.154-179</span>, <span class="seriesInfo">ePrint 2019/403</span>, <span class="seriesInfo">issue 4</span>, <span class="seriesInfo">volume 2019</span>, <span class="seriesInfo">In IACR Trans. CHES</span>, <time datetime="2019-08">August 2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2019/403">https://eprint.iacr.org/2019/403</a>&gt;</span>. </dd>
@@ -5195,7 +5211,7 @@ Procedure:
       <h2 id="name-test-vectors">
 <a href="#section-appendix.g" class="section-number selfRef">Appendix G. </a><a href="#name-test-vectors" class="section-name selfRef">Test vectors</a>
       </h2>
-<p id="section-appendix.g-1">This section gives test vectors for each suite defined in {#suites}.
+<p id="section-appendix.g-1">This section gives test vectors for each suite defined in <a href="#suites" class="xref">Section 8</a>.
 The test vectors in this section were generated using code that is
 available from <span>[<a href="#hash2curve-repo" class="xref">hash2curve-repo</a>]</span>.<a href="#section-appendix.g-1" class="pilcrow">¶</a></p>
 <p id="section-appendix.g-2">Each test vector in this section lists values computed by the
