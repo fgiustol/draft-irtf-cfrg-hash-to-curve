@@ -834,7 +834,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Faz-Hernandez, et al.</td>
-<td class="center">Expires 14 September 2020</td>
+<td class="center">Expires 19 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,12 +847,12 @@ table.left {
 <dd class="internet-draft">draft-irtf-cfrg-hash-to-curve-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-13" class="published">13 March 2020</time>
+<time datetime="2020-03-18" class="published">18 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-14">14 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-19">19 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -903,7 +903,7 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1130,6 +1130,9 @@ arbitrary string to a point on an elliptic curve.<a href="#section-abstract-1" c
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.10.2.2">
                 <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="xref">10.2</a>.  <a href="#name-expand_message_xmd-security" class="xref">expand_message_xmd security</a><a href="#section-toc.1-1.10.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.10.2.3">
+                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="xref">10.3</a>.  <a href="#name-target-security-levels" class="xref">Target Security Levels</a><a href="#section-toc.1-1.10.2.3.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -2034,7 +2037,9 @@ Reducing a random 256-bit integer modulo this p yields a value that is in
 the range [0, p / 3] with probability roughly 1/2, meaning that this value
 is statistically far from uniform in [0, p - 1].<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">To control bias, hash_to_field instead uses pseudorandom integers whose
-length is at least ceil(log2(p)) + k bits.
+length is at least ceil(log2(p)) + k bits, where k is the target security level
+for the suite in bits. (Note that k is an upper bound on the security level for
+the corresponding curve. See <a href="#security-considerations-targets" class="xref">Section 10.3</a> for more details.)
 Reducing such integers mod p gives bias at most 2^-k for any p; this bias
 is appropriate when targeting k-bit security.
 To obtain such integers, hash_to_field uses expand_message to obtain
@@ -2065,7 +2070,7 @@ Parameters:
 - p, the characteristic of F (see immediately above).
 - m, the extension degree of F, m &gt;= 1 (see immediately above).
 - L = ceil((ceil(log2(p)) + k) / 8), where k is the security
-  parameter of the cryptosystem (e.g., k = 128).
+  parameter of the suite (e.g., k = 128).
 - expand_message, a function that expands a byte string and
   domain separation tag into a pseudorandom byte string
   (see discussion above).
@@ -2865,8 +2870,8 @@ uses the constant sqrt_neg_486664 = sqrt(-486664) (mod 2^255 - 19).
 To ensure compatibility, this constant MUST be chosen such that
 sgn0(sqrt_neg_486664) == 1.
 Analogous ambiguities in other standardized rational maps MUST be
-resolved in the same way: for any constant k whose sign is ambiguous,
-k MUST be chosen such that sgn0(k) == 1.<a href="#section-6.8.1-3" class="pilcrow">¶</a></p>
+resolved in the same way: for any constant c whose sign is ambiguous,
+c MUST be chosen such that sgn0(c) == 1.<a href="#section-6.8.1-3" class="pilcrow">¶</a></p>
 <p id="section-6.8.1-4">The 4-isogeny map from curve448 to edwards448 (<span>[<a href="#RFC7748" class="xref">RFC7748</a>]</span>, Section 4.2)
 is unambiguous with respect to sign.<a href="#section-6.8.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.8.1-5">When defining new twisted Edwards curves, a Montgomery equivalent and rational
@@ -3656,7 +3661,7 @@ Budroni and Pintore (<span>[<a href="#BP17" class="xref">BP17</a>]</span>, Secti
 <p id="section-8.8-1">The RECOMMENDED way to define a new hash-to-curve suite is:<a href="#section-8.8-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-8.8-2">
           <li id="section-8.8-2.1">E, F, p, and m are determined by the elliptic curve and its base field;
-k is determined by the security level of the elliptic curve.<a href="#section-8.8-2.1" class="pilcrow">¶</a>
+k is determined by the target security level of the suite.<a href="#section-8.8-2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-8.8-2.2">Choose encoding type, either hash_to_curve or encode_to_curve (<a href="#roadmap" class="xref">Section 3</a>).<a href="#section-8.8-2.2" class="pilcrow">¶</a>
 </li>
@@ -3889,6 +3894,20 @@ strxor(b_0, b_(i - 1)) (step 9) rather than to b_0.
 This approach increases the Hamming distance between inputs to different
 invocations of H, which reduces the likelihood that nonidealities in H
 affect the distribution of the b_i values.<a href="#section-10.2-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations-targets">
+<section id="section-10.3">
+        <h3 id="name-target-security-levels">
+<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-target-security-levels" class="section-name selfRef">Target Security Levels</a>
+        </h3>
+<p id="section-10.3-1">Each ciphersuite specifies a target security level (in bits) for the underlying
+curve. This parameter ensures the corresponding hash_to_field instantiation is
+conservative and correct. We stress that this parameter is only an upper bound on
+the security level of the curve. It is neither a guarantee nor endorsement of its
+longevity. Mathematical and cryptographic advancements may lower the security level
+for any curve. In such cases, applications SHOULD choose curves and, consequently,
+ciphersuites with higher security levels.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
