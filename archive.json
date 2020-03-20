@@ -1,6 +1,6 @@
 {
   "magic": "B8n2c@e8kvfx",
-  "timestamp": "2020-03-19T20:01:40.542150+00:00",
+  "timestamp": "2020-03-20T23:34:10.454968+00:00",
   "repo": "cfrg/draft-irtf-cfrg-hash-to-curve",
   "labels": [
     {
@@ -5014,7 +5014,7 @@
       "labels": [],
       "body": "Hi folks,\r\n\r\nIt occurs to me that there's one possible modification to expand_message_xmd that would make it slightly nicer for some users. It's not a clear and unqualified win, but it's worth at least discussing.\r\n\r\nRight now, expand_message_xmd computes the following:\r\n\r\n    Z_pad = I2OSP(0, <block length of H>)\r\n    b_0 = H(Z_pad || msg || I2OSP(len_in_bytes, 2) || I2OSP(0, 1) || DST_prime)\r\n    b_1 = H(b_0 || I2OSP(1, 1) || DST_prime)\r\n    b_i = H(strxor(b_0, b_(i-1)) || I2OSP(i, 1) || DST_prime)\r\n\r\nThis is to ensure that `b_0` and `b_i` (i >= 1) are hashed with different initialization vectors. The downside of this approach is that some protocols will already have computed `H(msg || ...)`, and the above means that they have to pass over `msg` again to compute `b_0`.\r\n\r\nWe could instead consider doing this:\r\n\r\n    b_0 = H(msg || I2OSP(len_in_bytes, 2) || I2OSP(0, 1) || DST_prime)\r\n    b_1 = H(Z_pad || b_0 || I2OSP(1, 1) || DST_prime)\r\n    b_i = H(Z_pad || strxor(b_0, b_(i-1)) || I2OSP(i, 1) || DST_prime)\r\n\r\nThis also ensures that `b_0` and `b_i` (i >= 1) are hashed starting from different initialization vectors, but now implementors can reuse the work computing `H(msg || ...)` in `b_0`.\r\n\r\nThis looks like strictly more hashing work, since all the `b_i` need to be prefixed with a block of 0s. But as we know, most of the time implementations allow you to preload the state of the hash function, so in practice it's possible to optimize this away. On the other hand, anyone who *doesn't* want to implement this optimization *will* pay extra for hashing.\r\n\r\nSo the question is, do we enable a potentially nice optimization at the cost of making un-optimized implementations slower?\r\n\r\n(This assumes, of course, that we're willing to make any change at all. But now's the time for a change, since to my knowledge no one except me has actually implemented the new hash_to_field functions yet.)",
       "createdAt": "2020-03-14T23:56:19Z",
-      "updatedAt": "2020-03-19T20:00:14Z",
+      "updatedAt": "2020-03-20T17:39:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -5051,6 +5051,20 @@
           "body": "Thinking more about this, I think the proposal in my [prior message](https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/223#issuecomment-600988563) ends up assuming a lot more about the security of the compression function than the current version of xmd does (and, in particular, seems to assume a property that isn't really standard). So I think we'd be better off with the current version, just for the sake of being conservative with security.\r\n\r\n---\r\n\r\nDetails:\r\n\r\nRecall that the current version of xmd ensures that the \"inner\" invocation of H (to compute `b_0`) starts with a different initialization vector than the \"outer\" invocations (to compute `b_i`) by fixing the first block of the inner H's input to the all-zeros block (this suffices to guarantee that the outer and inner IVs are always different, thanks to the way we use the counter). And this is precisely the reason that the work computing the inner H invocation can't be reused by other pieces of an invoking protocol---we need to prepend a fixed block to `msg` to change the IV of the inner hash invocation.\r\n\r\n(Of course, the invoking protocol is welcome to use `H(Z_pad || msg || ...)` rather than `H(msg || ...)` if they want!)\r\n\r\nThe version I proposed in the prior message tries to ensure that the inner and outer invocations use different IVs by fixing the first block of the outer invocation (rather than the inner one). But for this to work, it has to be the case that the adversary can't craft an input to the inner invocation that causes the outer and inner IVs to match---and to rule this out, we need to rely on some property of the hash function that doesn't seem like a standard one.\r\n\r\nWhat property do we need? Well, contrary to what I initially posted above, it's certainly not enough for H to have preimage resistance, because this isn't quite a preimage attack:\r\n\r\n1. Preimage resistance: given some target X, come up with a message m such that X = H(m)\r\n2. What we would need: come up with any X and m such that X = H(X || 000...000 || m)\r\n\r\n(The attacker has strictly more power in the second case than in the first, so we should expect hash functions to be weaker against the second kind of attack than against a preimage attack.)\r\n\r\nIt's also not any of the standard prefix-resistance properties, since those fix a prefix for the attacker to target. We might call what we're looking for prefix-fixpoint-resistance. But since this doesn't appear to be anything like a standard notion of security, it seems at best dubious to base the security of the construction on it.\r\n\r\nAs more evidence that this isn't a great idea, we know that it's relatively easy to find a fixpoint for a Davies-Meyer--style compression function like the one used in SHA-2. I have no idea whether this can be extended to make the attack work, but it seems to be a crack in the armor...",
           "createdAt": "2020-03-19T19:59:01Z",
           "updatedAt": "2020-03-19T20:00:14Z"
+        },
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I consider that we must be act with caution, since it is easy to make wrong decisions that could lead to attacks.\r\nIt would be ideal to have a security proof of the extraction of pseudo random bytes. However, even the authors of eprint.iacr.org/2018/349 had a difficulties on analyzing the algorithms in SP-800-90A.\r\n\r\nAs a matter of sanity, we could take some time to revisit the simplest and secure approach, and from it, departing to make some improvements.",
+          "createdAt": "2020-03-19T22:35:34Z",
+          "updatedAt": "2020-03-19T22:35:34Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Well, since it seems like there's no way to make this work-savings proposal happen unless we're willing to make some weird assumption about a hash function, how about we table this for now and revisit if any of us comes up with a better idea?\r\n\r\n---\r\n\r\nMeanwhile, I think @armfazh is right that we want to write down a detailed analysis of the current expand_message_xmd function.\r\n\r\nJust for the sake of completeness, here's a variant of our current function that gets rid of the XOR operation, at the cost of one more compression function invocation. (The security analysis of this one is somewhat easier because it doesn't use XOR chaining.)\r\n\r\n    b_0 = H(Z_pad || msg || I2OSP(len_in_bytes, 2) || I2OSP(0, 1) || DST_prime)\r\n    b_0_pad = b_0 || I2OSP(0, r_in_bytes - b_in_bytes)    # pad b_0 to 1 block\r\n    for i in (1, ..., ell):\r\n        b_i = H(b_0_pad || b_(i - 1) || I2OSP(i, 1) || DST_prime)\r\n\r\nHere, unless `b_0_pad = Z_pad` (which requires finding a first preimage), the inner and outer H functions have independent IVs. Meanwhile, because of the counter, all of the messages are distinct.\r\n\r\nThe extra compression function invocation is to compute `h(IV, b_0_pad)` once; this can be reused for all `b_i` computations, which thereafter require as little as one compression function invocation (depending on the length of DST). This is cheaper than what we considered in #214,\r\n\r\n    b_i = H(b_0 || b_(i-1) || I2OSP(i, 1) || DST_prime)\r\n\r\nwhich would require at least two compression function invocations for every `b_i`.",
+          "createdAt": "2020-03-20T17:39:42Z",
+          "updatedAt": "2020-03-20T17:39:42Z"
         }
       ]
     },
@@ -5066,7 +5080,7 @@
       "labels": [],
       "body": "Mike Scott sent me an email with several pieces of feedback on sgn0. Let's discuss if/how to handle these in this issue, and then I'll put together a PR.\r\n\r\nThe high-level message is that the sgn0 definitions are too complex, and may lead to implementation errors. Specific suggestions:\r\n\r\n1. Get rid of `sgn0_be` and only use `sgn0_le`.\r\n\r\n    - Pros: only one sgn0 variant would be great.\r\n    - Cons: this would mean that existing curves that use `sgn0_be` for point compression wouldn't be able to reuse that implementation for hashing. Also, it looks like the BLS12-381 community is pretty firmly entrenched at this point, which would make life hard for the BLS signatures draft.\r\n\r\n2. If sgn0 returns 0 for positive or zero, and 1 for negative, then it (at least, `sgn0_le`) could be much simpler, especially for the `m=1` case:\r\n\r\n        def sgn0_le(x):\r\n            return x mod 2\r\n\r\n    This could also be made quite simple for quadratic extensions:\r\n\r\n        def sgn0_le(x):   # x = (x_1, x_2)\r\n            p0 = x_1 == 0\r\n            p1 = x_1 mod 2\r\n            p2 = x_2 mod 2\r\n            return p1 | (p0 & p2)\r\n\r\n    - Pros: simplifies specifying `sgn0_le`. Not clear whether it simplifies `sgn0_be`, but it might.\r\n    - Cons: is (0, 1) less intuitive than (1, -1) for (positive, negative) respectively?\r\n\r\n3. Rather than specifying field extension sgn0 in terms of vector representations, specify it in terms of towering. That is, express sgn0 for Fp2 in terms of two calls to sgn0 for Fp; sgn0 for Fp4 in terms of two calls to sgn0 for Fp2; etc.\r\n\r\n    - Pros: may result in simpler constant-time implementations.\r\n    - Cons: requires us to define towering at sufficient detail in the document to actually specify this approach. Is not compatible with any existing point compression technique that I'm aware of.",
       "createdAt": "2020-03-18T22:54:42Z",
-      "updatedAt": "2020-03-18T22:56:19Z",
+      "updatedAt": "2020-03-20T02:26:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -5082,6 +5096,65 @@
           "body": "@armfazh @chris-wood thoughts?",
           "createdAt": "2020-03-18T22:56:19Z",
           "updatedAt": "2020-03-18T22:56:19Z"
+        },
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> it will definitely make the BLS signatures standard slightly more controversial (since the only suites right now are BLS12-381, and everyone there seems to prefer to use big-endian signedness).\r\n\r\nThe choice of sgn0 is particular to hash to curve, isn't it?. BLS signatures still can use big-endian sign for other purposes. As noted, verifying parity is easier to implement.\r\n\r\nMoving from (1,-1) to (0,1) is equivalent to move from `sgn` to `parity`. So, sgn can be defined in terms of parity.\r\n\r\nThe proposed sgn function is too specific to the tower used. However, how it is actually computed the sgn function in the current setting?\r\n\r\nFor example, if we have an element in Fp6, \r\nLet A \\in Fp6,  A = A1 x + A0. (as a quadratic extension over Fp3)\r\nA1 \\in Fp3,  A1 = a2 y^2 + a1 y + a0 ( a cubic extension over Fp)\r\n\r\n",
+          "createdAt": "2020-03-19T22:24:10Z",
+          "updatedAt": "2020-03-19T22:24:10Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The choice of sgn0 is particular to hash to curve, isn't it?. BLS signatures still can use big-endian sign for other purposes. As noted, verifying parity is easier to implement.\r\n\r\nYou're totally right, they could keep using the existing method for compression and only change sgn0 for hashing. This gives up on the hope that everyone could use the same sign method for both compression and hashing, but maybe that's OK.\r\n\r\n> Moving from (1,-1) to (0,1) is equivalent to move from `sgn` to `parity`. So, sgn can be defined in terms of parity.\r\n\r\nTrue.\r\n \r\n> The proposed sgn function is too specific to the tower used. However, how it is actually computed the sgn function in the current setting?\r\n> \r\n> For example, if we have an element in Fp6,\r\n> Let A \\in Fp6, A = A1 x + A0. (as a quadratic extension over Fp3)\r\n> A1 \\in Fp3, A1 = a2 y^2 + a1 y + a0 ( a cubic extension over Fp)\r\n\r\nIn the current version, I think we'd expect people to write down the element of Fp6 as a 6-vector over, say, the basis given by the Cartesian product {y^2, y, 1} x {x, 1} and then compute the sign using the existing method. Right?",
+          "createdAt": "2020-03-19T23:10:07Z",
+          "updatedAt": "2020-03-19T23:10:07Z"
+        },
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "\r\n> In the current version, I think we'd expect people to write down the element of Fp6 as a 6-vector over, say, the basis given by the Cartesian product {y^2, y, 1} x {x, 1} and then compute the sign using the existing method. Right?\r\n\r\nhence, it is equivalent to what is proposed by going trough the tower, or not?\r\nbecause, at the end, the sgn will be a function coefficients in the ground field.",
+          "createdAt": "2020-03-20T00:09:39Z",
+          "updatedAt": "2020-03-20T00:09:39Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ah, got it! (Sorry for being slow :smile:)\r\n\r\nI think you're right: it's possible, as long as the ground field elements have the \"right\" ordering, that the two methods would agree. This is a really good point :+1:",
+          "createdAt": "2020-03-20T02:26:06Z",
+          "updatedAt": "2020-03-20T02:26:06Z"
+        }
+      ]
+    },
+    {
+      "number": 227,
+      "id": "MDU6SXNzdWU1ODQ3NzUyODY=",
+      "title": "a different way around the k issue",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/227",
+      "state": "CLOSED",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I'm helping to implement hash-to-curve in RELIC, and as I'm doing this I'm realizing that the way we've specified `k` inherently requires a judgement call, which is annoying. This is related to @armfazh's issue with calling `k` the security parameter---that's subjective and will change over time, and even now people will disagree on how to define it.\r\n\r\nSo how could we do this in an objective way? One way would be to say\r\n\r\n    L = ceil(1.5 * ceil(log2(p)) / 8)\r\n\r\nin other words, we replace `k` with `ceil(log2(p)) / 2`. But this is too conservative for curves with large cofactors (like pairing-friendly curves).\r\n\r\nHow about this:\r\n\r\n    p_bits = ceil(log2(p))\r\n    r_bits = ceil(log2(r))  # the bit-length of the prime subgroup order\r\n    L = ceil((p_bits + ceil(r_bits / 2)) / 8)\r\n\r\nThis is essentially how we have been picking `k` already---in particular, I think this will not change any of the hash-to-field parameters in the Suites at all---but it's a totally objective measure, which is nice...\r\n\r\nI can put together a PR if this seems reasonable.",
+      "createdAt": "2020-03-20T00:27:39Z",
+      "updatedAt": "2020-03-20T23:33:14Z",
+      "closedAt": "2020-03-20T23:33:14Z",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Rather than replace `k` entirely, perhaps we can note that `k` could be computed as you suggest? I think having a target security level will be important for folks looking to adopt one of these in their applications or protocols.",
+          "createdAt": "2020-03-20T00:32:58Z",
+          "updatedAt": "2020-03-20T00:32:58Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Great point! We can add this in the \"defining new suites\" section, maybe.",
+          "createdAt": "2020-03-20T00:34:31Z",
+          "updatedAt": "2020-03-20T00:34:31Z"
         }
       ]
     }
@@ -23026,6 +23099,60 @@
           "body": "lgtm!",
           "createdAt": "2020-03-18T23:51:33Z",
           "updatedAt": "2020-03-18T23:51:33Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 228,
+      "id": "MDExOlB1bGxSZXF1ZXN0MzkxNjg1ODA3",
+      "title": "give guidance on choosing k in Section 8",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/228",
+      "state": "MERGED",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This implements @chris-wood's suggestion in #227.\r\n\r\ncloses #227",
+      "createdAt": "2020-03-20T18:39:30Z",
+      "updatedAt": "2020-03-20T23:33:15Z",
+      "closedAt": "2020-03-20T23:33:14Z",
+      "mergedAt": "2020-03-20T23:33:14Z",
+      "mergedBy": "chris-wood",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "LGTM \u2014 thanks!",
+          "createdAt": "2020-03-20T20:12:08Z",
+          "updatedAt": "2020-03-20T20:12:08Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzc4NzgyOTY2",
+          "commit": {
+            "abbreviatedOid": "53e5b1d"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-20T20:11:52Z",
+          "updatedAt": "2020-03-20T20:11:52Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzc4NzkxMDQ1",
+          "commit": {
+            "abbreviatedOid": "53e5b1d"
+          },
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-20T20:26:45Z",
+          "updatedAt": "2020-03-20T20:26:45Z",
           "comments": []
         }
       ]
