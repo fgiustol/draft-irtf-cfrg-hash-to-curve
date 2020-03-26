@@ -1,6 +1,6 @@
 {
   "magic": "B8n2c@e8kvfx",
-  "timestamp": "2020-03-20T23:34:10.454968+00:00",
+  "timestamp": "2020-03-26T01:04:27.415679+00:00",
   "repo": "cfrg/draft-irtf-cfrg-hash-to-curve",
   "labels": [
     {
@@ -5007,15 +5007,15 @@
       "id": "MDU6SXNzdWU1ODE0MjU4MDg=",
       "title": "expand_message_xmd : a potential optimization",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/223",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kwantam",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Hi folks,\r\n\r\nIt occurs to me that there's one possible modification to expand_message_xmd that would make it slightly nicer for some users. It's not a clear and unqualified win, but it's worth at least discussing.\r\n\r\nRight now, expand_message_xmd computes the following:\r\n\r\n    Z_pad = I2OSP(0, <block length of H>)\r\n    b_0 = H(Z_pad || msg || I2OSP(len_in_bytes, 2) || I2OSP(0, 1) || DST_prime)\r\n    b_1 = H(b_0 || I2OSP(1, 1) || DST_prime)\r\n    b_i = H(strxor(b_0, b_(i-1)) || I2OSP(i, 1) || DST_prime)\r\n\r\nThis is to ensure that `b_0` and `b_i` (i >= 1) are hashed with different initialization vectors. The downside of this approach is that some protocols will already have computed `H(msg || ...)`, and the above means that they have to pass over `msg` again to compute `b_0`.\r\n\r\nWe could instead consider doing this:\r\n\r\n    b_0 = H(msg || I2OSP(len_in_bytes, 2) || I2OSP(0, 1) || DST_prime)\r\n    b_1 = H(Z_pad || b_0 || I2OSP(1, 1) || DST_prime)\r\n    b_i = H(Z_pad || strxor(b_0, b_(i-1)) || I2OSP(i, 1) || DST_prime)\r\n\r\nThis also ensures that `b_0` and `b_i` (i >= 1) are hashed starting from different initialization vectors, but now implementors can reuse the work computing `H(msg || ...)` in `b_0`.\r\n\r\nThis looks like strictly more hashing work, since all the `b_i` need to be prefixed with a block of 0s. But as we know, most of the time implementations allow you to preload the state of the hash function, so in practice it's possible to optimize this away. On the other hand, anyone who *doesn't* want to implement this optimization *will* pay extra for hashing.\r\n\r\nSo the question is, do we enable a potentially nice optimization at the cost of making un-optimized implementations slower?\r\n\r\n(This assumes, of course, that we're willing to make any change at all. But now's the time for a change, since to my knowledge no one except me has actually implemented the new hash_to_field functions yet.)",
       "createdAt": "2020-03-14T23:56:19Z",
-      "updatedAt": "2020-03-20T17:39:42Z",
-      "closedAt": null,
+      "updatedAt": "2020-03-25T23:32:24Z",
+      "closedAt": "2020-03-25T23:32:24Z",
       "comments": [
         {
           "author": "kwantam",
@@ -5080,7 +5080,7 @@
       "labels": [],
       "body": "Mike Scott sent me an email with several pieces of feedback on sgn0. Let's discuss if/how to handle these in this issue, and then I'll put together a PR.\r\n\r\nThe high-level message is that the sgn0 definitions are too complex, and may lead to implementation errors. Specific suggestions:\r\n\r\n1. Get rid of `sgn0_be` and only use `sgn0_le`.\r\n\r\n    - Pros: only one sgn0 variant would be great.\r\n    - Cons: this would mean that existing curves that use `sgn0_be` for point compression wouldn't be able to reuse that implementation for hashing. Also, it looks like the BLS12-381 community is pretty firmly entrenched at this point, which would make life hard for the BLS signatures draft.\r\n\r\n2. If sgn0 returns 0 for positive or zero, and 1 for negative, then it (at least, `sgn0_le`) could be much simpler, especially for the `m=1` case:\r\n\r\n        def sgn0_le(x):\r\n            return x mod 2\r\n\r\n    This could also be made quite simple for quadratic extensions:\r\n\r\n        def sgn0_le(x):   # x = (x_1, x_2)\r\n            p0 = x_1 == 0\r\n            p1 = x_1 mod 2\r\n            p2 = x_2 mod 2\r\n            return p1 | (p0 & p2)\r\n\r\n    - Pros: simplifies specifying `sgn0_le`. Not clear whether it simplifies `sgn0_be`, but it might.\r\n    - Cons: is (0, 1) less intuitive than (1, -1) for (positive, negative) respectively?\r\n\r\n3. Rather than specifying field extension sgn0 in terms of vector representations, specify it in terms of towering. That is, express sgn0 for Fp2 in terms of two calls to sgn0 for Fp; sgn0 for Fp4 in terms of two calls to sgn0 for Fp2; etc.\r\n\r\n    - Pros: may result in simpler constant-time implementations.\r\n    - Cons: requires us to define towering at sufficient detail in the document to actually specify this approach. Is not compatible with any existing point compression technique that I'm aware of.",
       "createdAt": "2020-03-18T22:54:42Z",
-      "updatedAt": "2020-03-20T02:26:06Z",
+      "updatedAt": "2020-03-25T23:26:37Z",
       "closedAt": null,
       "comments": [
         {
@@ -5124,6 +5124,34 @@
           "body": "Ah, got it! (Sorry for being slow :smile:)\r\n\r\nI think you're right: it's possible, as long as the ground field elements have the \"right\" ordering, that the two methods would agree. This is a really good point :+1:",
           "createdAt": "2020-03-20T02:26:06Z",
           "updatedAt": "2020-03-20T02:26:06Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My $0.02:\r\n\r\n1. I'm OK removing the BE variant, given that it primarily benefits one use case.\r\n2. I don't think (0,1) would cause much confusion. As a plus, specifying sgn0 in terms of parity does seem to simplify things. \r\n3. I'm less comfortable with this proposal. @kwantam, does it depend on a particular basis representation for field elements? ",
+          "createdAt": "2020-03-23T01:53:31Z",
+          "updatedAt": "2020-03-23T01:53:42Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "ping @kwantam @armfazh!",
+          "createdAt": "2020-03-25T20:08:20Z",
+          "updatedAt": "2020-03-25T20:08:20Z"
+        },
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "it seems we are all agree on  points 1 and 2.\r\nFor the point 3, we might need to specify the order in which the elements and sub-elements are evaluated. So, a sgn function that does not depend on the order of element will be ideal.\r\n",
+          "createdAt": "2020-03-25T20:34:55Z",
+          "updatedAt": "2020-03-25T20:34:55Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It's not obvious to me how to make sgn independent of the evaluation order (or that it's even possible), but it's a very cool idea...\r\n\r\nI'm still not super jazzed about killing sgn0_be, but I'll go along with it if both of you prefer it.\r\n\r\n(0,1) seems fine.\r\n\r\nI should have some time in the next couple days to put together edits for points 1 and 2, and then I guess we can re-evaluate whether we definitely want to remove sgn0_be.",
+          "createdAt": "2020-03-25T23:26:37Z",
+          "updatedAt": "2020-03-25T23:26:37Z"
         }
       ]
     },
@@ -20420,7 +20448,7 @@
       "labels": [],
       "body": "This pull request fixes #166 specifying the algorithm of [BP18] for a fast cofactor clearing.",
       "createdAt": "2019-11-07T19:14:41Z",
-      "updatedAt": "2020-03-11T13:26:29Z",
+      "updatedAt": "2020-03-23T08:18:01Z",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20452,6 +20480,13 @@
           "body": "Hey @kwantam, thanks a lot for this review! I updated the pull request integrating your comments, and rebasing it all on master to keep the git log tidied up :). What do you think?",
           "createdAt": "2020-03-11T13:25:26Z",
           "updatedAt": "2020-03-11T13:26:29Z"
+        },
+        {
+          "author": "mmaker",
+          "authorAssociation": "NONE",
+          "body": "hello @kwantam ! any updates on this?\r\n\r\n(hope you're doing fine during these crazy days!)",
+          "createdAt": "2020-03-23T08:18:00Z",
+          "updatedAt": "2020-03-23T08:18:00Z"
         }
       ],
       "reviews": [
@@ -23115,7 +23150,7 @@
       "labels": [],
       "body": "This implements @chris-wood's suggestion in #227.\r\n\r\ncloses #227",
       "createdAt": "2020-03-20T18:39:30Z",
-      "updatedAt": "2020-03-20T23:33:15Z",
+      "updatedAt": "2020-03-21T00:35:11Z",
       "closedAt": "2020-03-20T23:33:14Z",
       "mergedAt": "2020-03-20T23:33:14Z",
       "mergedBy": "chris-wood",
@@ -23156,6 +23191,25 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 229,
+      "id": "MDExOlB1bGxSZXF1ZXN0MzkzOTAxMjk5",
+      "title": "Pointers to rust reference implementation",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/229",
+      "state": "OPEN",
+      "author": "armfazh",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I've created a rust reference implementation compatible with v05 and v06",
+      "createdAt": "2020-03-26T01:04:07Z",
+      "updatedAt": "2020-03-26T01:04:07Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
