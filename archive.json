@@ -1,6 +1,6 @@
 {
   "magic": "B8n2c@e8kvfx",
-  "timestamp": "2020-03-26T01:04:27.415679+00:00",
+  "timestamp": "2020-03-29T15:08:14.953313+00:00",
   "repo": "cfrg/draft-irtf-cfrg-hash-to-curve",
   "labels": [
     {
@@ -5073,15 +5073,15 @@
       "id": "MDU6SXNzdWU1ODQwNTA2MDk=",
       "title": "feedback about sgn0",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/225",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kwantam",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Mike Scott sent me an email with several pieces of feedback on sgn0. Let's discuss if/how to handle these in this issue, and then I'll put together a PR.\r\n\r\nThe high-level message is that the sgn0 definitions are too complex, and may lead to implementation errors. Specific suggestions:\r\n\r\n1. Get rid of `sgn0_be` and only use `sgn0_le`.\r\n\r\n    - Pros: only one sgn0 variant would be great.\r\n    - Cons: this would mean that existing curves that use `sgn0_be` for point compression wouldn't be able to reuse that implementation for hashing. Also, it looks like the BLS12-381 community is pretty firmly entrenched at this point, which would make life hard for the BLS signatures draft.\r\n\r\n2. If sgn0 returns 0 for positive or zero, and 1 for negative, then it (at least, `sgn0_le`) could be much simpler, especially for the `m=1` case:\r\n\r\n        def sgn0_le(x):\r\n            return x mod 2\r\n\r\n    This could also be made quite simple for quadratic extensions:\r\n\r\n        def sgn0_le(x):   # x = (x_1, x_2)\r\n            p0 = x_1 == 0\r\n            p1 = x_1 mod 2\r\n            p2 = x_2 mod 2\r\n            return p1 | (p0 & p2)\r\n\r\n    - Pros: simplifies specifying `sgn0_le`. Not clear whether it simplifies `sgn0_be`, but it might.\r\n    - Cons: is (0, 1) less intuitive than (1, -1) for (positive, negative) respectively?\r\n\r\n3. Rather than specifying field extension sgn0 in terms of vector representations, specify it in terms of towering. That is, express sgn0 for Fp2 in terms of two calls to sgn0 for Fp; sgn0 for Fp4 in terms of two calls to sgn0 for Fp2; etc.\r\n\r\n    - Pros: may result in simpler constant-time implementations.\r\n    - Cons: requires us to define towering at sufficient detail in the document to actually specify this approach. Is not compatible with any existing point compression technique that I'm aware of.",
       "createdAt": "2020-03-18T22:54:42Z",
-      "updatedAt": "2020-03-25T23:26:37Z",
-      "closedAt": null,
+      "updatedAt": "2020-03-29T15:07:46Z",
+      "closedAt": "2020-03-29T15:07:46Z",
       "comments": [
         {
           "author": "kwantam",
@@ -5152,6 +5152,34 @@
           "body": "It's not obvious to me how to make sgn independent of the evaluation order (or that it's even possible), but it's a very cool idea...\r\n\r\nI'm still not super jazzed about killing sgn0_be, but I'll go along with it if both of you prefer it.\r\n\r\n(0,1) seems fine.\r\n\r\nI should have some time in the next couple days to put together edits for points 1 and 2, and then I guess we can re-evaluate whether we definitely want to remove sgn0_be.",
           "createdAt": "2020-03-25T23:26:37Z",
           "updatedAt": "2020-03-25T23:26:37Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I've opened #230 to address issues (1) and (2).\r\n\r\nIf we really want to deal with the towering issue (issue (3)), we can add an appendix about it. As @armfazh pointed out, it's possible to implement the towering approach in a way that's compatible with the vector approach as currently specified.",
+          "createdAt": "2020-03-27T05:31:10Z",
+          "updatedAt": "2020-03-27T05:31:35Z"
+        },
+        {
+          "author": "bwesterb",
+          "authorAssociation": "NONE",
+          "body": "It is an interesting question whether there is a generalisation of the sign to an arbitrary extension field.\r\n\r\nWhat do we expect?\r\n\r\n* `sgn(-x) = -sgn(x)`\r\n* `sgn(T(x)) = sgn(x)` for any automorphism `T`\r\n\r\nSuch a `sgn` does not exist for `GF(p^2)` if `n:=(p-1)/2` is odd. Call an element `x` (strictly) positive if `sgn(x)=1`. `GP(p^2)` has two automorphisms: the trivial one and the Frobenius automorphism which sends `x` to `x^p`. There are exactly `n:=(p-1)/2` positive elements fixed by the Frobenius automorphism. This leaves `2(n^2+n)-n` positive elements that cannot be fixed by the automorphism/. As n is assumed to be odd, this number is odd.  But that cannot be as they have to pair up via the Frobenius automorphism!  Thus such `sgn` does not exist.\r\n\r\nThe existence of such a sign is actually equivalent to the problem of selecting a square root. Indeed, suppose there is a way we can pick a preferred square root irrespective of representation.  Then we can define such a `sgn` function as follows. Define `sgn(0) = 0`. Given a non-zero element `x`, check whether `sqrt(x^2)=x` where `sqrt` is our preferred square root.  Define `sgn(x)=1` if `sqrt(x^2)=x` and `-1` otherwise.  This `sgn` satisfies our assumptions.\r\n\r\nI'm now thinking about the general case for `F(p^n)`.",
+          "createdAt": "2020-03-27T18:19:58Z",
+          "updatedAt": "2020-03-27T18:21:30Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> The existence of such a sign is actually equivalent to the problem of selecting a square root. Indeed, suppose there is a way we can pick a preferred square root irrespective of representation. Then we can define such a `sgn` function as follows. Define `sgn(0) = 0`. Given a non-zero element `x`, check whether `sqrt(x^2)=x` where `sqrt` is our preferred square root. Define `sgn(x)=1` if `sqrt(x^2)=x` and `-1` otherwise. This `sgn` satisfies our assumptions.\r\n\r\nThis is a good point! and in fact we're using this idea, but backwards, in the draft---we *don't* specify how to compute sqrt, and instead we always restrict `sgn0` of the result...",
+          "createdAt": "2020-03-27T21:27:54Z",
+          "updatedAt": "2020-03-27T21:27:54Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> * `sgn(T(x)) = sgn(x)` for any automorphism `T`\r\n\r\nAs you say, this appears to be problematic for the general case. So we give up on this, only requiring that `sgn0(x) = -sgn0(-x)` for `x != 0`. (Or, well, the moral equivalent if sgn0 outputs {0,1}.)",
+          "createdAt": "2020-03-27T21:30:32Z",
+          "updatedAt": "2020-03-27T21:32:45Z"
         }
       ]
     },
@@ -20448,7 +20476,7 @@
       "labels": [],
       "body": "This pull request fixes #166 specifying the algorithm of [BP18] for a fast cofactor clearing.",
       "createdAt": "2019-11-07T19:14:41Z",
-      "updatedAt": "2020-03-23T08:18:01Z",
+      "updatedAt": "2020-03-29T03:50:01Z",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -20487,6 +20515,27 @@
           "body": "hello @kwantam ! any updates on this?\r\n\r\n(hope you're doing fine during these crazy days!)",
           "createdAt": "2020-03-23T08:18:00Z",
           "updatedAt": "2020-03-23T08:18:00Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> hello @kwantam ! any updates on this?\r\n> \r\n> (hope you're doing fine during these crazy days!)\r\n\r\nHi! Thanks for the updates---I'll take another look asap (tomorrow, I hope).\r\n\r\nHope you're staying well, too :)",
+          "createdAt": "2020-03-26T02:55:12Z",
+          "updatedAt": "2020-03-26T02:55:12Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Ah, but just to make sure I understand correctly: the pseudocode assumes homogeneous projective coordinates, right? In other words, the projective point (X : Y : Z) corresponds to the affine point (X/Z, Y/Z), yes?\r\n",
+          "createdAt": "2020-03-29T02:02:35Z",
+          "updatedAt": "2020-03-29T02:02:35Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "OK, I reformatted the code samples to better match the rest of the document, moved this section into the sample code appendix, and added a sage file to test the code. See #232.\r\n\r\nPlease let me know if anything there looks amiss, and thank you again for documenting this!",
+          "createdAt": "2020-03-29T03:50:00Z",
+          "updatedAt": "2020-03-29T03:50:00Z"
         }
       ],
       "reviews": [
@@ -20583,6 +20632,19 @@
               "updatedAt": "2020-03-11T13:10:26Z"
             }
           ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzgzMzY0NDg2",
+          "commit": {
+            "abbreviatedOid": "b4a94a8"
+          },
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This is great!\r\n\r\nThere are a couple small changes I'd like to make for consistency with the example code elsewhere, but they're very small and I'm happy to make them myself.",
+          "createdAt": "2020-03-29T01:34:11Z",
+          "updatedAt": "2020-03-29T01:34:11Z",
+          "comments": []
         }
       ]
     },
@@ -23197,14 +23259,149 @@
       "id": "MDExOlB1bGxSZXF1ZXN0MzkzOTAxMjk5",
       "title": "Pointers to rust reference implementation",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/229",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "armfazh",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I've created a rust reference implementation compatible with v05 and v06",
       "createdAt": "2020-03-26T01:04:07Z",
-      "updatedAt": "2020-03-26T01:04:07Z",
+      "updatedAt": "2020-03-26T02:54:25Z",
+      "closedAt": "2020-03-26T02:54:24Z",
+      "mergedAt": "2020-03-26T02:54:24Z",
+      "mergedBy": "kwantam",
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 230,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzk0NTU4NDY5",
+      "title": "remove sgn0_be, change sgn0 to output in {0,1}",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/230",
+      "state": "MERGED",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR makes the changes we discussed in #225.\r\n\r\nCan we hold off on merging this until we get comments from folks working to deploy BLS signatures?\r\n\r\nCloses #225",
+      "createdAt": "2020-03-27T05:24:01Z",
+      "updatedAt": "2020-03-29T15:08:12Z",
+      "closedAt": "2020-03-29T15:07:46Z",
+      "mergedAt": "2020-03-29T15:07:46Z",
+      "mergedBy": "chris-wood",
+      "comments": [
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "CC @JustinDrake @hoeteck @zhenfeizhang @sergeynog\r\n\r\nFor background, see #225. The goal is to significantly simplify the document by unifying the notion of \"sign\" for all curves. Unfortunately, this is a breaking change for BLS12-381, and we'd like feedback on how much of a killer this is.\r\n\r\n@JustinDrake, I know I said that there were probably no more changes coming down the pipe. I'm sorry... :confounded: (If it's any consolation, the change is extremely simple from an implementation point of view...)",
+          "createdAt": "2020-03-27T05:28:57Z",
+          "updatedAt": "2020-03-27T05:28:57Z"
+        },
+        {
+          "author": "JustinDrake",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "If it's a significant spec cleanup/simplification which is minimal for implementers then in theory it sounds good to me. Having said that I'll differ to @djrtwo who can provide much more informed feedback based on the development reality of Eth2 clients :)\r\n\r\ncc @CarlBeek @kirk-baird @mratsim",
+          "createdAt": "2020-03-27T15:12:27Z",
+          "updatedAt": "2020-03-27T15:12:27Z"
+        },
+        {
+          "author": "sergeynog",
+          "authorAssociation": "NONE",
+          "body": "Hi Riad:\n\nThis sounds good. I don't think there will be any issues from our end.\n\nRegards,\nSergey\n\n\nOn Fri, Mar 27, 2020 at 11:12 AM Justin <notifications@github.com> wrote:\n\n> If it's a significant spec cleanup/simplification which is minimal for\n> implementers then in theory it sounds good to me. Having said that I'll\n> differ to @djrtwo <https://github.com/djrtwo> who can provide much more\n> informed feedback based on the development reality of Eth2 clients :)\n>\n> cc @CarlBeek <https://github.com/CarlBeek> @kirk-baird\n> <https://github.com/kirk-baird> @mratsim <https://github.com/mratsim>\n>\n> \u2014\n> You are receiving this because you were mentioned.\n> Reply to this email directly, view it on GitHub\n> <https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/230#issuecomment-605054115>,\n> or unsubscribe\n> <https://github.com/notifications/unsubscribe-auth/AGD75LVOUT6JE4KRDCWRJ7TRJS66XANCNFSM4LUX5SQQ>\n> .\n>\n",
+          "createdAt": "2020-03-27T15:25:41Z",
+          "updatedAt": "2020-03-27T15:25:41Z"
+        },
+        {
+          "author": "kirk-baird",
+          "authorAssociation": "NONE",
+          "body": "From an implementation point of view I'm happy for removing `sgn0_be` and only using `sgn0_le` as it is simpler and faster (although the speed is negligible relative to the rest of hashing and pairing).\r\n\r\nFor Ethereum we still have not updated our specs to match hash-to-curve-06 and thus we are already introducing breaking changes so no issues on that front.",
+          "createdAt": "2020-03-28T04:12:48Z",
+          "updatedAt": "2020-03-28T04:12:48Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Merged after hearing no pushback!",
+          "createdAt": "2020-03-29T15:08:12Z",
+          "updatedAt": "2020-03-29T15:08:12Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzgzMjU2MzAy",
+          "commit": {
+            "abbreviatedOid": "de4fd17"
+          },
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-27T23:52:35Z",
+          "updatedAt": "2020-03-27T23:52:35Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzgzMjYxNTYx",
+          "commit": {
+            "abbreviatedOid": "de4fd17"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-28T00:21:17Z",
+          "updatedAt": "2020-03-28T00:21:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 231,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzk1MDMwMjU1",
+      "title": "add links to other libraries that implement hash-to-curve",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/231",
+      "state": "OPEN",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-03-28T01:47:43Z",
+      "updatedAt": "2020-03-29T01:28:35Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Does @jedisct1 have an implementation in a libsodium branch?",
+          "createdAt": "2020-03-28T16:15:48Z",
+          "updatedAt": "2020-03-28T16:15:48Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It looks like the \"next\" branch adds a ristretto-style map, but as far as I could tell from a quick glance it doesn't implement a compatible hash-to-field. (But I could be wrong!)",
+          "createdAt": "2020-03-29T01:28:19Z",
+          "updatedAt": "2020-03-29T01:28:35Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 232,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzk1MTkxMDg3",
+      "title": "merge @mmaker's g2 cofactor clearing code",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/232",
+      "state": "OPEN",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR merges the code from #191, does some slight reformatting, and adds tests.\r\n\r\nAlso adds @mmaker as a contributor.\r\n\r\ncloses #191",
+      "createdAt": "2020-03-29T03:43:34Z",
+      "updatedAt": "2020-03-29T03:48:01Z",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
