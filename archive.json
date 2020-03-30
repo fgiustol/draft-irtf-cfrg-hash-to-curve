@@ -1,6 +1,6 @@
 {
   "magic": "B8n2c@e8kvfx",
-  "timestamp": "2020-03-29T15:08:14.953313+00:00",
+  "timestamp": "2020-03-30T19:45:37.491665+00:00",
   "repo": "cfrg/draft-irtf-cfrg-hash-to-curve",
   "labels": [
     {
@@ -23285,7 +23285,7 @@
       "labels": [],
       "body": "This PR makes the changes we discussed in #225.\r\n\r\nCan we hold off on merging this until we get comments from folks working to deploy BLS signatures?\r\n\r\nCloses #225",
       "createdAt": "2020-03-27T05:24:01Z",
-      "updatedAt": "2020-03-29T15:08:12Z",
+      "updatedAt": "2020-03-29T21:58:47Z",
       "closedAt": "2020-03-29T15:07:46Z",
       "mergedAt": "2020-03-29T15:07:46Z",
       "mergedBy": "chris-wood",
@@ -23360,17 +23360,17 @@
       "id": "MDExOlB1bGxSZXF1ZXN0Mzk1MDMwMjU1",
       "title": "add links to other libraries that implement hash-to-curve",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/231",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kwantam",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2020-03-28T01:47:43Z",
-      "updatedAt": "2020-03-29T01:28:35Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
+      "updatedAt": "2020-03-30T15:31:02Z",
+      "closedAt": "2020-03-29T22:11:09Z",
+      "mergedAt": "2020-03-29T22:11:09Z",
+      "mergedBy": "chris-wood",
       "comments": [
         {
           "author": "chris-wood",
@@ -23385,6 +23385,27 @@
           "body": "It looks like the \"next\" branch adds a ristretto-style map, but as far as I could tell from a quick glance it doesn't implement a compatible hash-to-field. (But I could be wrong!)",
           "createdAt": "2020-03-29T01:28:19Z",
           "updatedAt": "2020-03-29T01:28:35Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood are you happy pulling this in now and amending if/when libsodium implements?",
+          "createdAt": "2020-03-29T22:10:19Z",
+          "updatedAt": "2020-03-29T22:10:19Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yep!",
+          "createdAt": "2020-03-29T22:11:04Z",
+          "updatedAt": "2020-03-29T22:11:04Z"
+        },
+        {
+          "author": "jedisct1",
+          "authorAssociation": "NONE",
+          "body": "The `edwards25519_XMD:SHA-512_ELL2_NU_` and `edwards25519_XMD:SHA-512_ELL2_RO_` suites are available in the libsodium's `master` branch (`crypto_core_ed25519_from_string()`, `crypto_core_ed25519_from_string_ro()`).",
+          "createdAt": "2020-03-30T15:31:02Z",
+          "updatedAt": "2020-03-30T15:31:02Z"
         }
       ],
       "reviews": []
@@ -23401,7 +23422,139 @@
       "labels": [],
       "body": "This PR merges the code from #191, does some slight reformatting, and adds tests.\r\n\r\nAlso adds @mmaker as a contributor.\r\n\r\ncloses #191",
       "createdAt": "2020-03-29T03:43:34Z",
-      "updatedAt": "2020-03-29T03:48:01Z",
+      "updatedAt": "2020-03-29T21:59:14Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 233,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzk1MzI5NDIw",
+      "title": "clarifications based on feedback from VRF authors",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/233",
+      "state": "MERGED",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR adds small clarifications:\r\n\r\n- makes a new subsection in Suites that gives a step-by-step guide\r\n\r\n- forward refs here from the intro rather than repeating that info there\r\n\r\n- changes the section name \"Roadmap\" to \"Encoding byte strings to elliptic curves\". Got feedback from several people that \"Roadmap\" wasn't sufficiently evocative and/or didn't actually describe the content of the section.\r\n\r\n- tweak to the way Z is specified and the justification for choice of sgn0(y) for SvdW\r\n\r\nThe VRF authors specifically requested changes along the lines of the first three to make it easier for users of their document once they incorporate us by ref. This doesn't mean we must do exactly what I've done in this PR, of course.\r\n\r\nI'm hopeful that VRF will accept our PR once we get something like these clarifications in place!",
+      "createdAt": "2020-03-29T22:08:09Z",
+      "updatedAt": "2020-03-30T19:38:20Z",
+      "closedAt": "2020-03-30T19:38:20Z",
+      "mergedAt": "2020-03-30T19:38:20Z",
+      "mergedBy": "chris-wood",
+      "comments": [
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks! I made one quick tweak to the ordering from @chris-wood's diff. Look OK?",
+          "createdAt": "2020-03-30T17:25:04Z",
+          "updatedAt": "2020-03-30T17:25:04Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzgzOTYxMzQz",
+          "commit": {
+            "abbreviatedOid": "3afd64a"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-30T15:17:17Z",
+          "updatedAt": "2020-03-30T15:18:18Z",
+          "comments": [
+            {
+              "originalPosition": 136,
+              "body": "Aiming for parallel structure:\r\n\r\n```suggestion\r\n1. Target elliptic curve operations, e.g., point addition and scalar multiplication.\r\n\r\n2. Target elliptic curve base field operations, e.g., addition, multiplication, and square root.\r\n\r\n3. The hash-to-field function; see {{hashtofield}}. This includes the expand\\_message\r\n   variant ({{hashtofield-expand}}) and any constituent hash function or XOF.\r\n\r\n4. The suite-specific mapping function; see {{mappings}}.\r\n\r\n5. A cofactor clearing function; see {{cofactor-clearing}}. This may be implemented as \r\n   scalar multiplication by h\\_eff or as a faster equivalent method.\r\n\r\n6. The desired encoding function; see {{roadmap}}. This is either hash\\_to\\_curve or \r\n   encode\\_to\\_curve.\r\n```\r\n\r\n(It may be over-generalizing a bit, but it seems we could probably define a hash-to-curve protocol as a tuple of these functions, e.g., (E, F, HashToField, MapToCurve, ClearCofactor, Encode).)",
+              "createdAt": "2020-03-30T15:17:17Z",
+              "updatedAt": "2020-03-30T17:24:35Z"
+            },
+            {
+              "originalPosition": 91,
+              "body": "> protocols and applications\r\n\r\n:+1:",
+              "createdAt": "2020-03-30T15:17:36Z",
+              "updatedAt": "2020-03-30T17:24:35Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "\ud83d\udc4d ",
+              "createdAt": "2020-03-30T15:18:14Z",
+              "updatedAt": "2020-03-30T17:24:35Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzg0MDQ1MTg5",
+          "commit": {
+            "abbreviatedOid": "3afd64a"
+          },
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-30T16:49:57Z",
+          "updatedAt": "2020-03-30T17:02:47Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "Note that the codomain of hash_to_field is a set of field elements.",
+              "createdAt": "2020-03-30T16:49:58Z",
+              "updatedAt": "2020-03-30T17:24:35Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzg0MDY2MDgw",
+          "commit": {
+            "abbreviatedOid": "3afd64a"
+          },
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-03-30T17:16:23Z",
+          "updatedAt": "2020-03-30T17:16:24Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "```suggestion\r\n-   The function hash\\_to\\_field, {0, 1}^\\* x {1, 2, ...} -> (F, F, ...), hashes arbitrary-length byte strings\r\n    to a list of one or more elements of a finite field; its implementation is defined in\r\n```",
+              "createdAt": "2020-03-30T17:16:23Z",
+              "updatedAt": "2020-03-30T17:24:35Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzg0MTcwMTQx",
+          "commit": {
+            "abbreviatedOid": "9fc2d62"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-30T19:38:13Z",
+          "updatedAt": "2020-03-30T19:38:13Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 234,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzk1NzgzODEz",
+      "title": "add libsodium to readme, too",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/234",
+      "state": "OPEN",
+      "author": "kwantam",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "@chris-wood you were right! I totally missed it.",
+      "createdAt": "2020-03-30T17:10:33Z",
+      "updatedAt": "2020-03-30T17:10:40Z",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
