@@ -1,6 +1,6 @@
 {
   "magic": "B8n2c@e8kvfx",
-  "timestamp": "2020-03-30T19:45:37.491665+00:00",
+  "timestamp": "2020-04-08T22:51:40.859485+00:00",
   "repo": "cfrg/draft-irtf-cfrg-hash-to-curve",
   "labels": [
     {
@@ -4063,9 +4063,9 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
-      "body": "Right now we have only the P-256, curve/edwards25519, and curve/edwards448.\r\n\r\nTODO: add others\r\n\r\n- [x] P-384\r\n- [x] P-521\r\n- [x] SECP256k1\r\n- [x] BLS12-381 G1\r\n- [ ] BLS12-381 G2\r\n- [ ] SSWU for p = 5 mod 8 --- for P-224 and some other curves\r\n\r\nThe potential optimizations for Shallue-van de Woestijne are pretty minimal, so I am assuming that for all of the above we would give straight-line impls only of Simplified SWU. Glad to consider doing otherwise, though.",
+      "body": "Right now we have only the P-256, curve/edwards25519, and curve/edwards448.\r\n\r\nTODO: add others\r\n\r\n- [x] P-384\r\n- [x] P-521\r\n- [x] SECP256k1\r\n- [x] BLS12-381 G1\r\n- [ ] BLS12-381 G2\r\n- [ ] SSWU for p = 5 mod 8 --- e.g., for M-221\r\n\r\nThe potential optimizations for Shallue-van de Woestijne are pretty minimal, so I am assuming that for all of the above we would give straight-line impls only of Simplified SWU. Glad to consider doing otherwise, though.",
       "createdAt": "2019-10-27T06:13:12Z",
-      "updatedAt": "2020-03-01T16:20:02Z",
+      "updatedAt": "2020-04-08T18:56:47Z",
       "closedAt": null,
       "comments": [
         {
@@ -4350,7 +4350,7 @@
       "labels": [],
       "body": "EDIT: Please see [this comment](https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/202#issuecomment-577864753) for a summary of the proposed changes.\r\n\r\n---\r\n\r\nSorry to reopen this can of worms, but I think there are a couple reasons to worry about the current version of hash-to-base.\r\n\r\n1. @BjoernMHaase points out that, for embedded systems, hashing can be much more expensive than field or curve operations. The reason is, hashing is done on the main (sometimes 8-bit!) processor, whereas field and curve operations use a specialized co-processor. The result is that, in his CPace implementation, he doesn't want to use our version of hash-to-base.\r\n\r\n    It seems reasonable to expect this to be an issue for several classes of hash-to-curve applications. I think we should be responsive to it, and come up with a simplified version of hash-to-base that's safe in this context.\r\n\r\n2. @reyzin points out that in the VRF draft they were very careful to make sure that all invocations of SHA-2 are domain separated, but our use of H in hash-to-base is incompatible with this. In fact, we sat down and talked through it yesterday, and there does not appear to be a safe and cheap way of domain separating uses of H outside of hash-to-base from its uses inside. The only way to do it appears to be to select a random, 32-byte string (e.g., by hashing a domain separation tag) and prepending that value to every use of H outside of hash-to-base.\r\n\r\n    This is really unsatisfying: first, it adds an extra invocation of the compression function, which is bad in resource-constrained contexts (per (1), above). Second, it means that domain separation requirements \"escape\" the hash-to-curve draft, in the sense that implementors need to understand how hash-to-curve uses H in order to safely reuse H in upper-layer protocols---an abstraction violation.\r\n\r\n3. We've heard from several people that they want to use SHA3, and our version of hash-to-base is overdesigned for this purpose. I don't care so much about overdesign in itself---it would be great if we could have a one size fits all version of hash-to-base---but given issues 1 and 2, we have an opportunity to revisit.\r\n\r\nI'm working on a couple proposals to fix this, one based on KMAC (or perhaps SHAKE) and one that's designed to be safe (including in the sense of (2) above) and efficient for Merkle-Damgaard functions (but should also be safe and efficient for SHA-3). For now I'm not proposing a specific course of action, just giving early warning that this is an issue we should think carefully about.",
       "createdAt": "2020-01-22T16:05:32Z",
-      "updatedAt": "2020-02-28T22:45:16Z",
+      "updatedAt": "2020-04-03T01:24:23Z",
       "closedAt": "2020-02-28T22:45:16Z",
       "comments": [
         {
@@ -4485,6 +4485,27 @@
           "body": "Great discussion. Following closely to learn as much as possible and contribute at the right time. ",
           "createdAt": "2020-02-15T11:49:51Z",
           "updatedAt": "2020-02-15T11:49:51Z"
+        },
+        {
+          "author": "grittygrease",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@kwantam In the spirit of code re-use, would it make sense to allow implementers who have a bigger toolbox than just cryptographic hashes and/xof functions to use these tools? For example, HKDF is available in many languages and libraries already. Perhaps we could allow HKDF to be used with the expand_message_xof function? It would be nice to be able to avoid implementing all of expand_message_xmd if HKDF is available.",
+          "createdAt": "2020-04-01T15:42:10Z",
+          "updatedAt": "2020-04-01T15:42:10Z"
+        },
+        {
+          "author": "jedisct1",
+          "authorAssociation": "NONE",
+          "body": "Do we really want even more options?\r\n\r\nHKDF is indeed widely available (or, if not, trivial to implement) and could be the only option for all suites.",
+          "createdAt": "2020-04-01T16:01:12Z",
+          "updatedAt": "2020-04-01T16:01:12Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Perhaps we could allow HKDF to be used with the expand_message_xof function? It would be nice to be able to avoid implementing all of expand_message_xmd if HKDF is available.\r\n\r\nIt would be pretty easy to define expand_message_hkdf() if we really want people to be able to use it. But:\r\n\r\n> HKDF is indeed widely available (or, if not, trivial to implement) and could be the only option for all suites.\r\n\r\nProbably not, because of the issues with HKDF described in the first post.\r\n\r\nI'm most worried about the fact that it makes strict domain separation impossible for the underlying hash. Moreover, it would make our discussion of domain separation in the document messier, because we'd have to explain that a lot of what we say doesn't apply to expand_message_hkdf. Or we'll have to explicitly assume (not at all unreasonably) that H-inside-HKDF and H-outside-HKDF are already sufficiently separated, and the fact that further separation is impractical is OK.\r\n\r\nIn any case, I suppose if we wanted to define it, it'd look something like this:\r\n\r\n```\r\ndef expand_message_hkdf(msg, DST, len_in_bytes):\r\n   prk = HKDF_Extract(DST, msg || I2OSP(0, 1))\r\n   pseudo_random_bytes = HKDF_Expand(prk, \"expand_message_hkdf\", len_in_bytes)\r\n   return pseudo_random_bytes\r\n```\r\n\r\n(The extra zero byte appended to msg makes the indifferentiability proof go through.)",
+          "createdAt": "2020-04-03T01:22:56Z",
+          "updatedAt": "2020-04-03T01:24:23Z"
         }
       ]
     },
@@ -4778,7 +4799,7 @@
       "labels": [],
       "body": "I'd like to argue that it wouldn't be inappropriate to have test vectors exercise conditions in algorithms, or more specifically both outcomes of CMOVs/if conditions. As opposite to just a limited number of specific strings fed to all algorithms,the set that is obviously too small to trigger all conditions in any chosen algorithm. Given current state [when test input is passed to hash_to_field] it naturally ~causes~ poses a challenge, as one would have to search for inputs that trigger specific conditions, but it shouldn't be a heavy computational problem.\r\n\r\nOn related note one can also wonder if it would be beneficial to ensure that [sufficient amount of] inputs to sgn0 are \"endian-unambiguous\". By \"endian ambiguity\" I mean that a specific input can yield same sign for both little- and big-endian variants of sgn0, in which case implementation invoking wrong sgn0 would pass the corresponding test.\r\n\r\nAlso, it might be useful to provide intermediate results from inputs to corresponding map_to_curves, as opposite for complete stack, so that map_to_curves can be tested by themselves. Does it make sense?\r\n",
       "createdAt": "2020-03-01T17:40:48Z",
-      "updatedAt": "2020-03-10T21:32:18Z",
+      "updatedAt": "2020-04-03T18:05:56Z",
       "closedAt": null,
       "comments": [
         {
@@ -4833,9 +4854,9 @@
         {
           "author": "kwantam",
           "authorAssociation": "COLLABORATOR",
-          "body": "Action items so far from this thread:\r\n\r\n- [x] make sure that poc code is linked in an obvious place in the doc (say, in the test vectors appendix)\r\n- [x] add intermediate values (output of hash-to-field, output of map-to-curve before cofactor clearing) to test vectors\r\n- [ ] choose test vectors that give reasonable branch coverage (e.g., different signs, x1 vs x2, etc)\r\n- [ ] choose test vectors such that sgn0 result is distinct for sgn0_le vs sgn0_be\r\n\r\nPlease let me know if I'm missing any.",
+          "body": "Action items so far from this thread:\r\n\r\n- [x] make sure that poc code is linked in an obvious place in the doc (say, in the test vectors appendix)\r\n- [x] add intermediate values (output of hash-to-field, output of map-to-curve before cofactor clearing) to test vectors\r\n- [ ] choose test vectors that give reasonable branch coverage (e.g., different signs, x1 vs x2, etc)\r\n- [ ] choose test vectors such that sgn0 result is distinct for sgn0_le vs sgn0_be\r\n- [ ] incorporate @jedisct1's suggestions below\r\n\r\nPlease let me know if I'm missing any.",
           "createdAt": "2020-03-02T17:44:05Z",
-          "updatedAt": "2020-03-09T06:11:43Z"
+          "updatedAt": "2020-04-03T18:05:56Z"
         },
         {
           "author": "mratsim",
@@ -4899,6 +4920,13 @@
           "body": "On vaguely related note reference to `{#suites}` is mistyped in new \"Test vectors\" appendix. It should be `{{suites}}`.",
           "createdAt": "2020-03-10T21:32:18Z",
           "updatedAt": "2020-03-10T21:32:18Z"
+        },
+        {
+          "author": "jedisct1",
+          "authorAssociation": "NONE",
+          "body": "Speaking of test vectors:\r\n\r\n- Maybe it would be good to have at least one vector with a large DST.\r\n- The DSTs of the test vectors all start with the suite, leading to think that this is a requirement (that could totally be justified). The actual document makes it clear that the suite is not required in the construction of the DST. But to avoid confusion, maybe the tests DST prefixes should be closer to a protocol and version number as recommended in the document.",
+          "createdAt": "2020-04-03T08:06:43Z",
+          "updatedAt": "2020-04-03T08:06:43Z"
         }
       ]
     },
@@ -5080,7 +5108,7 @@
       "labels": [],
       "body": "Mike Scott sent me an email with several pieces of feedback on sgn0. Let's discuss if/how to handle these in this issue, and then I'll put together a PR.\r\n\r\nThe high-level message is that the sgn0 definitions are too complex, and may lead to implementation errors. Specific suggestions:\r\n\r\n1. Get rid of `sgn0_be` and only use `sgn0_le`.\r\n\r\n    - Pros: only one sgn0 variant would be great.\r\n    - Cons: this would mean that existing curves that use `sgn0_be` for point compression wouldn't be able to reuse that implementation for hashing. Also, it looks like the BLS12-381 community is pretty firmly entrenched at this point, which would make life hard for the BLS signatures draft.\r\n\r\n2. If sgn0 returns 0 for positive or zero, and 1 for negative, then it (at least, `sgn0_le`) could be much simpler, especially for the `m=1` case:\r\n\r\n        def sgn0_le(x):\r\n            return x mod 2\r\n\r\n    This could also be made quite simple for quadratic extensions:\r\n\r\n        def sgn0_le(x):   # x = (x_1, x_2)\r\n            p0 = x_1 == 0\r\n            p1 = x_1 mod 2\r\n            p2 = x_2 mod 2\r\n            return p1 | (p0 & p2)\r\n\r\n    - Pros: simplifies specifying `sgn0_le`. Not clear whether it simplifies `sgn0_be`, but it might.\r\n    - Cons: is (0, 1) less intuitive than (1, -1) for (positive, negative) respectively?\r\n\r\n3. Rather than specifying field extension sgn0 in terms of vector representations, specify it in terms of towering. That is, express sgn0 for Fp2 in terms of two calls to sgn0 for Fp; sgn0 for Fp4 in terms of two calls to sgn0 for Fp2; etc.\r\n\r\n    - Pros: may result in simpler constant-time implementations.\r\n    - Cons: requires us to define towering at sufficient detail in the document to actually specify this approach. Is not compatible with any existing point compression technique that I'm aware of.",
       "createdAt": "2020-03-18T22:54:42Z",
-      "updatedAt": "2020-03-29T15:07:46Z",
+      "updatedAt": "2020-04-03T17:15:11Z",
       "closedAt": "2020-03-29T15:07:46Z",
       "comments": [
         {
@@ -5180,6 +5208,13 @@
           "body": "> * `sgn(T(x)) = sgn(x)` for any automorphism `T`\r\n\r\nAs you say, this appears to be problematic for the general case. So we give up on this, only requiring that `sgn0(x) = -sgn0(-x)` for `x != 0`. (Or, well, the moral equivalent if sgn0 outputs {0,1}.)",
           "createdAt": "2020-03-27T21:30:32Z",
           "updatedAt": "2020-03-27T21:32:45Z"
+        },
+        {
+          "author": "bwesterb",
+          "authorAssociation": "NONE",
+          "body": "I've thought a bit more about the existence of an automorphism invariant sign.  It cannot exist in `F(p^k)` with `k` even and `p` an odd prime.  Indeed, let `x` be an element of `F(p^k)` such that `x^2` is a quadratic-non residue of `F(p)`. Such a `x` exists because `k` is even and so `x^(p^k-1)/2 = x^{ (p-1)/2 (1 + p + ... + p^{k-1} ) } = ( ( x^{(p-1)/2} )^k = 1`.\r\n\r\nNote `(x^2)^{(p-1)/2} = -1` and so `x^p = -x`\r\n\r\nNote that `F(y)=y^p` is an automorphism and so `sign(x) = sign(x^p) = sign(-x) = -sign(x)`.  Contradiction!\r\n\r\nThis leaves the question open for odd `k\u22653`. ",
+          "createdAt": "2020-04-03T17:04:26Z",
+          "updatedAt": "2020-04-03T17:15:11Z"
         }
       ]
     },
@@ -5211,6 +5246,108 @@
           "body": "Great point! We can add this in the \"defining new suites\" section, maybe.",
           "createdAt": "2020-03-20T00:34:31Z",
           "updatedAt": "2020-03-20T00:34:31Z"
+        }
+      ]
+    },
+    {
+      "number": 235,
+      "id": "MDU6SXNzdWU1OTA2MDk4NzE=",
+      "title": "Too many suites?",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/235",
+      "state": "OPEN",
+      "author": "jedisct1",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Congrats for the amazing work that has been and keeps being made on this document!\r\n\r\nJust a general observation: do so many suites have to be defined?\r\n\r\n`edwards25519_XMD:SHA-256_ELL2_RO_` is identical to `edwards25519_XMD:SHA_512_ELL2_RO_`, except that `H` is SHA-256 instead of SHA-512. Are both really needed?\r\n\r\nFor the same curve, should a new protocol opt for the suite using SVDW or its counterpart using Simplified SWU? It might be useful for the document to make a recommendation.\r\n\r\nIn order to facilitate interoperability, increase code reuse and provide guidance to protocol designers, would it make sense to slightly reduce the list, or make one recommendation per curve?\r\n\r\nPlease apologize if this has been discussed before. ",
+      "createdAt": "2020-03-30T21:30:08Z",
+      "updatedAt": "2020-04-03T07:52:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "iirc, the document does not enforce the implementation of all suites, instead it provides examples of suites and their parameters, and also gives guidance on how to generate a new suite.\r\n\r\nFor the authors: should the document must state which suites to implement? \r\n",
+          "createdAt": "2020-04-02T20:18:01Z",
+          "updatedAt": "2020-04-02T20:18:01Z"
+        },
+        {
+          "author": "kwantam",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My take is that none of the suites should be must-implement, because that depends on the invoking protocol and because this document is more about helping higher-level protocols to make the right choices. But the point is well taken that having too many suites could make this difficult!\r\n\r\nRandom thoughts:\r\n\r\n- I really like the idea of recommending a particular suite for each curve. Or maybe, \"for best performance\" vs \"for simplicity of implementation\"?\r\n\r\n- I could see getting rid of the SHA-256 / curve25519 suite since ed25519 has pushed people towards combining SHA-512 with curve25519. But I suspect *someone* will really want to use SHA-256...\r\n\r\n- SvdW vs SSWU is a good question. For a library that just wants to implement *some* map, it makes sense to just support SvdW because it applies to any curve. But for a protocol that is worried about the cost of square roots, it makes sense to pick SSWU. (This goes doubly for curves that require an isogeny map to use SSWU.) So I suspect we'll see a tension between code reuse and optimality (as always, I suppose).",
+          "createdAt": "2020-04-03T01:05:48Z",
+          "updatedAt": "2020-04-03T01:08:31Z"
+        },
+        {
+          "author": "jedisct1",
+          "authorAssociation": "NONE",
+          "body": "> Or maybe, \"for best performance\" vs \"for simplicity of implementation\"?\r\n> For a library [...]  it makes sense to just support SvdW.  But for a protocol, it makes sense to pick SSWU.\r\n\r\nLibraries making a choice, and protocols making a different choice is a thing a standard can help avoid.\r\n\r\nRecommendations cannot be optimal for every case. The proposed suites may not be optimal anyway (ex: 384 vs 255 bit input for a 2^255-19 field size), so we can't prevent protocol designers from going off track if they really want to.\r\n\r\nBut having one recommended suite per curve can greatly limit fragmentation, and protocols that cannot be implemented due to incompatible libraries.",
+          "createdAt": "2020-04-03T07:52:51Z",
+          "updatedAt": "2020-04-03T07:52:51Z"
+        }
+      ]
+    },
+    {
+      "number": 236,
+      "id": "MDU6SXNzdWU1OTYxNDI0Mjg=",
+      "title": "expand_message_xmd injectivity",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/236",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As pointed out by David Benjamin, Step 6 of expand_message_xmd is not injective! Here's two inputs that will produce the same output (b_0 = H(Z_pad + [0, 16, 0, 4, 0, 16, 0, 0])): \r\n\r\nexpand_message_xmd(msg=[], DST=[0, 16, 0, 0], len_in_bytes=16)\r\nexpand_message_xmd(msg=[0, 16, 0, 4], DST=[], len_in_bytes=16) \r\n\r\nWe should probably address this, though it's not clear what is the best way.",
+      "createdAt": "2020-04-07T20:47:49Z",
+      "updatedAt": "2020-04-08T18:09:49Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jedisct1",
+          "authorAssociation": "NONE",
+          "body": "`H(Z_pad || l_i_b_str || I2OSP(0, 1) || DST_prime || msg)`?",
+          "createdAt": "2020-04-08T08:02:24Z",
+          "updatedAt": "2020-04-08T08:02:24Z"
+        },
+        {
+          "author": "davidben",
+          "authorAssociation": "NONE",
+          "body": "(Out of curiosity, any reason not to use HKDF? Different requirements?)\r\n\r\nDoes `DST_prime` need to be in a matching location between `b_0` and `b_i` computations? Otherwise the `I2OSP(i, 1)` iteration number doesn't line up quite right. I assumed that was why the tail end of all the hash invocations matched.\r\n\r\nTo that end, if we're lining everything up at the tail end, I think it'd work to just redefine `DST_prime` to `DST || I2OSP(len(DST), 1)`.\r\n\r\nNB: I'm only guessing as to the requirements and am probably making wrong assumptions. I've only just started looking at this draft and have no context as to why any of it looks the way that it does.",
+          "createdAt": "2020-04-08T17:43:54Z",
+          "updatedAt": "2020-04-08T17:43:54Z"
+        },
+        {
+          "author": "davidben",
+          "authorAssociation": "NONE",
+          "body": "`expand_message_xof` seems to have the same issue in the computation of `msg_prime`. I think the same fix to `DST_prime` addresses it.\r\n\r\nIt probably doesn't matter here, but this construction also has inconsistent block alignment of `msg` in `expand_message_xmd`. It sometimes follows a block-size prefix and sometimes a hash-sized prefix. (But it is injective with the `DST_prime` fix to align it all at the end rather than the start.) For comparison, HMAC (and thus HKDF-Extract) and the AD constructions in [AES-GCM](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf), [AES-GCM-SIV](https://tools.ietf.org/html/rfc8452#section-4), and [ChaCha20-Poly1305](https://tools.ietf.org/html/rfc7539#section-2.8) are all sensitive to the block size, with the AEADs even padding AD and ciphertext up so they both consistently start at block boundaries. (Then they add both lengths to be injective.) This is handy if, e.g., you've got `iovec`s floating around.\r\n\r\nBut this probably doesn't matter here. Fiddling with unaligned or partial blocks is negligible compared to the cost of field operations and presumably you aren't hashing bulk data.",
+          "createdAt": "2020-04-08T18:07:48Z",
+          "updatedAt": "2020-04-08T18:09:49Z"
+        }
+      ]
+    },
+    {
+      "number": 237,
+      "id": "MDU6SXNzdWU1OTY3Njg1ODM=",
+      "title": "P-521 suites have inconsistent L and k values",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/issues/237",
+      "state": "CLOSED",
+      "author": "davidben",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "armfazh"
+      ],
+      "labels": [],
+      "body": "The P-521 suites define `L` to be 96 and `k` to be 256. This is reflected in the reference implementation, which specifies both values.\r\nhttps://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.html#name-suites-for-nist-p-521\r\nhttps://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/blob/master/poc/suite_p521.sage#L21\r\n\r\nHowever, `L` is a derived parameter in `hash_to_field`. It's computed as `L = ceil((ceil(log2(p)) + k) / 8)`.\r\nhttps://cfrg.github.io/draft-irtf-cfrg-hash-to-curve/draft-irtf-cfrg-hash-to-curve.html#name-hash_to_field-implementatio\r\n\r\nFor P-521 and `k` = 256, this gives `L = ceil((521 + 256) / 8) = ceil(777 / 8) = 98`, not 96. One would get 96 if 521 was misread as 512. Between this and wanting to specify enough bits beyond the prime[*], it seems we want L = 98 rather than L = 96? The reference implementation and test vectors appear to be computed based on `L` rather than `k`, so those too probably need to be updated.\r\n\r\n[*] Although, in the case of P-521, the prime is 1 below a power of two anyway...",
+      "createdAt": "2020-04-08T18:20:53Z",
+      "updatedAt": "2020-04-08T22:51:14Z",
+      "closedAt": "2020-04-08T22:51:14Z",
+      "comments": [
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for pointing out this inconsistency, I will prepare the changes to fix this. ",
+          "createdAt": "2020-04-08T18:25:48Z",
+          "updatedAt": "2020-04-08T18:26:14Z"
         }
       ]
     }
@@ -23441,7 +23578,7 @@
       "labels": [],
       "body": "This PR adds small clarifications:\r\n\r\n- makes a new subsection in Suites that gives a step-by-step guide\r\n\r\n- forward refs here from the intro rather than repeating that info there\r\n\r\n- changes the section name \"Roadmap\" to \"Encoding byte strings to elliptic curves\". Got feedback from several people that \"Roadmap\" wasn't sufficiently evocative and/or didn't actually describe the content of the section.\r\n\r\n- tweak to the way Z is specified and the justification for choice of sgn0(y) for SvdW\r\n\r\nThe VRF authors specifically requested changes along the lines of the first three to make it easier for users of their document once they incorporate us by ref. This doesn't mean we must do exactly what I've done in this PR, of course.\r\n\r\nI'm hopeful that VRF will accept our PR once we get something like these clarifications in place!",
       "createdAt": "2020-03-29T22:08:09Z",
-      "updatedAt": "2020-03-30T19:38:20Z",
+      "updatedAt": "2020-04-05T03:50:30Z",
       "closedAt": "2020-03-30T19:38:20Z",
       "mergedAt": "2020-03-30T19:38:20Z",
       "mergedBy": "chris-wood",
@@ -23547,19 +23684,82 @@
       "id": "MDExOlB1bGxSZXF1ZXN0Mzk1NzgzODEz",
       "title": "add libsodium to readme, too",
       "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/234",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kwantam",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "@chris-wood you were right! I totally missed it.",
       "createdAt": "2020-03-30T17:10:33Z",
-      "updatedAt": "2020-03-30T17:10:40Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "comments": [],
-      "reviews": []
+      "updatedAt": "2020-04-05T03:50:37Z",
+      "closedAt": "2020-03-30T19:59:58Z",
+      "mergedAt": "2020-03-30T19:59:58Z",
+      "mergedBy": "chris-wood",
+      "comments": [
+        {
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "body": "No worries. :-)",
+          "createdAt": "2020-03-30T19:59:55Z",
+          "updatedAt": "2020-03-30T19:59:55Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzg0MTg0ODcw",
+          "commit": {
+            "abbreviatedOid": "bc0b71e"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-30T19:59:43Z",
+          "updatedAt": "2020-03-30T19:59:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 238,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDAxMTE1Njc1",
+      "title": "Fixing L parameter in P521 suites.",
+      "url": "https://github.com/cfrg/draft-irtf-cfrg-hash-to-curve/pull/238",
+      "state": "MERGED",
+      "author": "armfazh",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Changes:\r\n - L parameter was set to L=96, the correct value is 98.\r\n\r\nFixes #237 ",
+      "createdAt": "2020-04-08T22:40:37Z",
+      "updatedAt": "2020-04-08T22:51:20Z",
+      "closedAt": "2020-04-08T22:51:14Z",
+      "mergedAt": "2020-04-08T22:51:14Z",
+      "mergedBy": "chris-wood",
+      "comments": [
+        {
+          "author": "armfazh",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It needs to update the test vectors in the main document.",
+          "createdAt": "2020-04-08T22:51:20Z",
+          "updatedAt": "2020-04-08T22:51:20Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzkwMzg0MDc5",
+          "commit": {
+            "abbreviatedOid": "c7bfaff"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-04-08T22:51:08Z",
+          "updatedAt": "2020-04-08T22:51:08Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
