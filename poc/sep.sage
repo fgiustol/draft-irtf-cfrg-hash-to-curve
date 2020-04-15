@@ -24,7 +24,7 @@ publicKey = EccCore.applyDoubleAndAddMethod(base_point[0], base_point[1], secret
 
 def send_bait():
     msg=random.getrandbits(256)
-    vector = suite("abc", output_test_vector=True) 
+    vector = suite(str(msg), output_test_vector=True) 
     randomKey = random.getrandbits(256)
     c1 = EccCore.applyDoubleAndAddMethod(base_point[0], base_point[1], randomKey, a, b, mod)
     c2 = (int(vector["P"][0]), int(vector["P"][1]))
